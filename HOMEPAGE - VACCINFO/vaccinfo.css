@@ -1,0 +1,86 @@
+body {
+    margin: 0;
+    padding: 0;
+
+}
+
+.header {
+    background-color: rgb(215, 253, 215);
+    height: 80px;
+}
+
+.container {
+    display: flex;
+    width: 80%;
+    margin: 0;
+}
+.titulo {
+    font-weight: 700;
+    color: green;
+    display: flex;
+    margin-left: 20px;
+    
+}
+
+.header .container {
+    justify-content: space-between;
+}
+
+.navbar {
+    display: flex;
+    align-items: center;
+    list-style: none;
+    width: 300px;
+    justify-content: space-evenly;
+
+}
+
+.navbar li, .navbar a {
+    color: green;
+    text-decoration: none;
+    margin-right: 10px;
+}
+
+.banner{
+    background-image: url(./assets/imgs/vaccineheartbrain_blog.jpg);
+    background-size: cover;
+    -webkit-mask-image: linear-gradient(#00ff005e, rgb(0, 0, 0));
+    mask-image: linear-gradient(#0a5727, rgba(1, 253, 1, 0.418));
+}
+
+.banner .container {
+    height: 410px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: last baseline;
+    margin-left: 85px;
+    
+}
+.banner h1 {
+    width: 700px;
+    font-size: 2.2em;
+    font-weight: 800;
+    color: white;
+    margin: 0;
+    -webkit-text-stroke: 1px green;
+} 
+.container2 {
+    display: flex;
+    width: 80%;
+    height: 200px;
+    
+}
+
+.container2 p {
+    height: 100px;
+    display: flex;
+    justify-content: first baseline;
+    align-items: start;
+    color: rgb(255, 255, 255);
+    font-size: 1.5em;
+    margin-left: 85px;
+    margin-top: 0;
+    margin-right: 40%;
+    -webkit-text-stroke: 0.5px green
+}
+
