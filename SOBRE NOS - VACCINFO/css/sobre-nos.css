@@ -1,0 +1,217 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+/* HEADER */
+
+.header1 {
+    display: flex;
+    justify-content: center;
+    height: 5vh;
+    background-color: black;
+}
+
+.header1 .container{
+    justify-content: end;
+}
+
+.header1 .links {
+    display: flex;
+    gap: 18px;
+}
+
+.header1 .divisoria {
+    padding-right: 20px;
+}
+
+.header1 a{
+    color: white;
+    font-family: sans-serif;
+    text-decoration: none;
+}
+
+.header2 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 10vh;
+    background-color: #d5e4cf;
+}
+
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 90%;
+    height: 100%;
+}
+
+.header2 .container img {
+    height: 40%;
+}
+
+.header2 .links {
+    display: flex;
+    height: 100%;
+    align-items: center;
+}
+
+.header2 .link {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    padding-left: 15px;
+    padding-right: 15px;
+    border-left: 1px solid #025043;
+}
+
+.header2 a{
+    text-decoration: none;
+    font-family: sans-serif;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #025043;
+}
+
+/* BANNER */
+
+.banner {
+    display: flex;
+    justify-content: center;
+    height: 85vh;
+    background-image: url(../img/img-banner1.png);
+    background-size: cover;
+}
+
+.banner p {
+    color: white;
+    font-family: sans-serif;
+    font-size: 2rem;
+    text-decoration: underline 1px;
+    font-weight: bold;
+}
+
+.banner .container {
+    align-items: start;
+    margin-top: 5%;
+}
+
+/* VALORES */
+
+.valores {
+    display: flex;
+    background-color: #d5e4cf;
+    justify-content: center;
+}
+
+.valores .container {
+    flex-direction: column;
+    margin-top: 5%;
+    margin-bottom: 10%;
+}
+
+.tituloValores p {
+    font-size: 1.5rem;
+    font-family: sans-serif;
+    font-weight: 600;
+    color: #025043;
+}
+
+.cards {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 5%;
+}
+
+.card {
+    display: flex;
+    width: 30%;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.card .titulo {
+    width: 100%;
+    height: 40px;
+    text-align: center;
+    font-size: 1.4rem;
+    font-family: sans-serif;
+    font-weight: 600;
+    color: #025043;
+    border-bottom: 1px solid #025043;
+}
+
+/* NOSSA HISTORIA */
+
+.secao2 {
+    display: flex;
+    justify-content: center;
+    background-color: #6eb47d;
+}
+
+.secao2 .container {
+    flex-direction: column;
+    margin-top: 3%;
+    margin-bottom: 10%;
+}
+
+.secao2 .nossa-historia {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 80%;
+    padding: 50px;
+    text-align: center;
+    font-family: sans-serif;
+    border-radius: 8px;
+    background-color: #d5e4cf;
+}
+
+.tituloNossaHistoria {
+    width: 25%;
+    height: 40px;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #025043;
+    border-bottom: 1px solid #025043;
+    margin-bottom: 40px;
+}
+
+/* FOOTER */
+
+.footer {
+    display: flex;
+    flex-direction: column;
+}
+
+.footer1 {
+    display: flex;
+    height: 40vh;
+    padding: 20px;
+    background-color: #136B69;
+}
+
+.divisoria {
+    width: 50%;
+    height: 80%;
+    border-right: 1px solid white;
+}
+
+.footer2 {
+    display: flex;
+    height: 7vh;
+    justify-content: center;
+    align-items: center;
+    background-color: #04514F;
+}
+
+.footer2 {
+    color: white;
+}
+
+.footer2 a {
+    color: white;
+    text-decoration: none;
+}
