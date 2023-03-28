@@ -1,0 +1,26 @@
+.container-menu-lateral{
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    height: 100%;
+}
+.menu-content{
+    display: flex;
+    flex-direction: column;
+}
+.minhas-cargas{
+    display: flex;
+    flex-direction: column;
+}
+.filtros-content{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.menu-lateral h3{
+    font-weight: 900;
+    font-size: 2rem;
+    color: #025043;
+    font-family: sans-serif;
+}
