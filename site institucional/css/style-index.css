@@ -42,7 +42,7 @@ body {
 }
 
 .banner{
-    background-image: url(./assets/imgs/vaccineheartbrain_blog.jpg);
+    background-image: url(../img/vaccineheartbrain_blog.jpg);
     background-size: cover;
     -webkit-mask-image: linear-gradient(#00ff005e, rgb(0, 0, 0));
     mask-image: linear-gradient(#0a5727, rgba(1, 253, 1, 0.418));
