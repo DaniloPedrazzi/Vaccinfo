@@ -40,10 +40,10 @@
     justify-content: center;
     align-items: center;
     background-color: #d5e4cf;
-    height: 50vh;
+    height: 110vh;
 }
 .secao2 .container{
-    margin-top: 50vh;
+    margin-top: 0vh;
 }
 .secao2 .container .texto{
     display: flex;
@@ -59,11 +59,33 @@
 .secao2 .container .card{
     margin-left: 1px;
     border-left: 2px solid black;
-    margin-right: 7vh;
+    margin-right: 2vh;
 }
-.secao2 .container .simulador{
-    margin-top: 50vh;
-    width: 10px;
-    height: 10px;
+.secao3{
+    width: 185vh;
+    height: 88vh;
     background-image: url(../img/secao3.png);
+}
+.secao3 .container{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    height: 100%;
+}
+.secao3 .container .simulador .titulo{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 76vh;
+    background-color: #025043;
+    width: 1415px;
+    height: 12vh;
+    margin-left: 0vh;
+
+}
+.secao3 .container .simulador .titulo p{
+    margin-top: 3vh;
+    margin-left: 24vh;
+    font-size: xx-large;
+    color: white;
+
 }
