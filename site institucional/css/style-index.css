@@ -1,60 +1,69 @@
 
-.banner .container {
-    display: flex;
-    height: 30%;
-    width: 20%;
-    flex-direction: column;
-    margin-left: 30vh;
+* {
+    font-family: sans-serif;
 }
-.texto{
-    margin-left: 100px;
-    margin-top: 400px;
-    white-space: nowrap;
-}
-.banner{
-    background-image: linear-gradient(180deg, rgba(255, 255, 255, 0) 2.15%, rgba(42, 131, 107, 0.75) 54.38%, rgba(19, 107, 105, 0.75) 100%), url(../img/vaccineheartbrain_blog.jpg);
-    background-size: cover;
-    height: 634px;
-}
-.container h1{
-    color: white;
-    
-}
-.texto p{
-    color: white;
-    margin-top: 5px;
-}
-
-.botao{
-    padding: 7px 30px;
-    margin-top: 10px;
-    border-radius: 5px;
-    border: 0;
-    width: 200px;
-    height: 46px;
-    background-color: #D5E4CF;
-    font-size: x-large;
-    color: #025043;
-    font-weight: 600;
-
-}
-.bloco1{
+.banner {
     display: flex;
     justify-content: left;
+    height: 85vh;
+    background-image: url(../img/banner\ novo.png);
+    background-size: cover;
 }
-.bloco1 .container2{
+.banner .container {
     display: flex;
-    background-color:#d5e4cf ;
-    margin-top: 88px;
-    margin-left: 610px;
-    width: 1288px;
-    height: 634px;
-    padding: auto;
+    justify-content: center;
+    flex-direction: column;
+    height: 40vh;
+    width: 100vh;
+    margin-top: 35vh;
+    margin-left: 3vh;
+    border-radius: 5px;
+    color: #ffffff;
+    padding: 0 1vh;
 }
-.bloco1 .container2 .box1{
-    padding: 10vh 10px;
+.banner .container button{
+    margin-top: 3vh;
+    margin-right: 68vh;
+    height: 7vh;
+    width: 30vh;
+    font-size: x-large;
+    background-color: #d5e4cf;
+    color:#025043;
+    border: none;
+    border-radius: 1vh;
 }
-.bloco1 .container2 h1{
-    color: black;
-    white-space: nowrap;
+.banner .container p{
+    padding: 0 1vh;
+}
+.secao2{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #d5e4cf;
+    height: 50vh;
+}
+.secao2 .container{
+    margin-top: 50vh;
+}
+.secao2 .container .texto{
+    display: flex;
+    justify-content: left;
+    flex-direction: column;
+    width: 90vh;
+    letter-spacing: 1px;
+}
+.secao2 .container .texto p{
+    margin-top: 2vh;
+    font-size: 3vh;
+}
+.secao2 .container .card{
+    margin-left: 1px;
+    border-left: 2px solid black;
+    margin-right: 7vh;
+}
+.secao2 .container .simulador{
+    margin-top: 50vh;
+    width: 10px;
+    height: 10px;
+    background-image: url(../img/secao3.png);
 }
