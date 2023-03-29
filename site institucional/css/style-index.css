@@ -1,55 +1,3 @@
-<<<<<<< HEAD
-=======
-body {
-    margin: 0;
-    padding: 0;
-
-}
-
-.header {
-    background-color: rgb(215, 253, 215);
-    height: 80px;
-}
-
-.container {
-    display: flex;
-    width: 80%;
-    margin: 0;
-}
-.titulo {
-    font-weight: 700;
-    color: green;
-    display: flex;
-    margin-left: 20px;
-    
-}
-
-.header .container {
-    justify-content: space-between;
-}
-
-.navbar {
-    display: flex;
-    align-items: center;
-    list-style: none;
-    width: 300px;
-    justify-content: space-evenly;
-
-}
-
-.navbar li, .navbar a {
-    color: green;
-    text-decoration: none;
-    margin-right: 10px;
-}
-
-.banner{
-    background-image: url(../img/vaccineheartbrain_blog.jpg);
-    background-size: cover;
-    -webkit-mask-image: linear-gradient(#00ff005e, rgb(0, 0, 0));
-    mask-image: linear-gradient(#0a5727, rgba(1, 253, 1, 0.418));
-}
->>>>>>> 71a58a084b0d5a756773532619a364733accbf58
 
 .banner .container {
     display: flex;
@@ -90,4 +38,23 @@ body {
     font-weight: 600;
 
 }
-
+.bloco1{
+    display: flex;
+    justify-content: left;
+}
+.bloco1 .container2{
+    display: flex;
+    background-color:#d5e4cf ;
+    margin-top: 88px;
+    margin-left: 610px;
+    width: 1288px;
+    height: 634px;
+    padding: auto;
+}
+.bloco1 .container2 .box1{
+    padding: 10vh 10px;
+}
+.bloco1 .container2 h1{
+    color: black;
+    white-space: nowrap;
+}
