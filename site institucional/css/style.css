@@ -4,10 +4,6 @@
     font-family: Segoe UI;
 
 }
-body{
-    max-height: 768px;
-    max-width: 1388px;
-}
 
 /* HEADER */
 
@@ -111,6 +107,10 @@ body{
 
 .footer2 {
     color: white;
+}
+
+.footer2 .container {
+    justify-content: center;
 }
 
 .footer2 a {
