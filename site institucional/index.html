@@ -15,10 +15,10 @@
         <div class="container">
             <div class="links">
                 <div class="link divisoria">
-                    <a href="">ENTRAR</a>
+                    <a href="login.html">ENTRAR</a>
                 </div>
                 <div class="link">
-                    <a href="">CADASTRAR</a>
+                    <a href="cadastro.html">CADASTRAR</a>
                 </div>
             </div>
         </div>
@@ -31,13 +31,13 @@
                     <a href="./index.html">Home</a>
                 </div>
                 <div class="link">
-                    <a href="">Sobre</a>
+                    <a href="sobre-nos.html">Sobre</a>
                 </div>
                 <div class="link">
-                    <a href="">Ajuda</a>
+                    <a href="ajuda.html">Ajuda</a>
                 </div>
                 <div class="link">
-                    <a href="">Fale conosco</a>
+                    <a href="fale conosco.html">Fale conosco</a>
                 </div>
             </div>
         </div>
@@ -100,4 +100,36 @@
 </body>
 
 </html>
+<script>
+    /*
+    <div>
+      <h1>Simule quanto você pode economizar:</h1> <br>
+      //Quantidade de vacinas
+      Quantidade de vacinas em um carregamento:
+      <input type="number" id="input_qtd_vacina" /> <br>
+      //Quantidade de lotes por ano
+      Quantidade de carregamentos por ano:
+      <input type="number" id="input_qtd_lotes" /> <br>
+      //Preço unitario das vacinas
+      Preço unitário da vacina:
+      <input type="number" id="input_preco_vacina" /> <br>
+      //Botao que chama a funcao para efetuar o calculo
+      <button onclick="calculadora()" class="button_forms">Calcular</button> <br>
+      <div id="div_orcamento"></div>
+    </div>
+    */
+
+    function calculadora() {
+      var quantidade_de_lotes = Number(input_qtd_lotes.value); //Quantidade de lotes por ano
+      var qtd_vacina = Number(input_qtd_vacina.value); //Quantidade de vacinas transportadas
+      var preco_vacina = Number(input_preco_vacina.value); // Valor unitario de vacinas
+      var valor_total_carregamentos = (qtd_vacina * preco_vacina) * quantidade_de_lotes; //valor total
+      var quantidade_de_lotes_perdidos = (quantidade_de_lotes * 0.10); //10% dos carregamentos são perdidos
+      var valor_dos_carregamentos_perdidos = (qtd_vacina * preco_vacina) * quantidade_de_lotes_perdidos; //Valor total da perda dos carregamentos
+      var valor_economizado =  (valor_dos_carregamentos_perdidos * 0.75).toFixed(0); //75% dos carregamentos perdidos são salvos pela VaccInfo
+      
+      div_orcamento.innerHTML = `<p>Você tem uma perda aproximada de R$${valor_dos_carregamentos_perdidos} .<br>
+          Com a VaccInfo você reduzirá essa perda em R$${valor_economizado}</p>`;
+    }
+  </script>
 
