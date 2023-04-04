@@ -1,0 +1,114 @@
+body {
+  margin: 0;
+}
+
+.banner {
+  display: flex;
+  justify-content: center;
+  height: 100vh;
+  background-image: url(../img/banner\ novo.png);
+  background-size: cover;
+}
+
+.banner p {
+  color: white;
+  font-size: 2rem;
+  text-decoration: underline 1px;
+  font-weight: bold;
+}
+
+.banner .container {
+  justify-content: center;
+  align-items: center;
+  margin-top: 5%;
+}
+
+/* FORMULÁRIO */
+
+.box_externa {
+  background-color: #2a836b;
+  height: 26rem;
+  width: 26rem;
+  /* position: absolute; */
+  border-radius: 7px;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.box_interna {
+  width: 24rem;
+  height: 24rem;
+  background-color: #499c70;
+  display: flex;
+  border-radius: 7px;
+  backdrop-filter: blur(10px);
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.box_externa h3 {
+  margin-bottom: 2rem;
+  font-family: "Montserrat", sans-serif;
+  color: antiquewhite;
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.formulario h3 {
+  font-size: 1.3rem;
+  font-weight: 400;
+  margin-bottom: 10px;
+}
+
+.formulario {
+  color: green;
+  position: absolute;
+}
+
+.formulario input {
+  margin-bottom: 20px;
+}
+
+.formulario button {
+  cursor: pointer;
+  border: 1px solid black;
+  border-radius: 4px;
+  font-weight: 600;
+  background-color: #136b69;
+  width: 6rem;
+  height: 2rem;
+  padding: 4px 0;
+  transition: 0.4s;
+  font-size: medium;
+  color: #d5e4cf;
+}
+
+#alinhar_botao {
+  display: flex;
+  justify-content: space-between;
+}
+
+.formulario button:hover {
+  color: rgb(0, 0, 0);
+  box-shadow: 0 0 20px rgba(109, 170, 74, 0.6);
+  background-color: #ffffff;
+}
+
+#cadastrar {
+  cursor: pointer;
+  text-decoration: none;
+  color: antiquewhite;
+  font-weight: 400;
+  font-family: "Montserrat", sans-serif;
+}
+
+.formulario input {
+  width: 16rem;
+  border: #2a836b solid 2px;
+  border-radius: 5px;
+  height: 2rem;
+  font-size: 0.9rem;
+}
