@@ -1,26 +1,60 @@
-.container-menu-lateral{
+.main{
     display: flex;
-    flex-direction: column;
-    width: 90%;
+    justify-content: space-between;
     height: 100%;
-}
-.menu-content{
-    display: flex;
-    flex-direction: column;
-}
-.minhas-cargas{
-    display: flex;
-    flex-direction: column;
-}
-.filtros-content{
-    display: flex;
-    flex-direction: column;
+    width: 100%;
     align-items: flex-start;
 }
 
-.menu-lateral h3{
-    font-weight: 900;
-    font-size: 2rem;
+/* SIDEBAR */
+.main .sidebar .container{
+    flex-direction: column;
+    align-items: flex-start;
+    margin-left: 40px;
+}
+
+.menu, .filtros{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    align-items: flex-start;
+}
+
+.menosIcon{
+    filter: invert(11%) sepia(46%) saturate(7005%) hue-rotate(166deg) brightness(98%) contrast(98%);
+    margin-left: 3rem;
+    cursor: pointer;
+}
+
+.subMenosIcon{
+    filter: invert(43%) sepia(29%) saturate(838%) hue-rotate(113deg) brightness(94%) contrast(88%);
+    cursor: pointer;
+    margin-left: 1.7rem;
+}
+
+.menu button, .filtros button{
+    border: none;
+    background: none;
+    padding: 8px 0;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btnTitulo{
     color: #025043;
-    font-family: sans-serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.btnTitulo:hover{
+    color: #2A836B;
+}
+
+.btnTexto{
+    color: #2A836B;
+}
+
+.btnTexto:hover{
+    color: #3bcda6;
 }
