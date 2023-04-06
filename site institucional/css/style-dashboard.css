@@ -21,13 +21,13 @@
     align-items: flex-start;
 }
 
-.menosIcon{
+.Icon{
     filter: invert(11%) sepia(46%) saturate(7005%) hue-rotate(166deg) brightness(98%) contrast(98%);
     margin-left: 3rem;
     cursor: pointer;
 }
 
-.subMenosIcon{
+.subIcon{
     filter: invert(43%) sepia(29%) saturate(838%) hue-rotate(113deg) brightness(94%) contrast(88%);
     cursor: pointer;
     margin-left: 1.7rem;
@@ -51,11 +51,17 @@
     color: #2A836B;
 }
 
+.btnsubTexto{
+    color: #2A836B;
+    font-size: 0.7rem;
+    margin-left: 5px;
+}
+
 .btnTexto{
     color: #2A836B;
 }
 
-.btnTexto:hover{
+.btnTexto:hover, .btnsubTexto:hover{
     color: #3bcda6;
 }
 
