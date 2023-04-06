@@ -5,6 +5,11 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- ChartJS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+    <script src="http://www.chartjs.org/dist/2.7.1/Chart.js"></script>
+    <script src="http://www.chartjs.org/samples/latest/utils.js"></script>
+
     <link rel="stylesheet" href="./css/style.css">
     <link rel="stylesheet" href="./css/style-dashboard.css">
     <title>VaccInfo | Dashboard</title>
@@ -74,56 +79,7 @@
                         </div>
                     </div>
                     <div class="bodyCarga">
-                        <!-- Insira o gráfico aqui -->
-                        <p>Gráfico aqui</p>
-                    </div>
-                </div>
-                <div class="carga">
-                    <div class="headerCarga">
-                        <h3 class="numLote">N° do lote: 81298723814</h3>
-                        <div class="backgroundCaminhao">
-                            <img src="./img/img-caminhao-icon.png" height="35px" class="caminhaoIcon">
-                        </div>
-                    </div>
-                    <div class="bodyCarga">
-                        <!-- Insira o gráfico aqui -->
-                        <p>Gráfico aqui</p>
-                    </div>
-                </div>
-                <div class="carga">
-                    <div class="headerCarga">
-                        <h3 class="numLote">N° do lote: 81298723814</h3>
-                        <div class="backgroundCaminhao">
-                            <img src="./img/img-caminhao-icon.png" height="35px" class="caminhaoIcon">
-                        </div>
-                    </div>
-                    <div class="bodyCarga">
-                        <!-- Insira o gráfico aqui -->
-                        <p>Gráfico aqui</p>
-                    </div>
-                </div>
-                <div class="carga">
-                    <div class="headerCarga">
-                        <h3 class="numLote">N° do lote: 81298723814</h3>
-                        <div class="backgroundCaminhao">
-                            <img src="./img/img-caminhao-icon.png" height="35px" class="caminhaoIcon">
-                        </div>
-                    </div>
-                    <div class="bodyCarga">
-                        <!-- Insira o gráfico aqui -->
-                        <p>Gráfico aqui</p>
-                    </div>
-                </div>
-                <div class="carga">
-                    <div class="headerCarga">
-                        <h3 class="numLote">N° do lote: 81298723814</h3>
-                        <div class="backgroundCaminhao">
-                            <img src="./img/img-caminhao-icon.png" height="35px" class="caminhaoIcon">
-                        </div>
-                    </div>
-                    <div class="bodyCarga">
-                        <!-- Insira o gráfico aqui -->
-                        <p>Gráfico aqui</p>
+                        <canvas id="lm35Temperatura"></canvas>
                     </div>
                 </div>
             </div>
@@ -148,9 +104,9 @@
     var iconMenu = document.getElementById("iconMenu");
     var iconCargas = document.getElementById("iconCargas");
     var iconFiltros = document.getElementById("iconFiltros");
-    
+
     function hideMenu() {
-        if(cargas.style.display === "none"){
+        if (cargas.style.display === "none") {
             cargas.style.display = "block";
             caminhoes.style.display = "block";
             geladeiras.style.display = "block";
@@ -159,7 +115,7 @@
             configuracoes.style.display = "block";
             iconMenu.src = "./img/img-menos-icon.png";
             iconCargas.src = "./img/img-menos-icon.png";
-        }else{
+        } else {
             cargas.style.display = "none";
             caminhoes.style.display = "none";
             geladeiras.style.display = "none";
@@ -170,26 +126,26 @@
         }
     }
 
-    function hideCargas(){
-        if(caminhoes.style.display === "none"){
+    function hideCargas() {
+        if (caminhoes.style.display === "none") {
             caminhoes.style.display = "block";
             geladeiras.style.display = "block";
             iconCargas.src = "./img/img-menos-icon.png";
-        }else{
+        } else {
             caminhoes.style.display = "none";
             geladeiras.style.display = "none";
             iconCargas.src = "./img/img-mais-icon.png";
         }
     }
 
-    function hideFiltros(){
-        if(emAndamento.style.display === "none"){
+    function hideFiltros() {
+        if (emAndamento.style.display === "none") {
             tudo.style.display = "block";
             emAndamento.style.display = "block";
             finalizado.style.display = "block";
             pendente.style.display = "block";
             iconFiltros.src = "./img/img-menos-icon.png";
-        }else{
+        } else {
             tudo.style.display = "none";
             emAndamento.style.display = "none";
             finalizado.style.display = "none";
@@ -198,4 +154,78 @@
         }
     }
 
+    // ChartJS
+    var contextoLm35Temperatura = document.getElementById('lm35Temperatura').getContext('2d');
+    contextoLm35Temperatura.canvas.width = 1600;
+    contextoLm35Temperatura.canvas.height = 300;
+    var lm35Temperatura = new Chart(
+        contextoLm35Temperatura,
+        {
+            type: 'line',
+            data: {
+                datasets: [{
+                    label: 'Temperatura',
+                    type: 'line',
+                    borderColor: ['#025043'],
+                    backgroundColor: ['#9DCC9B']
+                }]
+            },
+            options: {
+                scales: {
+                    xAxes: [{
+                        distribution: 'series',
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }],
+                    yAxes: [{
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Temperatura'
+                        },
+                        ticks: {
+                            beginAtZero: false
+                        }
+                    }]
+                },
+                animation: {
+                    duration: 0
+                }
+            }
+        }
+    );
+
+    var paginacao = {};
+    var tempo = {};
+    function obterDados(grafico, endpoint) {
+        var http = new XMLHttpRequest();
+        http.open('GET', 'http://localhost:3300/sensores/' + endpoint, false);
+        http.send(null);
+        var valores = JSON.parse(http.responseText);
+        if (paginacao[endpoint] == null) {
+            paginacao[endpoint] = 0;
+        }
+        if (tempo[endpoint] == null) {
+            tempo[endpoint] = 0;
+        }
+        // Exibir à partir do último elemento exibido anteriormente
+        var ultimaPaginacao = paginacao[endpoint];
+        paginacao[endpoint] = valores.length;
+        var valores = valores.slice(ultimaPaginacao);
+        valores.forEach((valor) => {
+            //Máximo de 60 itens exibidos no gráfico
+            if (grafico.data.labels.length == 10 && grafico.data.datasets[0].data.length == 10) {
+                grafico.data.labels.shift();
+                grafico.data.datasets[0].data.shift();
+            }
+
+            grafico.data.labels.push(tempo[endpoint]++);
+            grafico.data.datasets[0].data.push(parseFloat(valor));
+            grafico.update();
+        })
+    }
+
+    setInterval(() => {
+        obterDados(lm35Temperatura, 'lm35/temperatura');
+    }, 1000);
 </script>
