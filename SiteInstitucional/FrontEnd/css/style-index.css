@@ -90,10 +90,10 @@ body {
 }
 
 .secao3 .container {
-    height: 85%;
     justify-content: center;
     align-items: center;
 }
+
 
 .secao3 .simulador {
     display: flex;
@@ -101,6 +101,10 @@ body {
     align-items: center;
     width: 70%;
     color: white;
+}
+
+#container_simulador {
+    height: 85%;
 }
 
 .inputs {
