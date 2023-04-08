@@ -84,11 +84,11 @@
 
                 <div class="inputs">
                     <div class="input">
-                        <p>Quantidade de carregamentos feitos em um ano:</p>
+                        <p>Quantidade de carregamentos por ano:</p>
                         <input type="number" id="input_qtd_lotes" class="input_simulador">
                     </div>
                     <div class="input">
-                        <p>Quantidade de vacinas em um carregamento:</p>
+                        <p>Quantidade de vacinas por carregamento:</p>
                         <input type="number" id="input_qtd_vacina" class="input_simulador">
                     </div>
                     <div class="input">
@@ -128,8 +128,8 @@
       var valor_dos_carregamentos_perdidos = (qtd_vacina * preco_vacina) * quantidade_de_lotes_perdidos; //Valor total da perda dos carregamentos
       var valor_economizado =  (valor_dos_carregamentos_perdidos * 0.75).toFixed(0); //75% dos carregamentos perdidos são salvos pela VaccInfo
       
-      div_resultado_simulador.innerHTML = `<p>Você tem uma perda aproximada de <span style="color: red">R$${valor_dos_carregamentos_perdidos}</span>.<br>
-          Com a VaccInfo você reduzirá essa perda em <span style="color: blue">R$${valor_economizado}</span></p>`;
+      div_resultado_simulador.innerHTML = `<p>Você tem uma perda aproximada de <span style="color: white; font-weight: bold;">R$${valor_dos_carregamentos_perdidos}</span></p>
+          <p>Com a VaccInfo você reduzirá essa perda em <span style="color: white; font-weight: bold;">R$${valor_economizado}</span></p>`;
     }
   </script>
 
