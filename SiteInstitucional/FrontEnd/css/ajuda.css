@@ -14,7 +14,7 @@
     height: 28vh;
     background-image:
     linear-gradient(to bottom, rgba(0, 0, 0, 0.59), rgba(255, 255, 255, 0.09)),
-    url('../img/img-ajudabanner.png');
+    url('/FrontEnd/img/img-ajudabanner.png');
     background-size: cover;
     box-shadow: 0px 6px 30px rgba(0, 0, 0, 0.25);
 }
@@ -53,21 +53,159 @@
     color: #FFFFFF;
 } */
 
+
 .categorias .tituloCategorias {
     position: absolute;
-width: 674px;
-height: 112px;
-left: 383px;
-top: 400px;
+    width: 674px;
+    height: 112px;
+    left: 383px;
+    top: 400px;
+    
+    font-family: 'Montserrat Ace';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 42px;
+    line-height: 51px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    
+    color: #025043
+}
 
-font-family: 'Montserrat Ace';
-font-style: normal;
-font-weight: 700;
-font-size: 42px;
-line-height: 51px;
-display: flex;
-align-items: center;
-text-align: center;
+.botoes {
+    display: flex;
+    margin-top: 50px;
+    width: 60%;
+    justify-content: space-between;
+}
 
-color: #025043;
+.botao1 {
+    position: absolute;
+    width: 365px;
+    height: 175px;
+    left: 124px;
+    top: 512px;
+    background: #136B69;
+    box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.25);
+    border-radius: 4px;
+}
+
+.botao1 .texto {
+    padding: 70px 0;
+    text-align: center;
+    font-size: 38px;
+    font-weight: bold;
+    color: #FFFFFF;
+}
+
+.botao2 {
+    position: absolute;
+    width: 365px;
+    height: 175px;
+    left: 537px;
+    top: 512px;
+    
+    background: #136B69;
+    box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.25);
+    border-radius: 4px;
+}
+
+.botao2 .texto {
+    padding: 70px 0;
+    text-align: center;
+    font-size: 38px;
+    font-weight: bold;
+    color: #FFFFFF;
+}
+
+.botao3 {
+    position: absolute;
+    width: 365px;
+    height: 175px;
+    left: 950px;
+    top: 512px;
+    
+    background: #136B69;
+    box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.25);
+    border-radius: 4px;
+}
+
+.botao3 .texto {
+    padding: 70px 0;
+    text-align: center;
+    font-size: 38px;
+    font-weight: bold;
+    color: #FFFFFF;
+}
+.botao4 {
+    position: absolute;
+    width: 365px;
+    height: 175px;
+    left: 124px;
+    top: 770px;
+
+    background: #136B69;
+    box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.25);
+    border-radius: 4px;
+}
+
+.botao4 .texto {
+    padding: 70px 0;
+    text-align: center;
+    font-size: 38px;
+    font-weight: bold;
+    color: #FFFFFF;
+}
+
+.botao5 {
+    position: absolute;
+    width: 365px;
+    height: 175px;
+    left: 537px;
+    top: 770px;
+    
+    background: #136B69;
+    box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.25);
+    border-radius: 4px;
+}
+
+.botao5 .texto {
+    padding: 70px 0;
+    text-align: center;
+    font-size: 38px;
+    font-weight: bold;
+    color: #FFFFFF;
+}
+
+.botao6 {
+    position: absolute;
+    width: 365px;
+    height: 175px;
+    left: 950px;
+    top: 770px;
+    
+    background: #136B69;
+    box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.25);
+    border-radius: 4px;
+}
+
+.botao6 .texto {
+    padding: 70px 0;
+    text-align: center;
+    font-size: 38px;
+    font-weight: bold;
+    color: #FFFFFF;
+  }
+
+.categorias .container{
+    height: 100vh;
+    }
+
+.Duvidas {
+  position: center;
+  width: 1440px;
+  height: 490px;
+  top: 1015px;
+  background-color: #6EB47D;
 }
