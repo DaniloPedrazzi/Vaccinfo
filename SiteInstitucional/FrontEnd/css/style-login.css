@@ -6,7 +6,7 @@ body {
   display: flex;
   justify-content: center;
   height: 100vh;
-  background-image: url(../img/banner\ novo.png);
+  background-image: url(../img/img-banner-cadastro.png);
   background-size: cover;
 }
 

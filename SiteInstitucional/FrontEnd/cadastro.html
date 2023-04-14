@@ -1,60 +1,95 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="css/style-cadastro.css" />
-    <link rel="stylesheet" href="css/style.css" />
-    <link
-      href="https://fonts.googleapis.com/css?family=Montserrat:100"
-      rel="stylesheet"
-    />
-    <title>VaccInfo | Cadastro</title>
-  </head>
 
-  <body>
-    <div class="banner">
-      <div class="container">
-        <div class="box_externa">
-          <h3 id="saldacao">Cadastrar</h3>
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="css/style-cadastro.css" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:100" rel="stylesheet" />
+  <title>VaccInfo | Cadastro</title>
+</head>
 
-          <div class="box_interna">
-            <div class="formulario">
-              <h3>Email:</h3>
-              <input type="email" />
+<body>
+  <div class="banner">
 
-              <h3>Telefone:</h3>
+    <div class="container">
+
+      <div class="box_externa">
+        <div class="titulo">
+          <h3>Cadastrar</h3>
+        </div>
+
+        <div class="box_interna">
+
+          <div class="formularios">
+
+            <div id="formulario_empresa" class="formulario">
+
+              <h3>Informações da empresa</h3>
+
+              <p>Nome:</p>
               <input type="text" />
 
-              <h3>Senha:</h3>
+              <p>CNPJ:</p>
+              <input type="text" />
+
+              <p>Email:</p>
+              <input type="email" />
+
+              <p>Telefone:</p>
+              <input type="text" />
+
+            </div>
+
+            <div class="formulario">
+
+              <h3>Informações do Administrador</h3>
+
+              <p>Nome:</p>
+              <input type="text" />
+
+              <p>CPF:</p>
+              <input type="text" />
+
+              <p>Data de nascimento:</p>
+              <input type="text" />
+
+              <p>Login:</p>
+              <input type="text" />
+
+              <p>Senha:</p>
               <input type="password" />
 
-              <h3>Confirmar a senha:</h3>
+              <p>Confirmar a senha:</p>
               <input type="password" />
 
-              <br />
-              <div id="alinhar_botao">
-                <h3><a id="entrar" href="login.html">Entrar</a></h3>
-                <button>Cadastrar</button>
-              </div>
             </div>
           </div>
-        </div>
-      </div>
-    </div>
 
-    <div class="footer">
-      <div class="footer2">
-        <div class="conatiner">
-          <p>
-            Copyright © 2023 - 2023 Vaccinfo. Todos os direitos reservados. |
-            <a href="">Termos de uso</a> |
-            <a href="">Política de privacidade</a> |
-            <a href="">Definições de cookies</a> | <a href="">Mapa do site</a>
-          </p>
+          <div class="login">
+            <h3><a id="entrar" href="login.html">Entrar</a></h3>
+            <button>Cadastrar</button>
+          </div>
+
         </div>
       </div>
     </div>
-  </body>
+  </div>
+
+  <div class="footer">
+    <div class="footer2">
+      <div class="container">
+        <p>
+          Copyright © 2023 - 2023 Vaccinfo. Todos os direitos reservados. |
+          <a href="">Termos de uso</a> |
+          <a href="">Política de privacidade</a> |
+          <a href="">Definições de cookies</a> | <a href="">Mapa do site</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</body>
+
 </html>
