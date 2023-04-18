@@ -37,6 +37,7 @@
 
               <p>Email: *</p>
               <input type="email" id="input_email_empresa" />
+              <div id="div_validacao_email_empresa"></div>
 
               <p>Telefone: *</p>
               <input type="text" id="input_telefone_empresa" />
@@ -71,6 +72,7 @@
 
               <p>Email: *</p>
               <input type="email" id="input_email_usuario" />
+              <div id="div_validacao_email_usuario"></div>
 
               <p>Telefone:</p>
               <input placeholder="(XX)XXXXX-XXXX" type="text" id="input_telefone_usuario" />
@@ -136,10 +138,14 @@
     var senha = input_senha.value;
     var confirmacaoSenha = input_confirmacaoSenha.value;
 
+    // validações
     var camposEmpresaPreenchidos = nomeEmpresa != "" && cnpj != "" && emailEmpresa != "" && telefoneEmpresa != "";
     var camposUsuarioPreenchidos = nomeUsuario != "" && dataNascimento != "" && documento != "" && tipoDocumento != ""
-      && emailUsuario != "" && loginUsuario != "" && senha != "" && confirmacaoSenha != "";
-    var emailValidado = emailEmpresa.indexOf("@") != -1 || emailUsuario.indexOf("@") != -1;
+      && emailUsuario != "" && loginUsuario != "" && senha != "" && confirmacaoSenha != "";  
+
+    var emailEmpresaValidado = (emailEmpresa.indexOf("@") != -1) && (emailEmpresa.indexOf(".") != -1);
+    var emailUsuarioValidado = (emailUsuario.indexOf("@") != -1) && (emailUsuario.indexOf(".") != -1);
+
     var confirmacaoSenhaValidada = senha == confirmacaoSenha;
     var senhaForteValidada = senha.lenght >= 8 &&
       (senha.indexOf("!") != -1 ||
@@ -152,31 +158,50 @@
         senha.indexOf("*") != 1 ||
         senha.indexOf("_") != 1);
 
+      div_validacao_email_empresa.innerHTML = "";
+      div_validacao_email_usuario.innerHTML = "";
+      div_validacao_senha.innerHTML = "";
+
 
     if (!camposEmpresaPreenchidos || !camposUsuarioPreenchidos) {
 
       alert("Por favor, preencha todos os campos obrigatórios")
-      
+
     } else {
-          if (!confirmacaoSenhaValidada) {
+      if (!emailEmpresaValidado) {
+
+        div_validacao_email_empresa.innerHTML = `
+        <p style="color: rgb(248, 46, 46); font-size: 0.9rem;">Insira um email válido</p>
+        `;
       
-            div_validacao_senha.innerHTML = `
+      } else if (!emailUsuarioValidado) {
+
+        div_validacao_email_usuario.innerHTML = `
+        <p style="color: rgb(248, 46, 46); font-size: 0.9rem;">Insira um email válido</p>
+        `;
+
+      } else {
+        if (!confirmacaoSenhaValidada) {
+
+          div_validacao_senha.innerHTML = `
             <p style="color: rgb(248, 46, 46); font-size: 0.9rem;">Insira o mesmo valor nos dois campos de senha</p>
             `;
-      
-          } else {
-      
-            if (!senhaForteValidada) {
-      
-              div_validacao_senha.innerHTML = `
+
+        } else {
+
+          if (!senhaForteValidada) {
+
+            div_validacao_senha.innerHTML = `
             <p style="color: rgb(248, 46, 46); font-size: 0.9rem;">Sua senha deve ter no mínimo 8 caracteres, e algum caractere especial (! * @ # $ % & | _)</p>
             `;
-      
-            } else {
-      
-            }
-      
+
+          } else {
+
           }
+        }
+
+
+      }
     }
 
   }
