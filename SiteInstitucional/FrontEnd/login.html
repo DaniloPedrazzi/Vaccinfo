@@ -22,15 +22,15 @@
           <div class="box_interna">
             <div class="formulario">
               <h3>Email:</h3>
-              <input type="email" />
+              <input id="input_email" type="email" />
 
               <h3>Senha:</h3>
-              <input type="password" />
+              <input id="input_senha" type="password" />
 
               <br />
               <div id="alinhar_botao">
                 <h3><a id="cadastrar" href="cadastro.html">Cadastrar</a></h3>
-                <button>Entrar</button>
+                <button onclick="validar()">Entrar</button>
               </div>
             </div>
           </div>
@@ -52,3 +52,25 @@
     </div>
   </body>
 </html>
+
+<script>
+  function validar(){
+    var email = input_email.value;
+    var senha = input_senha.value;
+
+    var tudo_validado = true;
+    
+    if(email != 'gustavo.ribeiro@sptech.school'){
+      alert("Email não cadastrado! Por favor insira um email já cadastrado");
+      tudo_validado = false;
+    };
+    if(senha != '#Vaccinfo'){
+      alert("Senha incorreta!");
+      tudo_validado = false;
+    };
+
+    if(tudo_validado){
+      window.location.href = "dashboard.html";
+    };
+  }
+</script>
