@@ -29,17 +29,17 @@
 
               <h3>Informações da empresa</h3>
 
-              <p>Nome:</p>
-              <input type="text" />
+              <p>Nome: *</p>
+              <input type="text" id="input_nome_empresa" />
 
-              <p>CNPJ:</p>
-              <input type="text" />
+              <p>CNPJ: *</p>
+              <input type="text" id="input_cnpj" />
 
-              <p>Email:</p>
-              <input type="email" />
+              <p>Email: *</p>
+              <input type="email" id="input_email_empresa" />
 
-              <p>Telefone:</p>
-              <input type="text" />
+              <p>Telefone: *</p>
+              <input type="text" id="input_telefone_empresa" />
 
             </div>
 
@@ -47,30 +47,51 @@
 
               <h3>Informações do Administrador</h3>
 
-              <p>Nome:</p>
-              <input type="text" />
+              <p>Nome completo: *</p>
+              <input type="text" id="input_nome_usuario" />
 
-              <p>CPF:</p>
-              <input type="text" />
+              <p>Data de nascimento: *</p>
+              <input placeholder="dd/mm/yyyy" type="text" id="input_data_nascimento" />
 
-              <p>Data de nascimento:</p>
-              <input type="text" />
+              <div class="documento">
+                <div class="num_documento">
+                  <p>Documento: *</p>
+                  <input type="text" id="input_documento" />
+                </div>
 
-              <p>Login:</p>
-              <input type="text" />
+                <div class="tipo_documento">
+                  <p>Tipo do documento: *</p>
+                  <select id="select_tipo_documento">
+                    <option value="">-----------</option>
+                    <option value="cpf">CPF</option>
+                    <option value="passaporte">Passaporte</option>
+                  </select>
+                </div>
+              </div>
 
-              <p>Senha:</p>
-              <input type="password" />
+              <p>Email: *</p>
+              <input type="email" id="input_email_usuario" />
 
-              <p>Confirmar a senha:</p>
-              <input type="password" />
+              <p>Telefone:</p>
+              <input placeholder="(XX)XXXXX-XXXX" type="text" id="input_telefone_usuario" />
+
+              <p>Login: *</p>
+              <input type="text" id="input_login_usuario" />
+
+              <p>Senha: *</p>
+              <input id="input_senha" type="password" />
+
+              <p>Confirmar a senha: *</p>
+              <input id="input_confirmacaoSenha" type="password" />
+              <div id="div_validacao_senha">
+              </div>
 
             </div>
           </div>
 
           <div class="login">
             <h3><a id="entrar" href="login.html">Entrar</a></h3>
-            <button>Cadastrar</button>
+            <button onclick="validarCampos()" id="button_cadastrar">Cadastrar</button>
           </div>
 
         </div>
@@ -93,3 +114,71 @@
 </body>
 
 </html>
+
+<script>
+
+  function validarCampos() {
+
+    // dados da empresa
+    var nomeEmpresa = input_nome_empresa.value;
+    var cnpj = input_cnpj.value;
+    var emailEmpresa = input_email_empresa.value
+    var telefoneEmpresa = input_telefone_empresa.value;
+
+    // dados do usuario
+    var nomeUsuario = input_nome_usuario.value;
+    var dataNascimento = input_data_nascimento.value;
+    var documento = input_documento.value;
+    var tipoDocumento = select_tipo_documento.value;
+    var emailUsuario = input_email_usuario.value;
+    var telefoneUsuario = input_telefone_usuario.value;
+    var loginUsuario = input_login_usuario.value;
+    var senha = input_senha.value;
+    var confirmacaoSenha = input_confirmacaoSenha.value;
+
+    var camposEmpresaPreenchidos = nomeEmpresa != "" && cnpj != "" && emailEmpresa != "" && telefoneEmpresa != "";
+    var camposUsuarioPreenchidos = nomeUsuario != "" && dataNascimento != "" && documento != "" && tipoDocumento != ""
+      && emailUsuario != "" && loginUsuario != "" && senha != "" && confirmacaoSenha != "";
+    var emailValidado = emailEmpresa.indexOf("@") != -1 || emailUsuario.indexOf("@") != -1;
+    var confirmacaoSenhaValidada = senha == confirmacaoSenha;
+    var senhaForteValidada = senha.lenght >= 8 &&
+      (senha.indexOf("!") != -1 ||
+        senha.indexOf("@") != -1 ||
+        senha.indexOf("#") != -1 ||
+        senha.indexOf("$") != -1 ||
+        senha.indexOf("%") != -1 ||
+        senha.indexOf("&") != -1 ||
+        senha.indexOf("|") != 1 ||
+        senha.indexOf("*") != 1 ||
+        senha.indexOf("_") != 1);
+
+
+    if (!camposEmpresaPreenchidos || !camposUsuarioPreenchidos) {
+
+      alert("Por favor, preencha todos os campos obrigatórios")
+      
+    } else {
+          if (!confirmacaoSenhaValidada) {
+      
+            div_validacao_senha.innerHTML = `
+            <p style="color: rgb(248, 46, 46); font-size: 0.9rem;">Insira o mesmo valor nos dois campos de senha</p>
+            `;
+      
+          } else {
+      
+            if (!senhaForteValidada) {
+      
+              div_validacao_senha.innerHTML = `
+            <p style="color: rgb(248, 46, 46); font-size: 0.9rem;">Sua senha deve ter no mínimo 8 caracteres, e algum caractere especial (! * @ # $ % & | _)</p>
+            `;
+      
+            } else {
+      
+            }
+      
+          }
+    }
+
+  }
+
+</script>

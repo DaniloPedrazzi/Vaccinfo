@@ -6,7 +6,7 @@ body {
     display: flex;
     justify-content: left;
     height: 85vh;
-    background-image: url(../img/banner\ novo.png);
+    background-image: url(../img/img-banner-vacina.png);
     background-size: cover;
 }
 .banner .container {
@@ -197,49 +197,4 @@ body {
 
 .secao4 h3, .secao5  h3 {
     font-size: 1.8rem;
-}
-
-/* SEÇÃO 5 */
-
-.secao5 {
-    display: flex;
-    justify-content: center;
-    height: 95vh;
-    background-color: #6EB47D;
-    margin-bottom: 8%;
-}
-
-.secao5 .container {
-    justify-content: center;
-}
-
-.secao5 .texto {
-    display: flex;
-    flex-direction: column;
-    gap: 25px;
-    width: 30%;
-    padding: 30px 40px;
-    background-color: #D5E4CF;
-}
-
-.secao5 .texto p {
-    width: 80%;
-}
-
-#button_nossa_historia {
-    width: 60%;
-    padding: 15px 10px;
-    color: white;
-    background-color: #136B69;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-.secao5 .img {
-    display: flex;
-}
-
-.secao5 img {
-    width: 44vw;
 }
