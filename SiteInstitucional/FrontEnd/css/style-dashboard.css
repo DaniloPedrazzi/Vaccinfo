@@ -23,6 +23,7 @@ body{
 .boxGrafico{
     height: 100%;
     box-shadow: 0 0 7px rgba(0,0,0,0.5);
+    position: relative;
 }
 
 .headerGrafico{
@@ -39,8 +40,12 @@ body{
 }
 
 .qtdLotesTotal{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-105%, -30%);
+    font-size: 2.3rem;
     text-align: center;
-    font-size: 1.9rem;
 }
 
 .botoes{
