@@ -37,48 +37,50 @@
         </div>
     </div>
     <div class="main">
-        <div class="sidebar">
-            <div class="container">
-                <div class="menu">
-                    <div id="menuTexto" onclick="hideMenu()">
-                        <button class="btnTitulo">Menu</button>
-                        <img src="./img/img-menos-icon.png" width="13px" id="iconMenu" class="Icon">
+        <div class="container">
+            <div class="leftSide">
+                <div class="boxGrafico">
+                    <div class="headerGrafico">
+                        <h3>Visão Geral - Semanal</h3>
                     </div>
-                    <div id="minhasCargasTexto" onclick="hideCargas()">
-                        <button class="btnTexto">Minhas Cargas</button>
-                        <img src="./img/img-menos-icon.png" width="13px" id="iconCargas" class="subIcon">
+                    <div class="bodyGrafico">
+                        <canvas id="lineSemanal"></canvas>
                     </div>
-                    <button id="caminhoesTexto" class="btnsubTexto">Caminhões</button>
-                    <button id="geladeirasTexto" class="btnsubTexto">Geladeiras</button>
-                    <button id="historicoTexto" class="btnTexto">Histórico</button>
-                    <button id="rastreioTexto" class="btnTexto">Rastreio</button>
-                    <button id="configuracoesTexto" class="btnTexto">Configurações</button>
-                </div>
-                <div class="filtros" onclick="hideFiltros()">
-                    <div id="filtrosTexto">
-                        <button class="btnTitulo">Filtros</button>
-                        <img src="./img/img-menos-icon.png" width="13px" id="iconFiltros" class="Icon">
-                    </div>
-                    <button id="tudoTexto" class="btnTexto">Tudo</button>
-                    <button id="emAndamentoTexto" class="btnTexto">Em Andamento</button>
-                    <button id="finalizadoTexto" class="btnTexto">Finalizado</button>
-                    <button id="pendenteTexto" class="btnTexto">Pendente</button>
                 </div>
             </div>
-        </div>
-        <div class="cargas">
-            <div class="container">
-                <button class="btnRegistrar">Registrar Carga</button>
-                <div class="carga">
-                    <div class="headerCarga">
-                        <h3 class="numLote">N° do lote: 81298723814</h3>
-                        <div class="backgroundCaminhao">
-                            <img src="./img/img-caminhao-icon.png" height="35px" class="caminhaoIcon">
+            <div class="rightSide">
+                <div class="boxGrafico">
+                    <div class="headerGrafico">
+                        <h3>Visão Geral - Diária</h3>
+                    </div>
+                    <div class="bodyGraficoDiario">
+                        <canvas id="pieDiaria"></canvas>
+                        <!-- <h3 class="qtdLotesTotal">23 <br> Lotes</h3> -->
+                    </div>
+                </div>
+
+                <div class="botoes">
+                    <a href="cargas.html" class="botao botaoVermelho">
+                        <div class="headerBotao">
+                            <h3>Crítico</h3>
+                            <img height="20px" src="./img/img-exclamacao-icon.png">
                         </div>
-                    </div>
-                    <div class="bodyCarga">
-                        <canvas id="lm35Temperatura"></canvas>
-                    </div>
+                        <h2>3</h2>
+                    </a>
+                    <a href="cargas.html" class="botao botaoAmarelo">
+                        <div class="headerBotao">
+                            <h3>Alerta</h3>
+                            <img height="20px" src="./img/img-warn-icon.png">
+                        </div>
+                        <h2>9</h2>
+                    </a>
+                    <a href="cargas.html" class="botao botaoVerde">
+                        <div class="headerBotao">
+                            <h3>Ideal</h3>
+                            <img height="20px" src="./img/img-check-icon.png">
+                        </div>
+                        <h2>10</h2>
+                    </a>
                 </div>
             </div>
         </div>
@@ -88,106 +90,112 @@
 </html>
 
 <script>
-    //Definir elementos a serem modificados
-    var cargas = document.getElementById("minhasCargasTexto");
-    var caminhoes = document.getElementById("caminhoesTexto");
-    var geladeiras = document.getElementById("geladeirasTexto");
-    var historico = document.getElementById("historicoTexto");
-    var rastreio = document.getElementById("rastreioTexto");
-    var configuracoes = document.getElementById("configuracoesTexto");
-    var tudo = document.getElementById("tudoTexto");
-    var emAndamento = document.getElementById("emAndamentoTexto");
-    var finalizado = document.getElementById("finalizadoTexto");
-    var pendente = document.getElementById("pendenteTexto");
-    var iconMenu = document.getElementById("iconMenu");
-    var iconCargas = document.getElementById("iconCargas");
-    var iconFiltros = document.getElementById("iconFiltros");
-
-    function hideMenu() {
-        if (cargas.style.display === "none") {
-            cargas.style.display = "block";
-            caminhoes.style.display = "block";
-            geladeiras.style.display = "block";
-            historico.style.display = "block";
-            rastreio.style.display = "block";
-            configuracoes.style.display = "block";
-            iconMenu.src = "./img/img-menos-icon.png";
-            iconCargas.src = "./img/img-menos-icon.png";
-        } else {
-            cargas.style.display = "none";
-            caminhoes.style.display = "none";
-            geladeiras.style.display = "none";
-            historico.style.display = "none";
-            rastreio.style.display = "none";
-            configuracoes.style.display = "none";
-            iconMenu.src = "./img/img-mais-icon.png";
-        }
-    }
-
-    function hideCargas() {
-        if (caminhoes.style.display === "none") {
-            caminhoes.style.display = "block";
-            geladeiras.style.display = "block";
-            iconCargas.src = "./img/img-menos-icon.png";
-        } else {
-            caminhoes.style.display = "none";
-            geladeiras.style.display = "none";
-            iconCargas.src = "./img/img-mais-icon.png";
-        }
-    }
-
-    function hideFiltros() {
-        if (emAndamento.style.display === "none") {
-            tudo.style.display = "block";
-            emAndamento.style.display = "block";
-            finalizado.style.display = "block";
-            pendente.style.display = "block";
-            iconFiltros.src = "./img/img-menos-icon.png";
-        } else {
-            tudo.style.display = "none";
-            emAndamento.style.display = "none";
-            finalizado.style.display = "none";
-            pendente.style.display = "none";
-            iconFiltros.src = "./img/img-mais-icon.png";
-        }
-    }
-
-    // ChartJS
-    var contextoLm35Temperatura = document.getElementById('lm35Temperatura').getContext('2d');
-    contextoLm35Temperatura.canvas.width = 1600;
-    contextoLm35Temperatura.canvas.height = 300;
-    var lm35Temperatura = new Chart(
-        contextoLm35Temperatura,
+    // SEMANAL
+    var contextolineSemanal = document.getElementById('lineSemanal').getContext('2d');
+    contextolineSemanal.canvas.width = 600;
+    contextolineSemanal.canvas.height = 400;
+    var pieSemanal = new Chart(
+        contextolineSemanal,
         {
             type: 'line',
             data: {
-                datasets: [{
-                    label: 'Temperatura',
-                    type: 'line',
-                    borderColor: ['#025043'],
-                    backgroundColor: ['#9DCC9B']
-                }]
+                labels: [
+                    'Domingo',
+                    'Segunda',
+                    'Terça',
+                    'Quarta',
+                    'Quinta',
+                    'Sexta',
+                    'Sábado'
+                ],
+                datasets: [
+                    {
+                        label: 'Ideal',
+                        data: [13, 21, 22, 20, 18, 23, 25],
+                        fill: false,
+                        type: 'line',
+                        borderColor: ['#74A94C'],
+                        backgroundColor: ['#90BE6D']
+                    },
+                    {
+                        label: 'Alerta',
+                        data: [7, 13, 10, 8, 3, 2, 15, 20],
+                        fill: false,
+                        type: 'line',
+                        borderColor: ['#F6B213'],
+                        backgroundColor: ['#F9C74F']
+                    },
+                    {
+                        label: 'Crítico',
+                        data: [3, 1, 4, 7, 3, 0, 5],
+                        fill: false,
+                        type: 'line',
+                        borderColor: ['#F81215'],
+                        backgroundColor: ['#F94144']
+                    },
+                ]
             },
             options: {
                 scales: {
                     xAxes: [{
                         distribution: 'series',
                         ticks: {
-                            beginAtZero: true
+                            beginAtZero: false
                         }
                     }],
                     yAxes: [{
                         scaleLabel: {
                             display: true,
-                            labelString: 'Temperatura'
+                            labelString: 'Quantidade de Lotes'
                         },
                         ticks: {
-                            beginAtZero: false
+                            beginAtZero: true
                         }
                     }]
                 },
                 animation: {
-                    duration: 0
+                    duration: 0.3
+                }
+            }
+        }
+    );
+
+    // DIÁRIO
+    var contextopieDiaria = document.getElementById('pieDiaria').getContext('2d');
+    contextopieDiaria.canvas.width = 400;
+    contextopieDiaria.canvas.height = 200;
+    var pieDiaria = new Chart(
+        contextopieDiaria,
+        {
+            type: 'doughnut',
+            data: {
+                labels: [
+                    'Ideal',
+                    'Alerta',
+                    'Crítico'
+                ],
+                datasets: [
+                    {
+                        data: [13, 7, 3],
+                        backgroundColor: [
+                            '#74A94C',
+                            '#F6B213',
+                            '#F81215'
+                        ]
+                    }
+                ]
+            },
+            options: {
+                cutoutPercentage: 70,
+                legend: {
+                    position: 'right',
+                    align: 'middle'
+                },
+                layout: {
+                    padding: {
+                        top: 10,
+                        bottom: 10
+                    }
                 }
             }
         }
