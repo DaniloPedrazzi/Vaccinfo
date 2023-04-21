@@ -7,17 +7,14 @@ body {
     height: 85vh;
     background-image: url(../img/img-banner-vacina.png);
     background-size: cover;
-    
-
 }
 
 .banner .container {
     height: 80%;
-    width: 600;
     margin-top: 5vh;
-    margin-left: 5vh;
-    margin-bottom: 5vh;
-    margin-right: 5vh;
+    margin-left: 25vh;
+    margin-bottom: 25vh;
+    margin-right: 25vh;
     color: #025043;
     padding: 0 1vh;
     border: #025043 solid 5px;
@@ -25,14 +22,14 @@ body {
     border-radius: 5px;
 }
 .aba-esquerda-do-perfil {
-    margin: auto;
-    display: flex;
-    justify-content: center;
-    align-items: start;
-    width: 250px;
-    height: 500px;
-    
+    width: 350px;
+    height: 400px;
+    margin-right: 5px;
+
 }
+
+
+
 
 .aba-principal {
     margin: auto;
@@ -47,20 +44,38 @@ body {
     height: 60px;
     display: flex;
     justify-content: center;
-    margin-right: 0;
+    margin-top: 30px;
 }
 
-
-.avatar-icon {
-    width: 150px;
+.div-avatar {
+    margin-top: 30px;
+    height: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
     
 }
 
-.foto-do-perfil {
-    height: 100px;
-	width: 100px;
-	border-radius: 100%;
-	border: 5px solid #fff;
-    background-color: white;
+.div-avatar h4 {
+
+    font-weight: bold;
+    font-size: 1.5rem;
+    margin-top: 10px;
+    margin-bottom: 10px;
+
 }
+
+.div-avatar p {
+    font-weight: 300;
+    font-size: 1rem;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.avatar-icon {
+    width: 150px;
+
+
+}
+
 
