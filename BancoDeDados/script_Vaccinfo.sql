@@ -145,5 +145,18 @@ CREATE TABLE registro (
 
 -- Caso hipotético, no qual o lote que estava no caminhão, vá para a geladeira, necessário um update
 update sensor set instalacao = 'Geladeira' where id = 2;
+
+-- -- Select dados do sensor
+select empresa.nome as 'Nome da Empresa',
+	empresa.email as 'Email da empresa',
+    localSensor.nome as 'Local do sensor',
+    concat('Endereço: ', ifnull(endereco.logradouro,'Não possui rua. '), ', ', ifnull(endereco.complemento, 'Não possui complemento. '), ', ', ifnull(endereco.cidade, 'Não possui cidade. '), '.' ) as 'Endereço do local',
+    sensor.idSensor as 'ID do sensor',
+    registro.dataHoraRegistro as 'Momento do registro',
+    registro.temperatura as Temperatura
+		from localSensor join empresa on localSensor.fkEmpresa = empresa.idEmpresa
+        join endereco on localSensor.fkEndereco = endereco.idEndereco
+        join sensor on localSensor.idLocal = sensor.fkLocalSensor
+        join registro on sensor.idSensor = registro.fkSensor;
    
 drop database vaccinfo;
