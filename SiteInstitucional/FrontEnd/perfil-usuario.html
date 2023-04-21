@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./css/style-perfil-usuario.css">
+    <title>VaccInfo | Home</title>
+</head>
+
+<body>
+    <div class="header1">
+        <div class="container">
+            <div class="links">
+                <div class="link divisoria">
+                    <a href="index.html">LogOut</a>
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="header2">
+        <div class="container">
+            <img src="./img/logo-vaccinfo.png" alt="">
+            <div class="links">
+                <div class="link">
+                    <a href="./index.html">Home</a>
+                </div>
+                <div class="link">
+                    <a href="sobre-nos.html">Sobre</a>
+                </div>
+                <div class="link">
+                    <a href="fale conosco.html">Fale conosco</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="banner">
+        <div class="container">        
+            <div class="aba-esquerda-do-perfil">               
+                    <img src="img/avatar-icon.png" alt="" class="avatar-icon">
+            </div>
+                <div class="aba-principal">
+                    <div class="titulo-perfil">
+                        <h1>Perfil do Usuário</h1>
+                    </div>
+                </div>
+        </div>
+    </div>
+
+
+
+   
+
+    <div class="footer">
+        <div class="footer1">
+            <div class="divisoria"></div>
+        </div>
+        <div class="footer2">
+            <div class="container">
+                <p>Copyright © 2023 - 2023 Vaccinfo. Todos os direitos reservados. | <a href="">Termos de uso</a> | <a
+                        href="">Política de privacidade</a> | <a href="">Definições de cookies</a> | <a href="">Mapa do
+                        site</a></p>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>
+<script>
+    function calculadora() {
+        var quantidade_de_lotes = Number(input_qtd_lotes.value); //Quantidade de lotes por ano
+        var qtd_vacina = Number(input_qtd_vacina.value); //Quantidade de vacinas transportadas
+        var preco_vacina = Number(input_preco_vacina.value); // Valor unitario de vacinas
+        var valor_total_carregamentos = (qtd_vacina * preco_vacina) * quantidade_de_lotes; //valor total
+        var quantidade_de_lotes_perdidos = (quantidade_de_lotes * 0.10); //10% dos carregamentos são perdidos
+        var valor_dos_carregamentos_perdidos = (qtd_vacina * preco_vacina) * quantidade_de_lotes_perdidos; //Valor total da perda dos carregamentos
+        var valor_economizado = (valor_dos_carregamentos_perdidos * 0.75).toFixed(0); //75% dos carregamentos perdidos são salvos pela VaccInfo
+
+        div_resultado_simulador.innerHTML = `<p>Você tem uma perda aproximada de <span style="color: white; font-weight: bold;">R$${valor_dos_carregamentos_perdidos}</span></p>
+          <p>Com a VaccInfo você reduzirá essa perda em <span style="color: white; font-weight: bold;">R$${valor_economizado}</span></p>`;
+    }
+</script>
