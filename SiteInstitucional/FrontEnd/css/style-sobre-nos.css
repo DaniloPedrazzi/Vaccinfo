@@ -1,5 +1,5 @@
 *{
-    font-family: sans-serif;
+    font-family: 'Montserrat';
 }
 
 /* BANNER */
@@ -82,6 +82,18 @@
     margin-bottom: 10%;
 }
 
+.secao2 .img {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.secao2 img{
+    width: 88%;
+    margin-bottom: 3%;
+    border-radius: 5px;
+}
+
 .secao2 .nossa-historia {
     display: flex;
     flex-direction: column;
@@ -95,10 +107,17 @@
 
 .tituloNossaHistoria {
     width: 25%;
-    height: 40px;
+    height: 25%;
     font-size: 1.5rem;
     font-weight: 600;
     color: #025043;
     border-bottom: 1px solid #025043;
     margin-bottom: 40px;
 }
+
+.texto {
+    text-align: justify;
+    text-indent: 5%;
+    
+}
+

@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
+    <!-- ChartJS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+    <script src="http://www.chartjs.org/dist/2.7.1/Chart.js"></script>
+    <script src="http://www.chartjs.org/samples/latest/utils.js"></script>
+
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./css/style-cargas.css">
+    <title>VaccInfo | Dashboard</title>
+    
+    <link rel="website icon" type="png" href="img/mini-logo.png">
+</head>
+
+<body>
+    <div class="header2">
+        <div class="container">
+            <img src="./img/logo-vaccinfo.png" alt="">
+            <div class="links">
+                <div class="link">
+                    <a href="./index.html">Home</a>
+                </div>
+                <div class="link">
+                    <a href="fale conosco.html">Fale conosco</a>
+                </div>
+                <div class="link">
+                    <a href="index.html">Sair</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="main">
+        <div class="sidebar">
+            <div class="container">
+                <div class="menu">
+                    <div id="menuTexto" onclick="hideMenu()">
+                        <button class="btnTitulo">Menu</button>
+                        <img src="./img/img-menos-icon.png" width="13px" id="iconMenu" class="Icon">
+                    </div>
+                    <div id="minhasCargasTexto" onclick="hideCargas()">
+                        <button class="btnTexto">Minhas Cargas</button>
+                        <img src="./img/img-menos-icon.png" width="13px" id="iconCargas" class="subIcon">
+                    </div>
+                    <button id="caminhoesTexto" class="btnsubTexto">Caminhões</button>
+                    <button id="geladeirasTexto" class="btnsubTexto">Geladeiras</button>
+                    <button id="historicoTexto" class="btnTexto">Histórico</button>
+                    <button id="rastreioTexto" class="btnTexto">Rastreio</button>
+                    <button id="configuracoesTexto" class="btnTexto">Configurações</button>
+                </div>
+                <div class="filtros" onclick="hideFiltros()">
+                    <div id="filtrosTexto">
+                        <button class="btnTitulo">Filtros</button>
+                        <img src="./img/img-menos-icon.png" width="13px" id="iconFiltros" class="Icon">
+                    </div>
+                    <button id="tudoTexto" class="btnTexto">Tudo</button>
+                    <button id="emAndamentoTexto" class="btnTexto">Em Andamento</button>
+                    <button id="finalizadoTexto" class="btnTexto">Finalizado</button>
+                    <button id="pendenteTexto" class="btnTexto">Pendente</button>
+                </div>
+            </div>
+        </div>
+        <div class="cargas">
+            <div class="container">
+                <button class="btnRegistrar">Registrar Carga</button>
+                <div class="carga">
+                    <div class="headerCarga">
+                        <h3 class="numLote">N° do lote: 81298723814</h3>
+                        <div class="backgroundCaminhao">
+                            <img src="./img/img-caminhao-icon.png" height="35px" class="caminhaoIcon">
+                        </div>
+                    </div>
+                    <div class="bodyCarga">
+                        <canvas id="lm35Temperatura"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
+
+<script>
+    //Definir elementos a serem modificados
+    var cargas = document.getElementById("minhasCargasTexto");
+    var caminhoes = document.getElementById("caminhoesTexto");
+    var geladeiras = document.getElementById("geladeirasTexto");
+    var historico = document.getElementById("historicoTexto");
+    var rastreio = document.getElementById("rastreioTexto");
+    var configuracoes = document.getElementById("configuracoesTexto");
+    var tudo = document.getElementById("tudoTexto");
+    var emAndamento = document.getElementById("emAndamentoTexto");
+    var finalizado = document.getElementById("finalizadoTexto");
+    var pendente = document.getElementById("pendenteTexto");
+    var iconMenu = document.getElementById("iconMenu");
+    var iconCargas = document.getElementById("iconCargas");
+    var iconFiltros = document.getElementById("iconFiltros");
+
+    function hideMenu() {
+        if (cargas.style.display === "none") {
+            cargas.style.display = "block";
+            caminhoes.style.display = "block";
+            geladeiras.style.display = "block";
+            historico.style.display = "block";
+            rastreio.style.display = "block";
+            configuracoes.style.display = "block";
+            iconMenu.src = "./img/img-menos-icon.png";
+            iconCargas.src = "./img/img-menos-icon.png";
+        } else {
+            cargas.style.display = "none";
+            caminhoes.style.display = "none";
+            geladeiras.style.display = "none";
+            historico.style.display = "none";
+            rastreio.style.display = "none";
+            configuracoes.style.display = "none";
+            iconMenu.src = "./img/img-mais-icon.png";
+        }
+    }
+
+    function hideCargas() {
+        if (caminhoes.style.display === "none") {
+            caminhoes.style.display = "block";
+            geladeiras.style.display = "block";
+            iconCargas.src = "./img/img-menos-icon.png";
+        } else {
+            caminhoes.style.display = "none";
+            geladeiras.style.display = "none";
+            iconCargas.src = "./img/img-mais-icon.png";
+        }
+    }
+
+    function hideFiltros() {
+        if (emAndamento.style.display === "none") {
+            tudo.style.display = "block";
+            emAndamento.style.display = "block";
+            finalizado.style.display = "block";
+            pendente.style.display = "block";
+            iconFiltros.src = "./img/img-menos-icon.png";
+        } else {
+            tudo.style.display = "none";
+            emAndamento.style.display = "none";
+            finalizado.style.display = "none";
+            pendente.style.display = "none";
+            iconFiltros.src = "./img/img-mais-icon.png";
+        }
+    }
+
+    // ChartJS
+    var contextoLm35Temperatura = document.getElementById('lm35Temperatura').getContext('2d');
+    contextoLm35Temperatura.canvas.width = 1600;
+    contextoLm35Temperatura.canvas.height = 300;
+    var lm35Temperatura = new Chart(
+        contextoLm35Temperatura,
+        {
+            type: 'line',
+            data: {
+                datasets: [{
+                    label: 'Temperatura',
+                    type: 'line',
+                    borderColor: ['#025043'],
+                    backgroundColor: ['#9DCC9B']
+                }]
+            },
+            options: {
+                scales: {
+                    xAxes: [{
+                        distribution: 'series',
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }],
+                    yAxes: [{
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Temperatura'
+                        },
+                        ticks: {
+                            beginAtZero: false
+                        }
+                    }]
+                },
+                animation: {
+                    duration: 0
+                }
+            }
+        }
+    );
+
+    var paginacao = {};
+    var tempo = {};
+    function obterDados(grafico, endpoint) {
+        var http = new XMLHttpRequest();
+        http.open('GET', 'http://localhost:3300/sensores/' + endpoint, false);
+        http.send(null);
+        var valores = JSON.parse(http.responseText);
+        if (paginacao[endpoint] == null) {
+            paginacao[endpoint] = 0;
+        }
+        if (tempo[endpoint] == null) {
+            tempo[endpoint] = 0;
+        }
+        // Exibir à partir do último elemento exibido anteriormente
+        var ultimaPaginacao = paginacao[endpoint];
+        paginacao[endpoint] = valores.length;
+        var valores = valores.slice(ultimaPaginacao);
+        valores.forEach((valor) => {
+            //Máximo de 60 itens exibidos no gráfico
+            if (grafico.data.labels.length == 10 && grafico.data.datasets[0].data.length == 10) {
+                grafico.data.labels.shift();
+                grafico.data.datasets[0].data.shift();
+            }
+
+            grafico.data.labels.push(tempo[endpoint]++);
+            grafico.data.datasets[0].data.push(parseFloat(valor));
+            grafico.update();
+        })
+    }
+
+    setInterval(() => {
+        obterDados(lm35Temperatura, 'lm35/temperatura');
+    }, 1000);
+</script>
