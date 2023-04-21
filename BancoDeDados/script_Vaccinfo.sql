@@ -10,7 +10,7 @@ CREATE TABLE empresa (
     CNPJ CHAR(14),
     email VARCHAR(45),
 		constraint chk_email check (email like'%@%'),
-	telefone VARCHAR(12));
+	telefone VARCHAR(16));
 
 -- Criar tabela usuario para armazenar dados dos usuarios registrados pelo site
 -- O campo EMAIL tem uma constraint para verificar se o valor inserido é um email, ou seja, se possui um '@'
@@ -20,7 +20,7 @@ CREATE TABLE usuario (
 	idUsuario INT PRIMARY KEY AUTO_INCREMENT,
 	NomeCompleto VARCHAR(45) not null,
     email VARCHAR(45),
-		constraint chk_email check (email like'%@%'),
+		constraint chk_email_user check (email like'%@%'),
     telefone CHAR(14),
     tipoDocumento VARCHAR(10),
 		constraint chk_tipo_documento check (tipoDocumento in('cpf', 'passaporte')),
@@ -75,7 +75,9 @@ CREATE TABLE sensor (
 	tipoInstalacao VARCHAR(45),
 		constraint chk_instalacao CHECK (tipoInstalacao IN('geladeira','caminhao')),
 	fkLocalSensor INT,
-		constraint local_sensor foreign key (fkLocalSensor) references localSensor(idLocal)
+		constraint local_sensor foreign key (fkLocalSensor) references localSensor(idLocal),
+	fkEmpresa int,
+		constraint fkSensorEmpresa foreign key (fkEmpresa) references localSensor(fkEmpresa)
 );
 
 -- Criação da tabela LOTE para registrar os lotes de vacina registrados no nosso site
@@ -99,22 +101,22 @@ CREATE TABLE registro (
 		CONSTRAINT registroSensor FOREIGN KEY (fkSensor) REFERENCES sensor(idSensor)
 );
 
--- Inserir dados da empresa na tabela
+-- Inserir dados de empresas na tabela
 	INSERT INTO empresa VALUES
 		(null,'pfizer','46070868003699','contato@pfizer.com','+5511977424570'),
 		(null,'janssen','51780468000187','contato@janssen.com','+5511939479330');
     
--- inserir dados dos usuarios
+-- Inserir dados dos usuarios
 	INSERT INTO usuario VALUES
-		(null,'Gustavo ribeiro','gustavo.ribeiro@sptech.school','+5511963122168','cpf','53183297809','2005-04-30'),
-		(null,'Vitor Maciel','vitor.mramos@sptech.school','+5511992951528','cpf','53183297809','2000-08-16');
+		(null,'Gustavo ribeiro','gustavo.ribeiro@sptech.school','+5511963122168','cpf','53183297809','2005-04-30',1),
+		(null,'Vitor Maciel','vitor.mramos@sptech.school','+5511992951528','cpf','53183297809','2000-08-16',2);
     
 -- Inserir dados do usuario na tabela login
 	insert into login values
 		(null, 'gustavo.ribeiro@sptech.school', '#VaccInfo', '1','1'),
 		(null, 'vitor.mramos@sptech.school', '#VaccInfo', '0','2');
 	
--- Inserir dados do endereço da empresa
+-- Inserir dados de endereço das empresas
 	insert into endereco values
 		(null, 'rua haddock lobo', 'travessa da avenida paulista', 'Jardins', 'São Paulo', 'SP'),
 		(null, 'rua cabral', 'travessa da avenida dom pedro', 'Pindorama', 'Rio de Janeiro', 'RJ');
@@ -126,8 +128,10 @@ CREATE TABLE registro (
 
 -- Inserir o sensor LM35 tanto na geladeira quanto no Caminhão
 	insert into sensor values
-		(null, 'LM35', 'geladeira','1','1'),
-		(null, 'LM35', 'caminhao','2','2');
+		(null, 'LM35', 'geladeira',1,1),
+		(null, 'LM35', 'caminhao',2,2);
+        
+	select * from localSensor;
     
 -- Inserir dados sobre um lote
 	insert into lote values
@@ -141,5 +145,5 @@ CREATE TABLE registro (
 
 -- Caso hipotético, no qual o lote que estava no caminhão, vá para a geladeira, necessário um update
 update sensor set instalacao = 'Geladeira' where id = 2;
-
+   
 drop database vaccinfo;
