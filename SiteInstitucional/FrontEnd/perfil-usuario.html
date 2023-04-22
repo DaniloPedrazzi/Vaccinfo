@@ -68,19 +68,37 @@
                     <div class="formulario">
                         
                             <div class="nome">
-                                Primeiro Nome
+                                Primeiro Nome *
                                 <input type="text" value="Michael" id="form1">
                                                            
                                 <!-- <label for="telefone">Sobrenome <span style="color: darkgreen">*</span></label> -->
 
-                               <p id="texto">Sobrenome</p> 
+                               <p id="campo-a-preencher">Sobrenome *</p> 
                                 <input type="text" value="Jordão" id="form1"> </input>
                                 </div> <br>
                                     <div class="endereco">
-                                        Endereço<input type="text" value="Jardim Icaraí" id="form2">
+                                        Endereço *
+                                        <input type="text" value="Jardim Icaraí" id="form2">
 
-                                           <p id="texto">Complemento</p>  <input type="text" id="form2">
-                                        </div>                     
+                                           <p id="campo-a-preencher">Complemento</p>  
+                                           <input type="text" id="form2"> 
+                                    </div>   <br>
+                                        <div class="numeroTel">
+                                            <p id="campo-a-preencher">Telefone Celular *</p>
+                                            <input type="text" value="(11)94002-8922" id="form3">
+
+                                            <p id="campo-a-preencher">Telefone Fixo</p>
+                                            <input type="text" id="form3">
+                                            </div> <br>
+                                                <div class="bio">
+                                                    <p id="campo-a-preencher">Biografia</p>
+                                                    <!-- <input type="text" value="Analista de Controle de Qualidade na empresa AstraZeneca desde 2015." id="form4"> -->
+                                                        <textarea id="textarea" cols="20" rows="14"></textarea>
+                                                </div>        
+
+                                                <div class="div-botao">
+                                                    <button type="submit" id="botao-salvar" onclick="salvar()">Salvar</button>
+                                                </div>
                         
                     </div>
                 </div>
