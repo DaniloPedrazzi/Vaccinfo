@@ -103,7 +103,7 @@ body {
 
 
 
-.nome #form1 {
+.nome .form1 {
     
     margin-left: 20px;
 }
@@ -117,7 +117,7 @@ body {
     margin-left: 10px;
 }
 
-.endereco #form2 {
+.endereco .form2 {
     margin-left: 20px;
 }
 
@@ -125,7 +125,7 @@ body {
     margin-left: 10px;
 }
 
-.numeroTel #form3 {
+.numeroTel .form3 {
     margin-left: 20px;
 }
 
@@ -136,7 +136,7 @@ body {
     margin-bottom: 10px;
 }
 
-.bio #form4 {
+.bio .form4 {
     margin-left: 20px;
     height: 200px;
 }
@@ -152,20 +152,20 @@ body {
 
 
 .icons img {
-    width: 20px;
+    width: 10%;
    
 }
 
 .icons {
     display: flex;
     justify-content: center;
-    gap: 10px;
+    gap: 3%;
 }
 
 .div-botao #botao-salvar {
-    width: 100px;
+    width: 20%;
     height: 35px;
-    margin-top: 15px;
+    margin-top: 2%;
 }
 
 .div-botao {
