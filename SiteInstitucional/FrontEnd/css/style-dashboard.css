@@ -20,6 +20,22 @@ body{
     width: 49%;
 }
 
+.btnRegistrar{
+    background: #025043;
+    color: #fff;
+    font-weight: bold;
+    border: none;
+    padding: 7px 20px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-top: -100px;
+    margin-bottom: 20px;
+}
+
+.btnRegistrar:hover{
+    background: #2A836B;
+}
+
 .boxGrafico{
     height: 100%;
     box-shadow: 0 0 7px rgba(0,0,0,0.5);
