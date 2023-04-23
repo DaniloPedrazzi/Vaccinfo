@@ -14,8 +14,8 @@
 
 .banner p {
     color: white;
+    border-bottom: white solid 1px;
     font-size: 2rem;
-    text-decoration: underline 1px;
     font-weight: bold;
 }
 

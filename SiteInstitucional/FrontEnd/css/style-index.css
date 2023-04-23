@@ -2,6 +2,10 @@ body {
     background-color: #D5E4CF;
 }
 
+h2{
+    font-size: 1.8rem;
+}
+
 .banner {
     display: flex;
     justify-content: left;
@@ -53,9 +57,9 @@ body {
     width: 90vh;
     letter-spacing: 1px;
 }
-.secao2 .container .texto p{
+.secao2 p, .secao4 p{
     margin-top: 2vh;
-    font-size: 3vh;
+    font-size: 1.2rem;
 }
 .secao2 .container .card{
     margin-left: 1px;
@@ -195,6 +199,3 @@ body {
     margin-left: 5%;
 }
 
-.secao4 h3, .secao5  h3 {
-    font-size: 1.8rem;
-}
