@@ -3,7 +3,7 @@ Projeto Vaccinfo - Sprint 2 | SPTECH
 
 
 Trello: https://trello.com/b/DVQHeBRf/vaccinfo <br>
-Documentação: https://docs.google.com/document/d/1hZ6VkrTlbBDdThNPqaZR2K3yKGeJl6lcfmJ2UDwhYbg <br>
+Documentação: https://1drv.ms/w/s!Am4tV2kQ_gbTgy0tPCk5e6MKo-et<br>
 Figma: https://www.figma.com/file/yMPALrwzsiFw2QaUUcZtdz/Vaccinfo <br>
 
 
