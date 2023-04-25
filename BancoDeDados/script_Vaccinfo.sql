@@ -36,9 +36,11 @@ CREATE TABLE login (
 	idLoginAdm INT PRIMARY KEY AUTO_INCREMENT,
     login VARCHAR(45),
     senha VARCHAR(45),
-    adiministrador TINYINT,
+    administrador TINYINT,
     fkUsuario INT,
-		constraint loginUsuario foreign key (fkUsuario) references usuario (idUsuario));
+		constraint loginUsuario foreign key (fkUsuario) references usuario (idUsuario),
+        constraint chkAdm check (administrador in(0,1))
+	);
 
 -- Criar tabela endereço para armazenar os dados da localização da empresa
 
@@ -123,8 +125,8 @@ CREATE TABLE registro (
     
 -- Inserir dados do local aonde o sensor está
 	insert into localSensor values
-		(null,'Geladeira001','1','1'),
-		(null,'Caminhão001','2','2');
+		(null,'Geladeira001',1,1),
+		(null,'Caminhão001',2,null);
 
 -- Inserir o sensor LM35 tanto na geladeira quanto no Caminhão
 	insert into sensor values
@@ -139,24 +141,24 @@ CREATE TABLE registro (
 		(null, 'VI2', 2);
     
 -- Inserir dados sobre o registro de temperatuda do sensor
-	insert into registro values
-		(null, null, '6','1'),
-		(null, null, '7','2');
+	insert into registro (temperatura, fkSensor) values
+		('6', 1),
+		('7', 2);
 
 -- Caso hipotético, no qual o lote que estava no caminhão, vá para a geladeira, necessário um update
-update localSensor set fkSensor = 1 where id = 2;
+update lote set fkSensor = 1 where idLote = 2;
 
 -- -- Select dados do sensor
 select empresa.nome as 'Nome da Empresa',
 	empresa.email as 'Email da empresa',
     localSensor.nome as 'Local do sensor',
-    concat('Endereço: ', ifnull(endereco.logradouro,'Não possui rua. '), ', ', ifnull(endereco.complemento, 'Não possui complemento. '), ', ', ifnull(endereco.cidade, 'Não possui cidade. '), '.' ) as 'Endereço do local',
+    concat('Endereço: ', ifnull(endereco.logradouro,'Não possui rua'), ',  ', ifnull(endereco.complemento, 'Não possui complemento'), ', ', ifnull(endereco.cidade, 'Não possui cidade'), '.' ) as 'Endereço do local',
     sensor.idSensor as 'ID do sensor',
     registro.dataHoraRegistro as 'Momento do registro',
     registro.temperatura as Temperatura
 		from localSensor join empresa on localSensor.fkEmpresa = empresa.idEmpresa
-        join endereco on localSensor.fkEndereco = endereco.idEndereco
+        left join endereco on localSensor.fkEndereco = endereco.idEndereco
         join sensor on localSensor.idLocal = sensor.fkLocalSensor
         join registro on sensor.idSensor = registro.fkSensor;
    
-drop database vaccinfo;
+-- drop database vaccinfo;
