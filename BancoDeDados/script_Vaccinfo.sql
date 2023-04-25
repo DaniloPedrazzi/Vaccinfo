@@ -144,7 +144,7 @@ CREATE TABLE registro (
 		(null, null, '7','2');
 
 -- Caso hipotético, no qual o lote que estava no caminhão, vá para a geladeira, necessário um update
-update sensor set instalacao = 'Geladeira' where id = 2;
+update localSensor set fkSensor = 1 where id = 2;
 
 -- -- Select dados do sensor
 select empresa.nome as 'Nome da Empresa',
