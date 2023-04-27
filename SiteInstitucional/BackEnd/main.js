@@ -69,12 +69,8 @@ const serial = async (
         // *Lu* - usar apenas para quando for inserir
         if (HABILITAR_OPERACAO_INSERIR) {
             if (AMBIENTE == 'producao') {
-                // altere!
-                // Este insert irá inserir os dados na tabela "medida"
-                // -> altere nome da tabela e colunas se necessário
-                // Este insert irá inserir dados de fk_aquario id=1 (fixo no comando do insert abaixo)
-                // >> Importante! você deve ter o aquario de id 1 cadastrado.
-                sqlquery = `INSERT INTO medida (dht11_umidade, dht11_temperatura, luminosidade, lm35_temperatura, chave, momento, fk_aquario) VALUES (${dht11Umidade}, ${dht11Temperatura}, ${luminosidade}, ${lm35Temperatura}, ${chave}, CURRENT_TIMESTAMP, 1)`;
+                
+                sqlquery = `INSERT INTO registro (dataHoraRegistro, temperatura, fkSensor) VALUES (CURRENT_TIMESTAMP, ${lm35Temperatura}, 1)`;
 
                 // CREDENCIAIS DO BANCO REMOTO - SQL SERVER
                 // Importante! você deve ter criado o usuário abaixo com os comandos presentes no arquivo
