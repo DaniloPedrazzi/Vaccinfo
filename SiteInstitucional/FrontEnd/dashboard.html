@@ -45,7 +45,7 @@
                         <h3>Visão Geral - Semanal</h3>
                     </div>
                     <div class="bodyGrafico">
-                        <canvas id="lineSemanal"></canvas>
+                        <canvas id="barSemanal"></canvas>
                     </div>
                 </div>
             </div>
@@ -92,13 +92,13 @@
 
 <script>
     // SEMANAL
-    var contextolineSemanal = document.getElementById('lineSemanal').getContext('2d');
-    contextolineSemanal.canvas.width = 600;
-    contextolineSemanal.canvas.height = 400;
+    var contextobarSemanal = document.getElementById('barSemanal').getContext('2d');
+    contextobarSemanal.canvas.width = 600;
+    contextobarSemanal.canvas.height = 400;
     var pieSemanal = new Chart(
-        contextolineSemanal,
+        contextobarSemanal,
         {
-            type: 'line',
+            type: 'bar',
             data: {
                 labels: [
                     'Domingo',
@@ -109,54 +109,29 @@
                     'Sexta',
                     'Sábado'
                 ],
-                datasets: [
-                    {
-                        label: 'Ideal',
-                        data: [13, 21, 22, 20, 18, 23, 10],
-                        fill: false,
-                        type: 'line',
-                        borderColor: ['#74A94C'],
-                        backgroundColor: ['#90BE6D']
-                    },
-                    {
-                        label: 'Alerta',
-                        data: [7, 13, 10, 8, 3, 2, 9],
-                        fill: false,
-                        type: 'line',
-                        borderColor: ['#F6B213'],
-                        backgroundColor: ['#F9C74F']
-                    },
-                    {
-                        label: 'Crítico',
-                        data: [3, 1, 4, 7, 3, 0, 3],
-                        fill: false,
-                        type: 'line',
-                        borderColor: ['#F81215'],
-                        backgroundColor: ['#F94144']
-                    },
-                ]
+                datasets: [{
+                    label: 'Ideal',
+                    backgroundColor: "#90BE6D",
+                    data: [13, 21, 22, 20, 18, 23, 10],
+                }, {
+                    label: 'Alerta',
+                    backgroundColor: "#F9C74F",
+                    data: [7, 13, 10, 8, 3, 2, 9],
+                }, {
+                    label: 'Crítico',
+                    backgroundColor: "#F94144",
+                    data: [3, 1, 4, 7, 3, 0, 3],
+                }],
             },
             options: {
                 scales: {
                     xAxes: [{
-                        distribution: 'series',
-                        ticks: {
-                            beginAtZero: false
-                        }
+                        stacked: true,
                     }],
                     yAxes: [{
-                        scaleLabel: {
-                            display: true,
-                            labelString: 'Quantidade de Lotes'
-                        },
-                        ticks: {
-                            beginAtZero: true
-                        }
+                        stacked: true,
                     }]
                 },
-                animation: {
-                    duration: 0.3
-                }
             }
         }
     );
