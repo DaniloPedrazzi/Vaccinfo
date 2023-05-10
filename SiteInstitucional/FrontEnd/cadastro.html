@@ -102,6 +102,10 @@
             <button onclick="cadastrar()" id="button_cadastrar">Cadastrar</button>
           </div>
 
+          <div id="div_aguardar" style="display: none;">
+            <img style="height: 50px;" src="./img/circle-loading.gif" id="loading-gif">
+          </div>
+
         </div>
       </div>
     </div>
@@ -126,7 +130,7 @@
 <script>
 
 function cadastrar() {
-        // aguardar(); Função pra colocar Gif de loading
+        aguardar();
 
         // dados da empresa
         var nomeEmpresaVar = input_nome_empresa.value;
@@ -210,29 +214,21 @@ function cadastrar() {
             console.log("resposta: ", resposta);
 
             if (resposta.ok) {
-                cardErro.style.display = "block";
-
-                mensagem_erro.innerHTML = "Cadastro realizado com sucesso! Redirecionando para tela de Login...";
+              div_validacao_senha.innerHTML = "Cadastro realizado com sucesso! Redirecionando para tela de Login...";
 
                 setTimeout(() => {
                     window.location = "login.html";
-                }, "2000")
+                }, "4000")
 
-                limparFormulario(); //De onde vem isso?
                 finalizarAguardar();
             } else {
                 throw ("Houve um erro ao tentar realizar o cadastro!");
             }
         }).catch(function (resposta) {
             console.log(`#ERRO: ${resposta}`);
-            // finalizarAguardar(); //Tira o Gif de loading
+            finalizarAguardar();
         });
 
         return false;
     }
-
-    // function sumirMensagem() {
-    //     cardErro.style.display = "none"
-    // }
-
 </script>
