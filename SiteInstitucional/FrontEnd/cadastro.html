@@ -10,6 +10,9 @@
   <link href="https://fonts.googleapis.com/css?family=Montserrat:100" rel="stylesheet" />
   <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
   <title>VaccInfo | Cadastro</title>
+
+  <!-- Funções pra API -->
+  <script src="./js/funcoes.js"></script>
   
   <link rel="website icon" type="png" href="img/mini-logo.png">
 </head>
@@ -96,7 +99,7 @@
 
           <div class="login">
             <h3><a id="entrar" href="login.html">Entrar</a></h3>
-            <button onclick="validarCampos()" id="button_cadastrar">Cadastrar</button>
+            <button onclick="cadastrar()" id="button_cadastrar">Cadastrar</button>
           </div>
 
         </div>
@@ -122,91 +125,114 @@
 
 <script>
 
-  function validarCampos() {
+function cadastrar() {
+        // aguardar(); Função pra colocar Gif de loading
 
-    // dados da empresa
-    var nomeEmpresa = input_nome_empresa.value;
-    var cnpj = input_cnpj.value;
-    var emailEmpresa = input_email_empresa.value
-    var telefoneEmpresa = input_telefone_empresa.value;
+        // dados da empresa
+        var nomeEmpresaVar = input_nome_empresa.value;
+        var cnpjVar = input_cnpj.value;
+        var emailEmpresaVar = input_email_empresa.value
+        var telefoneEmpresaVar = input_telefone_empresa.value;
 
-    // dados do usuario
-    var nomeUsuario = input_nome_usuario.value;
-    var dataNascimento = input_data_nascimento.value;
-    var documento = input_documento.value;
-    var tipoDocumento = select_tipo_documento.value;
-    var emailUsuario = input_email_usuario.value;
-    var telefoneUsuario = input_telefone_usuario.value;
-    var loginUsuario = input_login_usuario.value;
-    var senha = input_senha.value;
-    var confirmacaoSenha = input_confirmacaoSenha.value;
+        // dados do usuario
+        var nomeUsuarioVar = input_nome_usuario.value;
+        var dataNascimentoVar = input_data_nascimento.value;
+        var documentoVar = input_documento.value;
+        var tipoDocumentoVar = select_tipo_documento.value;
+        var emailUsuarioVar = input_email_usuario.value;
+        var telefoneUsuarioVar = input_telefone_usuario.value;
+        var loginUsuarioVar = input_login_usuario.value;
+        var senhaVar = input_senha.value;
+        var confirmacaoSenhaVar = input_confirmacaoSenha.value;
 
-    // validações
-    var camposEmpresaPreenchidos = nomeEmpresa != "" && cnpj != "" && emailEmpresa != "" && telefoneEmpresa != "";
-    var camposUsuarioPreenchidos = nomeUsuario != "" && dataNascimento != "" && documento != "" && tipoDocumento != ""
-      && emailUsuario != "" && loginUsuario != "" && senha != "" && confirmacaoSenha != "";  
+        // validações
+        var camposEmpresaPreenchidos = nomeEmpresaVar != "" && cnpjVar != "" && emailEmpresaVar != "" && telefoneEmpresaVar != "";
+        var camposUsuarioPreenchidos = nomeUsuarioVar != "" && dataNascimentoVar != "" && documentoVar != "" && tipoDocumentoVar != ""
+          && emailUsuarioVar != "" && loginUsuarioVar != "" && senhaVar != "" && confirmacaoSenhaVar != "";  
 
-    var emailEmpresaValidado = (emailEmpresa.indexOf("@") != -1) && (emailEmpresa.indexOf(".") != -1);
-    var emailUsuarioValidado = (emailUsuario.indexOf("@") != -1) && (emailUsuario.indexOf(".") != -1);
+        var emailEmpresaValidado = (emailEmpresaVar.indexOf("@") != -1) && (emailEmpresaVar.indexOf(".") != -1);
+        var emailUsuarioValidado = (emailUsuarioVar.indexOf("@") != -1) && (emailUsuarioVar.indexOf(".") != -1);
 
-    var confirmacaoSenhaValidada = senha == confirmacaoSenha;
-    var senhaForteValidada = senha.lenght >= 8 &&
-      (senha.indexOf("!") != -1 ||
-        senha.indexOf("@") != -1 ||
-        senha.indexOf("#") != -1 ||
-        senha.indexOf("$") != -1 ||
-        senha.indexOf("%") != -1 ||
-        senha.indexOf("&") != -1 ||
-        senha.indexOf("|") != 1 ||
-        senha.indexOf("*") != 1 ||
-        senha.indexOf("_") != 1);
+        var confirmacaoSenhaValidada = senhaVar == confirmacaoSenhaVar;
+        var senhaForteValidada = senhaVar.lenght >= 8 &&
+          (senhaVar.indexOf("!") != -1 ||
+            senhaVar.indexOf("@") != -1 ||
+            senhaVar.indexOf("#") != -1 ||
+            senhaVar.indexOf("$") != -1 ||
+            senhaVar.indexOf("%") != -1 ||
+            senhaVar.indexOf("&") != -1 ||
+            senhaVar.indexOf("|") != 1 ||
+            senhaVar.indexOf("*") != 1 ||
+            senhaVar.indexOf("_") != 1);
 
-      div_validacao_email_empresa.innerHTML = "";
-      div_validacao_email_usuario.innerHTML = "";
-      div_validacao_senha.innerHTML = "";
+          div_validacao_email_empresa.innerHTML = "";
+          div_validacao_email_usuario.innerHTML = "";
+          div_validacao_senha.innerHTML = "";
 
-
-    if (!camposEmpresaPreenchidos || !camposUsuarioPreenchidos) {
-
-      alert("Por favor, preencha todos os campos obrigatórios")
-
-    } else {
-      if (!emailEmpresaValidado) {
-
-        div_validacao_email_empresa.innerHTML = `
-        <p style="color: rgb(248, 46, 46); font-size: 0.9rem;">Insira um email válido</p>
-        `;
-      
-      } else if (!emailUsuarioValidado) {
-
-        div_validacao_email_usuario.innerHTML = `
-        <p style="color: rgb(248, 46, 46); font-size: 0.9rem;">Insira um email válido</p>
-        `;
-
-      } else {
-        if (!confirmacaoSenhaValidada) {
-
-          div_validacao_senha.innerHTML = `
-            <p style="color: rgb(248, 46, 46); font-size: 0.9rem;">Insira o mesmo valor nos dois campos de senha</p>
-            `;
-
-        } else {
-
-          if (!senhaForteValidada) {
-
-            div_validacao_senha.innerHTML = `
-            <p style="color: rgb(248, 46, 46); font-size: 0.9rem;">Sua senha deve ter no mínimo 8 caracteres, e algum caractere especial (! * @ # $ % & | _)</p>
-            `;
-
-          } else {
-
-          }
+        if (!camposEmpresaPreenchidos || !camposUsuarioPreenchidos) {
+          alert("Por favor, preencha todos os campos obrigatórios")
+          return false;
+        } else if (!emailEmpresaValidado) {
+          div_validacao_email_empresa.innerHTML = `<p style="color: rgb(248, 46, 46); font-size: 0.9rem;">Insira um email válido</p>`;
+          return false;
+        } else if (!emailUsuarioValidado) {
+          div_validacao_email_usuario.innerHTML = `<p style="color: rgb(248, 46, 46); font-size: 0.9rem;">Insira um email válido</p>`;
+          return false;
+        } else if (!confirmacaoSenhaValidada) {
+          div_validacao_senha.innerHTML = `<p style="color: rgb(248, 46, 46); font-size: 0.9rem;">Insira o mesmo valor nos dois campos de senha</p>`;
+          return false;
         }
 
+        // Enviando o valor da nova input
+        fetch("/usuarios/cadastrar", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                // crie um atributo que recebe o valor recuperado aqui
+                // Agora vá para o arquivo routes/usuario.js
+                nomeEmpresaServer: nomeEmpresaVar,
+                CNPJEmpresaServer: cnpjVar,
+                emailEmpresaServer: emailEmpresaVar,
+                telefoneEmpresaServer: telefoneEmpresaVar,
+                nomeAdmServer: nomeUsuarioVar,
+                dtNascServer: dataNascimentoVar,
+                tipoDocumentoAdmServer: tipoDocumentoVar,
+                documentoAdmServer: documentoVar,
+                emailAdmServer: emailUsuarioVar,
+                telefoneAdmServer: telefoneUsuarioVar,
+                loginAdmServer: loginUsuarioVar,
+                senhaAdmServer: senhaVar
+            })
+        }).then(function (resposta) {
 
-      }
+            console.log("resposta: ", resposta);
+
+            if (resposta.ok) {
+                cardErro.style.display = "block";
+
+                mensagem_erro.innerHTML = "Cadastro realizado com sucesso! Redirecionando para tela de Login...";
+
+                setTimeout(() => {
+                    window.location = "login.html";
+                }, "2000")
+
+                limparFormulario(); //De onde vem isso?
+                finalizarAguardar();
+            } else {
+                throw ("Houve um erro ao tentar realizar o cadastro!");
+            }
+        }).catch(function (resposta) {
+            console.log(`#ERRO: ${resposta}`);
+            // finalizarAguardar(); //Tira o Gif de loading
+        });
+
+        return false;
     }
 
-  }
+    // function sumirMensagem() {
+    //     cardErro.style.display = "none"
+    // }
 
 </script>
