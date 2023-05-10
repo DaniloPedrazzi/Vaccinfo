@@ -19,7 +19,7 @@ CREATE TABLE empresa (
 
 CREATE TABLE usuario (
 	idUsuario INT PRIMARY KEY AUTO_INCREMENT,
-	NomeCompleto VARCHAR(45) not null,
+	nomeCompleto VARCHAR(45) not null,
     email VARCHAR(45),
 		constraint chk_email_user check (email like'%@%'),
     telefone CHAR(14),
