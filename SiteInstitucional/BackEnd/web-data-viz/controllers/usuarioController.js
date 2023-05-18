@@ -72,7 +72,6 @@ function cadastrar(req, res) {
     var documentoAdm = req.body.documentoAdmServer;
     var emailAdm = req.body.emailAdmServer;
     var telefoneAdm = req.body.telefoneAdmServer;
-    var loginAdm = req.body.loginAdmServer;
     var senhaAdm = req.body.senhaAdmServer;
 
     // VALIDAÇÕES
@@ -85,7 +84,7 @@ function cadastrar(req, res) {
     } else {
         
         // Passe os valores como parâmetro e vá para o arquivo usuarioModel.js
-        usuarioModel.cadastrar(nomeEmpresa, CNPJEmpresa, emailEmpresa, telefoneEmpresa, nomeAdm, dtNascAdm, tipoDocumentoAdm, documentoAdm, emailAdm, telefoneAdm, loginAdm, senhaAdm)
+        usuarioModel.cadastrar(nomeEmpresa, CNPJEmpresa, emailEmpresa, telefoneEmpresa, nomeAdm, dtNascAdm, tipoDocumentoAdm, documentoAdm, emailAdm, telefoneAdm, senhaAdm)
             .then(
                 function (resultado) {
                     res.json(resultado);

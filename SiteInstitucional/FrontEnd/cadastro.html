@@ -58,7 +58,7 @@
               <input type="text" id="input_nome_usuario" />
 
               <p>Data de nascimento: *</p>
-              <input placeholder="dd/mm/yyyy" type="text" id="input_data_nascimento" />
+              <input placeholder="yyyy-mm-dd" type="text" id="input_data_nascimento" />
 
               <div class="documento">
                 <div class="num_documento">
@@ -82,9 +82,6 @@
 
               <p>Telefone:</p>
               <input placeholder="(XX)XXXXX-XXXX" type="text" id="input_telefone_usuario" />
-
-              <p>Login: *</p>
-              <input type="text" id="input_login_usuario" />
 
               <p>Senha: *</p>
               <input id="input_senha" type="password" />
@@ -145,14 +142,13 @@ function cadastrar() {
         var tipoDocumentoVar = select_tipo_documento.value;
         var emailUsuarioVar = input_email_usuario.value;
         var telefoneUsuarioVar = input_telefone_usuario.value;
-        var loginUsuarioVar = input_login_usuario.value;
         var senhaVar = input_senha.value;
         var confirmacaoSenhaVar = input_confirmacaoSenha.value;
 
         // validações
         var camposEmpresaPreenchidos = nomeEmpresaVar != "" && cnpjVar != "" && emailEmpresaVar != "" && telefoneEmpresaVar != "";
         var camposUsuarioPreenchidos = nomeUsuarioVar != "" && dataNascimentoVar != "" && documentoVar != "" && tipoDocumentoVar != ""
-          && emailUsuarioVar != "" && loginUsuarioVar != "" && senhaVar != "" && confirmacaoSenhaVar != "";  
+          && emailUsuarioVar != "" && senhaVar != "" && confirmacaoSenhaVar != "";  
 
         var emailEmpresaValidado = (emailEmpresaVar.indexOf("@") != -1) && (emailEmpresaVar.indexOf(".") != -1);
         var emailUsuarioValidado = (emailUsuarioVar.indexOf("@") != -1) && (emailUsuarioVar.indexOf(".") != -1);
@@ -201,12 +197,11 @@ function cadastrar() {
                 emailEmpresaServer: emailEmpresaVar,
                 telefoneEmpresaServer: telefoneEmpresaVar,
                 nomeAdmServer: nomeUsuarioVar,
-                dtNascServer: dataNascimentoVar,
+                dtNascAdmServer: dataNascimentoVar,
                 tipoDocumentoAdmServer: tipoDocumentoVar,
                 documentoAdmServer: documentoVar,
                 emailAdmServer: emailUsuarioVar,
                 telefoneAdmServer: telefoneUsuarioVar,
-                loginAdmServer: loginUsuarioVar,
                 senhaAdmServer: senhaVar
             })
         }).then(function (resposta) {
