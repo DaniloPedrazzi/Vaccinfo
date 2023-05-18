@@ -16,6 +16,7 @@ CREATE TABLE empresa (
 -- O campo EMAIL tem uma constraint para verificar se o valor inserido é um email, ou seja, se possui um '@'
 -- A tabela usuario tem um campo com uma chave estrangeira para armazenar de qual empresa aquele usuário pertence
 
+
 CREATE TABLE usuario (
 	idUsuario INT PRIMARY KEY AUTO_INCREMENT,
 	NomeCompleto VARCHAR(45) not null,
@@ -26,18 +27,15 @@ CREATE TABLE usuario (
 		constraint chk_tipo_documento check (tipoDocumento in('cpf', 'passaporte')),
     documento VARCHAR(45),
     dataNascimento DATE,
-	senha VARCHAR(45)
+	senha VARCHAR(45),
+    login VARCHAR(45),
+    administrador TINYINT,
+    fkEmpresa INT,
+		constraint usuarioEmpresa foreign key (fkEmpresa) references Empresa(idEmpresa)
 );
 
--- tabela login para armazenar os dados inserindos na tela de login e validar se o usuario é administrador
 
-CREATE TABLE login (
-	idLoginAdm INT PRIMARY KEY AUTO_INCREMENT,
-    login VARCHAR(45),
-    senha VARCHAR(45),
-    adiministrador TINYINT,
-    fkUsuario INT,
-		constraint loginUsuario foreign key (fkUsuario) references usuario (idUsuario));
+
 
 -- Criar tabela endereço para armazenar os dados da localização da empresa
 
@@ -72,11 +70,7 @@ CREATE TABLE sensor (
 	idSensor int PRIMARY KEY AUTO_INCREMENT,
    	nomeSensor VARCHAR(45),
 	tipoInstalacao VARCHAR(45),
-		constraint chk_instalacao CHECK (tipoInstalacao IN('geladeira','caminhao')),
-	fkLocalSensor INT,
-		constraint local_sensor foreign key (fkLocalSensor) references localSensor(idLocal),
-	fkEmpresa int,
-		constraint fkSensorEmpresa foreign key (fkEmpresa) references localSensor(fkEmpresa)
+		constraint chk_instalacao CHECK (tipoInstalacao IN('geladeira','caminhao'))
 );
 
 -- Criação da tabela LOTE para registrar os lotes de vacina registrados no nosso site
@@ -86,8 +80,10 @@ CREATE TABLE sensor (
 CREATE TABLE lote (
 	idLote int primary key auto_increment,
 	descricao varchar(45),
-	fkSensor int,
-	constraint lotesensor foreign key (fkSensor) references sensor(idSensor)
+	fkLocal int,
+	constraint loteLocal foreign key (fkLocal) references LocalSensor(idLocal),
+	fkEmpresa int,
+	constraint loteEmpresa foreign key (fkEmpresa) references Empresa(idEmpresa)
    );
    
 -- Criação da tabela registro para registrar a temperatura atual registrada no sensor
@@ -96,8 +92,8 @@ CREATE TABLE registro (
 	idRegistro INT PRIMARY KEY AUTO_INCREMENT,
 	dataHoraRegistro DATETIME DEFAULT CURRENT_TIMESTAMP,
 	temperatura FLOAT,
-	fkSensor int,
-		CONSTRAINT registroSensor FOREIGN KEY (fkSensor) REFERENCES sensor(idSensor)
+	fkLocal int,
+		CONSTRAINT registroLocal FOREIGN KEY (fkLocal) REFERENCES LocalSensor(idLocal)
 );
 
 -- Inserir dados de empresas na tabela
