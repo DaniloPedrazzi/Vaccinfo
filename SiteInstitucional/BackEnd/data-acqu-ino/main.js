@@ -70,7 +70,7 @@ const serial = async (
         if (HABILITAR_OPERACAO_INSERIR) {
             if (AMBIENTE == 'producao') {
                 
-                sqlquery = `INSERT INTO registro (dataHoraRegistro, temperatura, fkSensor) VALUES (CURRENT_TIMESTAMP, ${lm35Temperatura}, 1)`;
+                sqlquery = `INSERT INTO registro (dataHoraRegistro, temperatura, fkLocal) VALUES (CURRENT_TIMESTAMP, ${lm35Temperatura}, 1)`;
 
                 // CREDENCIAIS DO BANCO REMOTO - SQL SERVER
                 // Importante! você deve ter criado o usuário abaixo com os comandos presentes no arquivo
@@ -94,7 +94,7 @@ const serial = async (
                 // Este insert irá inserir dados de fk_aquario id=1 (fixo no comando do insert abaixo)
                 // >> você deve ter o aquario de id 1 cadastrado.
                 await poolBancoDados.execute(
-                    'INSERT INTO registro (dataHoraRegistro, temperatura, fkSensor) VALUES (now(), ?, 1)',
+                    'INSERT INTO registro (dataHoraRegistro, temperatura, fkLocal) VALUES (now(), ?, 1)',
                     [lm35Temperatura]
                 );
                 console.log("valores inseridos no banco: ", lm35Temperatura)
