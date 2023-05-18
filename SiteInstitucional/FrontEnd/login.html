@@ -12,6 +12,9 @@
       rel="stylesheet"
     />
     <title>VaccInfo | Login</title>
+
+    <!-- Funções pra API -->
+    <script src="./js/funcoes.js"></script>
     
     <link rel="website icon" type="png" href="img/mini-logo.png">
   </head>
@@ -33,7 +36,10 @@
               <br />
               <div id="alinhar_botao">
                 <h3><a id="cadastrar" href="cadastro.html">Cadastrar</a></h3>
-                <button onclick="validar()">Entrar</button>
+                <button onclick="entrar()">Entrar</button>
+              </div>
+              <div id="div_aguardar" style="display: none;">
+                <img style="height: 50px;" src="./img/circle-loading.gif" id="loading-gif">
               </div>
             </div>
           </div>
@@ -57,6 +63,68 @@
 </html>
 
 <script>
+
+  function entrar() {
+        aguardar();
+
+        var emailVar = input_email.value;
+        var senhaVar = input_senha.value;
+
+        if (emailVar == "" || senhaVar == "") {
+            alert("Preencha todos os campos!")
+            finalizarAguardar();
+            return false;
+        }
+
+        console.log("FORM LOGIN: ", emailVar);
+        console.log("FORM SENHA: ", senhaVar);
+
+        fetch("/usuarios/autenticar", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                emailServer: emailVar,
+                senhaServer: senhaVar
+            })
+        }).then(function (resposta) {
+            console.log("ESTOU NO THEN DO entrar()!")
+
+            if (resposta.ok) {
+                console.log(resposta);
+
+                resposta.json().then(json => {
+                    console.log(json);
+                    console.log(JSON.stringify(json));
+
+                    sessionStorage.EMAIL_USUARIO = json.email;
+                    sessionStorage.NOME_USUARIO = json.nomeCompleto;
+                    sessionStorage.ID_USUARIO = json.idUsuario;
+
+                    setTimeout(function () {
+                        window.location = "./dashboard.html";
+                    }, 1000); // apenas para exibir o loading
+
+                });
+
+            } else {
+
+                console.log("Houve um erro ao tentar realizar o login!");
+
+                resposta.text().then(texto => {
+                    console.error(texto);
+                    finalizarAguardar();
+                });
+            }
+
+        }).catch(function (erro) {
+            console.log(erro);
+        })
+
+        return false;
+  }
+
   function validar(){
     var email = input_email.value;
     var senha = input_senha.value;

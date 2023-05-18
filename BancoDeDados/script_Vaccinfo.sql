@@ -26,8 +26,7 @@ CREATE TABLE usuario (
 		constraint chk_tipo_documento check (tipoDocumento in('cpf', 'passaporte')),
     documento VARCHAR(45),
     dataNascimento DATE,
-    fkEmpresa INT,
-		constraint usuarioEmpresa foreign key (fkEmpresa) references empresa (idEmpresa)
+	senha VARCHAR(45)
 );
 
 -- tabela login para armazenar os dados inserindos na tela de login e validar se o usuario é administrador
