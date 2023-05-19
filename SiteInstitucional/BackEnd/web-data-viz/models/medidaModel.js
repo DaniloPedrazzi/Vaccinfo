@@ -30,6 +30,18 @@ function buscarUltimasMedidas(idSensor, limite_linhas) {
     return database.executar(instrucaoSql);
 }
 
+function buscarMedidas() {
+    instrucaoSql = `SELECT temperatura, dataHoraRegistro, DATE_FORMAT(dataHoraRegistro, '%Y%m%d') AS dia
+        FROM registro
+        WHERE fkLocal = 1
+            AND dataHoraRegistro >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)
+            AND dataHoraRegistro <= CURDATE()
+        ORDER BY dataHoraRegistro DESC;`;
+
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
+
 function buscarMedidasEmTempoReal(idSensor) {
 
     instrucaoSql = ''
@@ -62,5 +74,6 @@ function buscarMedidasEmTempoReal(idSensor) {
 
 module.exports = {
     buscarUltimasMedidas,
-    buscarMedidasEmTempoReal
+    buscarMedidasEmTempoReal,
+    buscarMedidas
 }

@@ -94,38 +94,93 @@
 </html>
 
 <script>
-    // SEMANAL
+
     var contextobarSemanal = document.getElementById('barSemanal').getContext('2d');
     contextobarSemanal.canvas.width = 600;
     contextobarSemanal.canvas.height = 400;
-    var pieSemanal = new Chart(
-        contextobarSemanal,
-        {
+    var contextopieDiaria = document.getElementById('pieDiaria').getContext('2d');
+    contextopieDiaria.canvas.width = 400;
+    contextopieDiaria.canvas.height = 200;
+
+    window.onload = obterDadosGraficoSemanal();
+
+    function obterDadosGraficoSemanal() {
+        fetch(`/medidas/medidas`, { cache: 'no-store' }).then(function (response) {
+            if (response.ok) {
+                response.json().then(function (resposta) {
+                    console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+                    resposta.reverse();
+
+                    plotarGraficoSemanal(resposta);
+                });
+            } else {
+                console.error('Nenhum dado encontrado ou erro na API');
+            }
+        }).catch(function (error) {
+            console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+        });
+    }
+    function plotarGraficoSemanal(resposta) {
+        let labels = [
+            'Domingo',
+            'Segunda',
+            'Terça',
+            'Quarta',
+            'Quinta',
+            'Sexta',
+            'Sábado'
+        ];
+        let dados = {
+            labels: labels,
+            datasets: [{
+                label: 'Ideal',
+                backgroundColor: "#90BE6D",
+                data: [],
+            }, {
+                label: 'Alerta',
+                backgroundColor: "#F9C74F",
+                data: [],
+            }, {
+                label: 'Crítico',
+                backgroundColor: "#F94144",
+                data: [],
+            }]
+        };
+        console.log('Estes dados foram recebidos pela funcao "obterDadosGrafico" e passados para "plotarGrafico":')
+        console.log(resposta)
+
+
+        
+        var qtdRegistrosIdeal = [0, 0, 0, 0, 0, 0, 0];
+        var qtdRegistrosAlerta = [0, 0, 0, 0, 0, 0, 0];
+        var qtdRegistrosCriticos = [0, 0, 0, 0, 0, 0, 0];
+
+        // Inserindo valores no gráfico de acordo com as métricas
+        for (var i = 0; i < resposta.length; i++) {
+            var hoje = Number((new Date().getFullYear()) + ((new Date().getMonth() + 1).toString().padStart(2, '0')) + (new Date().getDate().toString().padStart(2, '0')));
+            var dataRegistro = Number(resposta[i].dia);
+
+            var registro = resposta[i];
+            var diffDays = hoje - dataRegistro;
+            var index = 6 - diffDays;
+
+            if (registro.temperatura < 2 || registro.temperatura > 8) {
+                qtdRegistrosCriticos[index]++;
+            } else if (registro.temperatura <= 4.4 || registro.temperatura >= 6.6) {
+                qtdRegistrosAlerta[index]++;
+            } else {
+                qtdRegistrosIdeal[index]++;
+            }
+        }
+        for (var j = 0; j < 7; j++) {
+            dados.datasets[0].data[j] = qtdRegistrosCriticos[j];
+            dados.datasets[1].data[j] = qtdRegistrosAlerta[j];
+            dados.datasets[2].data[j] = qtdRegistrosIdeal[j];
+        }
+
+        const config = {
             type: 'bar',
-            data: {
-                labels: [
-                    'Domingo',
-                    'Segunda',
-                    'Terça',
-                    'Quarta',
-                    'Quinta',
-                    'Sexta',
-                    'Sábado'
-                ],
-                datasets: [{
-                    label: 'Ideal',
-                    backgroundColor: "#90BE6D",
-                    data: [13, 21, 22, 20, 18, 23, 10],
-                }, {
-                    label: 'Alerta',
-                    backgroundColor: "#F9C74F",
-                    data: [7, 13, 10, 8, 3, 2, 9],
-                }, {
-                    label: 'Crítico',
-                    backgroundColor: "#F94144",
-                    data: [3, 1, 4, 7, 3, 0, 3],
-                }],
-            },
+            data: dados,
             options: {
                 scales: {
                     xAxes: [{
@@ -136,8 +191,12 @@
                     }]
                 },
             }
-        }
-    );
+        };
+        let myChart = new Chart(
+            contextobarSemanal,
+            config
+        );
+    }
 
     // DIÁRIO
     var contextopieDiaria = document.getElementById('pieDiaria').getContext('2d');
@@ -179,38 +238,4 @@
             }
         }
     );
-
-    // var paginacao = {};
-    // var tempo = {};
-    // function obterDados(grafico, endpoint) {
-    //     var http = new XMLHttpRequest();
-    //     http.open('GET', 'http://localhost:3300/sensores/' + endpoint, false);
-    //     http.send(null);
-    //     var valores = JSON.parse(http.responseText);
-    //     if (paginacao[endpoint] == null) {
-    //         paginacao[endpoint] = 0;
-    //     }
-    //     if (tempo[endpoint] == null) {
-    //         tempo[endpoint] = 0;
-    //     }
-    //     // Exibir à partir do último elemento exibido anteriormente
-    //     var ultimaPaginacao = paginacao[endpoint];
-    //     paginacao[endpoint] = valores.length;
-    //     var valores = valores.slice(ultimaPaginacao);
-    //     valores.forEach((valor) => {
-    //         //Máximo de 60 itens exibidos no gráfico
-    //         if (grafico.data.labels.length == 10 && grafico.data.datasets[0].data.length == 10) {
-    //             grafico.data.labels.shift();
-    //             grafico.data.datasets[0].data.shift();
-    //         }
-
-    //         grafico.data.labels.push(tempo[endpoint]++);
-    //         grafico.data.datasets[0].data.push(parseFloat(valor));
-    //         grafico.update();
-    //     })
-    // }
-
-    // setInterval(() => {
-    //     obterDados(lm35Temperatura, 'lm35/temperatura');
-    // }, 1000);
 </script>
