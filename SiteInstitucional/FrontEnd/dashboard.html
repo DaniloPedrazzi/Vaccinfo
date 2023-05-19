@@ -69,21 +69,21 @@
                             <h3>Crítico</h3>
                             <img height="20px" src="./img/img-exclamacao-icon.png">
                         </div>
-                        <h2>3</h2>
+                        <h2 id="qtdLotesCriticos"></h2>
                     </a>
                     <a href="cargas.html" class="botao botaoAmarelo">
                         <div class="headerBotao">
                             <h3>Alerta</h3>
                             <img height="20px" src="./img/img-warn-icon.png">
                         </div>
-                        <h2>9</h2>
+                        <h2 id="qtdLotesAlerta"></h2>
                     </a>
                     <a href="cargas.html" class="botao botaoVerde">
                         <div class="headerBotao">
                             <h3>Ideal</h3>
                             <img height="20px" src="./img/img-check-icon.png">
                         </div>
-                        <h2>10</h2>
+                        <h2 id="qtdLotesIdeais"></h2>
                     </a>
                 </div>
             </div>
@@ -94,7 +94,6 @@
 </html>
 
 <script>
-
     var contextobarSemanal = document.getElementById('barSemanal').getContext('2d');
     contextobarSemanal.canvas.width = 600;
     contextobarSemanal.canvas.height = 400;
@@ -102,9 +101,9 @@
     contextopieDiaria.canvas.width = 400;
     contextopieDiaria.canvas.height = 200;
 
-    window.onload = obterDadosGraficoSemanal();
+    window.onload = obterDadosGraficos();
 
-    function obterDadosGraficoSemanal() {
+    function obterDadosGraficos() {
         fetch(`/medidas/medidas`, { cache: 'no-store' }).then(function (response) {
             if (response.ok) {
                 response.json().then(function (resposta) {
@@ -112,6 +111,7 @@
                     resposta.reverse();
 
                     plotarGraficoSemanal(resposta);
+                    plotarGraficoDiario(resposta);
                 });
             } else {
                 console.error('Nenhum dado encontrado ou erro na API');
@@ -197,32 +197,54 @@
             config
         );
     }
-
-    // DIÁRIO
-    var contextopieDiaria = document.getElementById('pieDiaria').getContext('2d');
-    contextopieDiaria.canvas.width = 400;
-    contextopieDiaria.canvas.height = 200;
-    var pieDiaria = new Chart(
-        contextopieDiaria,
-        {
-            type: 'doughnut',
-            data: {
-                labels: [
-                    'Ideal',
-                    'Alerta',
-                    'Crítico'
-                ],
-                datasets: [
-                    {
-                        data: [10, 9, 3],
-                        backgroundColor: [
-                            '#74A94C',
-                            '#F6B213',
-                            '#F81215'
-                        ]
-                    }
+    
+    function plotarGraficoDiario(resposta) {
+        var labels = [
+            'Ideal',
+            'Alerta',
+            'Crítico'
+        ];
+        let dados = {
+            labels: labels,
+            datasets: [{
+                data: [],
+                backgroundColor: [
+                    '#74A94C',
+                    '#F6B213',
+                    '#F81215'
                 ]
-            },
+            }]
+        };
+        console.log('Estes dados foram recebidos pela funcao "obterDadosGrafico" e passados para "plotarGrafico":')
+        console.log(resposta)
+
+        var qtdRegistrosIdeal = 0;
+        var qtdRegistrosAlerta = 0;
+        var qtdRegistrosCriticos = 0;
+
+        // Inserindo valores no gráfico de acordo com as métricas
+        for (var i = 0; i < resposta.length; i++) {
+            var hoje = Number((new Date().getFullYear()) + ((new Date().getMonth() + 1).toString().padStart(2, '0')) + (new Date().getDate().toString().padStart(2, '0')));
+            var dataRegistro = Number(resposta[i].dia);
+
+            var registro = resposta[i];
+            if(dataRegistro == hoje){
+                if (registro.temperatura < 2 || registro.temperatura > 8) {
+                    qtdRegistrosCriticos++;
+                } else if (registro.temperatura <= 4.4 || registro.temperatura >= 6.6) {
+                    qtdRegistrosAlerta++;
+                } else {
+                    qtdRegistrosIdeal++;
+                }
+            }
+        }
+        dados.datasets[0].data[0] = qtdRegistrosCriticos;
+        dados.datasets[0].data[1] = qtdRegistrosAlerta;
+        dados.datasets[0].data[2] = qtdRegistrosIdeal;
+
+        const config = {
+            type: 'doughnut',
+            data: dados,
             options: {
                 cutoutPercentage: 70,
                 legend: {
@@ -236,6 +258,18 @@
                     }
                 }
             }
-        }
-    );
+        };
+        let myChart = new Chart(
+            contextopieDiaria,
+            config
+        );
+
+        plotarCards(qtdRegistrosCriticos, qtdRegistrosAlerta, qtdRegistrosIdeal)
+    }
+
+    function plotarCards(qtdRegistrosCriticos, qtdRegistrosAlerta, qtdRegistrosIdeal) {
+        qtdLotesCriticos.innerHTML = qtdRegistrosCriticos;
+        qtdLotesAlerta.innerHTML = qtdRegistrosAlerta;
+        qtdLotesIdeais.innerHTML = qtdRegistrosIdeal;
+    }
 </script>
