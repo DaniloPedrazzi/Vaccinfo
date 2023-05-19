@@ -21,8 +21,8 @@ var sqlServerConfig = {
 var mySqlConfig = {
     host: "localhost",
     database: "Vaccinfo",
-    user: "root",
-    password: "1234",
+    user: "server",
+    password: "12345678",
 };
 
 function executar(instrucao) {
