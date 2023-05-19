@@ -58,10 +58,6 @@ canvas {
     font-weight: 700;
 }
 
-.btnTitulo:hover{
-    color: #2A836B;
-}
-
 .btnsubTexto{
     color: #2A836B;
     font-size: 0.7rem;

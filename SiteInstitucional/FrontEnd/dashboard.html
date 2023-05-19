@@ -63,21 +63,21 @@
                 </div>
 
                 <div class="botoes">
-                    <a href="cargas.html" class="botao botaoVermelho">
+                    <a href="cargas.html?filtro=critico" class="botao botaoVermelho">
                         <div class="headerBotao">
                             <h3>Crítico</h3>
                             <img height="20px" src="./img/img-exclamacao-icon.png">
                         </div>
                         <h2 id="qtdLotesCriticos"></h2>
                     </a>
-                    <a href="cargas.html" class="botao botaoAmarelo">
+                    <a href="cargas.html?filtro=alerta" class="botao botaoAmarelo">
                         <div class="headerBotao">
                             <h3>Alerta</h3>
                             <img height="20px" src="./img/img-warn-icon.png">
                         </div>
                         <h2 id="qtdLotesAlerta"></h2>
                     </a>
-                    <a href="cargas.html" class="botao botaoVerde">
+                    <a href="cargas.html?filtro=ideal" class="botao botaoVerde">
                         <div class="headerBotao">
                             <h3>Ideal</h3>
                             <img height="20px" src="./img/img-check-icon.png">
@@ -237,9 +237,9 @@
                 }
             }
         }
-        dados.datasets[0].data[0] = qtdRegistrosCriticos;
+        dados.datasets[0].data[0] = qtdRegistrosIdeal;
         dados.datasets[0].data[1] = qtdRegistrosAlerta;
-        dados.datasets[0].data[2] = qtdRegistrosIdeal;
+        dados.datasets[0].data[2] = qtdRegistrosCriticos;
 
         const config = {
             type: 'doughnut',

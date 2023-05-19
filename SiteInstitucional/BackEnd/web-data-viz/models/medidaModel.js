@@ -71,9 +71,21 @@ function buscarMedidasEmTempoReal(idSensor) {
     return database.executar(instrucaoSql);
 }
 
+function listar() {
+    var instrucao = `
+    select localSensor.idLocal, localSensor.nome, sensor.tipoInstalacao , registro.temperatura, DATE_FORMAT(registro.dataHoraRegistro,'%Y%m%d%H%i%s') as dataHoraRegistro
+        from localSensor
+    join sensor on localSensor.idLocal = sensor.fkLocalSensor
+    join registro on localSensor.idLocal = registro.fkLocal
+    order by localSensor.idLocal;
+    `
+    return database.executar(instrucao);
+}
+
 
 module.exports = {
     buscarUltimasMedidas,
     buscarMedidasEmTempoReal,
-    buscarMedidas
+    buscarMedidas,
+    listar
 }
