@@ -9,7 +9,6 @@
     <!-- ChartJS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
     <script src="http://www.chartjs.org/dist/2.7.1/Chart.js"></script>
-    <script src="http://www.chartjs.org/samples/latest/utils.js"></script>
 
     <link rel="stylesheet" href="./css/style.css">
     <link rel="stylesheet" href="./css/style-dashboard.css">
@@ -58,7 +57,7 @@
                         <h3>Visão Geral - Diária</h3>
                     </div>
                     <div class="bodyGraficoDiario">
-                        <h3 class="qtdLotesTotal">23 <br> Lotes</h3>
+                        <h3 class="qtdLotesTotal"><span id="qtdTotalLotes"></span> <br> Lotes</h3>
                         <canvas id="pieDiaria"></canvas>
                     </div>
                 </div>
@@ -271,5 +270,6 @@
         qtdLotesCriticos.innerHTML = qtdRegistrosCriticos;
         qtdLotesAlerta.innerHTML = qtdRegistrosAlerta;
         qtdLotesIdeais.innerHTML = qtdRegistrosIdeal;
+        qtdTotalLotes.innerHTML = qtdRegistrosCriticos + qtdRegistrosAlerta + qtdRegistrosIdeal;
     }
 </script>
