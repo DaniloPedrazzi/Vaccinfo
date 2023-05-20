@@ -48,10 +48,10 @@
                     <div id="filtrosTexto">
                         <button class="btnTitulo">Filtros</button>
                     </div>
-                    <button id="tudoTexto" class="btnTexto">Tudo</button>
-                    <button id="emAndamentoTexto" class="btnTexto">Crítico</button>
-                    <button id="finalizadoTexto" class="btnTexto">Alerta</button>
-                    <button id="pendenteTexto" class="btnTexto">Ideal</button>
+                    <a href="Cargas.html" class="btnTexto">Tudo</a>
+                    <a href="Cargas.html?filtro=critico" class="btnTexto">Crítico</a>
+                    <a href="Cargas.html?filtro=alerta" class="btnTexto">Alerta</a>
+                    <a href="Cargas.html?filtro=ideal" class="btnTexto">Ideal</a>
                 </div>
             </div>
         </div>
@@ -82,6 +82,11 @@
                     var temperatura = resposta[i].temperatura;
                     var dataHoraRegistro = Number(resposta[i].dataHoraRegistro);
 
+
+                    if(filtro == null){
+                        plotarCargas(idSensor, local, tipoInstalacao);
+                        obterDadosGrafico(idSensor);
+                    }
                     if(filtro == "critico"){
                         if(temperatura < 2 || temperatura > 8){
                             plotarCargas(idSensor, local, tipoInstalacao);
