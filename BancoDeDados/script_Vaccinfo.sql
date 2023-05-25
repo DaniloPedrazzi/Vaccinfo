@@ -133,4 +133,4 @@ SELECT fkLocal,
 FROM registro
 	WHERE DAYOFWEEK(dataHoraRegistro) = 4 -- número do dia da semana
 	AND temperatura < 7
-	GROUP BY fkLocal, dataRegistro
+	GROUP BY fkLocal, dataRegistro;
