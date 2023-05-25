@@ -13,7 +13,7 @@ CREATE TABLE empresa (
 
 CREATE TABLE usuario (
 	idUsuario INT PRIMARY KEY AUTO_INCREMENT,
-	NomeCompleto VARCHAR(45) not null,
+	nomeCompleto VARCHAR(45) not null,
     email VARCHAR(45),
 		constraint chk_email_user check (email like'%@%'),
     telefone CHAR(14),
@@ -44,7 +44,9 @@ create table localSensor(
 		constraint fkLocalEmpresa foreign key (fkEmpresa) references empresa(idEmpresa),
 		constraint pkLocal primary key (idLocal, fkEmpresa),
 	fkEndereco int,
-		constraint fkLocalEndereco foreign key (fkEndereco) references endereco(idEndereco)
+		constraint fkLocalEndereco foreign key (fkEndereco) references endereco(idEndereco),
+	fkSensor int,
+		constraint fkSensor foreign key (fkSensor) references sensor(idSensor)
 );
 
 CREATE TABLE sensor (
@@ -123,3 +125,12 @@ select empresa.nome as 'Nome da Empresa',
         join endereco on localSensor.fkEndereco = endereco.idEndereco
         join sensor on localSensor.idLocal = sensor.fkLocalSensor
         join registro on localSensor.idLocal = registro.fkLocal;
+        
+-- possível select para o gráfico de dias da semana (testar)
+SELECT fkLocal, 
+		DATE(dataHoraRegistro) AS dataRegistro,
+        temperatura AS temperatura
+FROM registro
+	WHERE DAYOFWEEK(dataHoraRegistro) = 4 -- número do dia da semana
+	AND temperatura < 7
+	GROUP BY fkLocal, dataRegistro
