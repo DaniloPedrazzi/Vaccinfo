@@ -25,7 +25,7 @@ CREATE TABLE usuario (
     administrador TINYINT,
 		constraint chk_administrador check (administrador in(0,1)),
     fkEmpresa INT,
-		constraint usuarioEmpresa foreign key (fkEmpresa) references empresa(idEmpresa)
+		constraint usuarioEmpresa foreign key (fkEmpresa) references Empresa(idEmpresa)
 );
 
 CREATE TABLE endereco (
@@ -53,16 +53,18 @@ CREATE TABLE sensor (
 	idSensor int PRIMARY KEY AUTO_INCREMENT,
    	nomeSensor VARCHAR(45),
 	tipoInstalacao VARCHAR(45),
-		constraint chk_instalacao CHECK (tipoInstalacao IN('geladeira','caminhao'))
+		constraint chk_instalacao CHECK (tipoInstalacao IN('geladeira','caminhao')),
+	fkLocalSensor int,
+		constraint fkSensorLocal foreign key (fkLocalSensor) references localSensor(idLocal)
 );
 
 CREATE TABLE lote (
 	idLote int primary key auto_increment,
 	descricao varchar(45),
 	fkLocal int,
-		constraint loteLocal foreign key (fkLocal) references localSensor(idLocal),
+		constraint loteLocal foreign key (fkLocal) references LocalSensor(idLocal),
 	fkEmpresa int,
-		constraint loteEmpresa foreign key (fkEmpresa) references empresa(idEmpresa)
+		constraint loteEmpresa foreign key (fkEmpresa) references Empresa(idEmpresa)
 );
 
 CREATE TABLE registro (
@@ -70,9 +72,7 @@ CREATE TABLE registro (
 	dataHoraRegistro DATETIME DEFAULT CURRENT_TIMESTAMP,
 	temperatura FLOAT,
 	fkLocal int,
-		CONSTRAINT registroLocal FOREIGN KEY (fkLocal) REFERENCES localSensor(idLocal),
-	fkEmpresa int,
-		CONSTRAINT empresaregistro FOREIGN KEY (fkEmpresa) REFERENCES empresa(idEmpresa)
+		CONSTRAINT registroLocal FOREIGN KEY (fkLocal) REFERENCES LocalSensor(idLocal)
 );
 
 -- Inserir dados de empresas na tabela
@@ -92,24 +92,23 @@ CREATE TABLE registro (
     
 -- Inserir dados do local aonde o sensor está
 	insert into localSensor values
-		(null,'Geladeira001', 1, 1,1),
-		(null,'Caminhão001', 2, 2,2);
+		(null,'Geladeira001', 1, 1),
+		(null,'Caminhão001', 2, 2);
 
 -- Inserir o sensor LM35 tanto na geladeira quanto no Caminhão
 	insert into sensor values
-		(null, 'LM35', 'geladeira'),
-		(null, 'LM35', 'caminhao');
+		(null, 'LM35', 'geladeira', 1),
+		(null, 'LM35', 'caminhao', 2);
     
 -- Inserir dados sobre um lote
 	insert into lote values
-		(null, 'VI1', 3, 1),
-		(null, 'VI2', 4, 1);
+		(null, 'VI1', 1, 1),
+		(null, 'VI2', 2, 1);
     
 -- Inserir dados sobre o registro de temperatuda do sensor
 	insert into registro values
-		(null, '2023-05-26 12:20:08', '13', 3,1),
-		(null, '2023-05-26 12:20:09', '-1', 3,1),
-		(null, '2023-05-26 12:20:10', '2', 3,1);
+		(null, null, '6', 1),
+		(null, null, '7', 2);
 
 -- Caso hipotético, no qual o lote que estava no caminhão, vá para a geladeira, necessário um update
 	update lote set fkLocal = 1 where idLote = 2;
@@ -135,3 +134,18 @@ FROM registro
 	WHERE DAYOFWEEK(dataHoraRegistro) = 4 -- número do dia da semana
 	AND temperatura < 7
 	GROUP BY fkLocal, dataRegistro;
+    
+SELECT 
+    CASE
+        WHEN temperatura > 7 OR temperatura < 2 THEN 'Crítico'
+        WHEN temperatura > 4.4 AND temperatura < 6.6 THEN 'Ideal'
+        WHEN temperatura > 2.2 AND temperatura < 4.4 THEN 'Alerta'
+        ELSE 'Outro'
+    END AS status,
+    DAYNAME(dataHoraRegistro) AS dia_semana,
+    fkLocal
+FROM
+    registro
+WHERE
+    YEARWEEK(dataHoraRegistro) = YEARWEEK(CURDATE())
+    group by fkLocal, dia_semana;
