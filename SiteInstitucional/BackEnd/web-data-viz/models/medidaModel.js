@@ -31,12 +31,18 @@ function buscarUltimasMedidas(idSensor, limite_linhas) {
 }
 
 function buscarMedidas() {
-    instrucaoSql = `SELECT temperatura, dataHoraRegistro, DATE_FORMAT(dataHoraRegistro, '%Y%m%d') AS dia
-        FROM registro
-        WHERE fkLocal = 1
-            AND dataHoraRegistro >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)
-            AND dataHoraRegistro <= CURDATE()
-        ORDER BY dataHoraRegistro DESC;`;
+    instrucaoSql = `SELECT r.temperatura, r.dataHoraRegistro, DATE_FORMAT(r.dataHoraRegistro, '%Y%m%d') AS dia
+    FROM registro r
+    JOIN (
+      SELECT fkLocal, MAX(dataHoraRegistro) AS maxDataHoraRegistro
+      FROM registro
+      WHERE dataHoraRegistro >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)
+      GROUP BY fkLocal
+    ) subquery
+    ON r.fkLocal = subquery.fkLocal AND r.dataHoraRegistro = subquery.maxDataHoraRegistro
+    WHERE r.dataHoraRegistro >= CURDATE()
+    ORDER BY r.dataHoraRegistro DESC;        
+    `;
 
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
@@ -75,9 +81,9 @@ function listar() {
     var instrucao = `
     select localSensor.idLocal, localSensor.nome, sensor.tipoInstalacao , registro.temperatura, DATE_FORMAT(registro.dataHoraRegistro,'%Y%m%d%H%i%s') as dataHoraRegistro
         from localSensor
-    join sensor on localSensor.idLocal = sensor.fkLocalSensor
+    join sensor on localSensor.fkSensor = sensor.idSensor
     join registro on localSensor.idLocal = registro.fkLocal
-    order by localSensor.idLocal;
+    order by localSensor.idLocal limit 1;
     `
     return database.executar(instrucao);
 }

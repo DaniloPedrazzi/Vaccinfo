@@ -28,10 +28,10 @@ const serial = async (
             {
                 // altere!
                 // CREDENCIAIS DO BANCO LOCAL - MYSQL WORKBENCH
-                host: 'localhost',
-                user: 'insertUser',
-                password: '12345678',
-                database: 'vaccinfo'
+                host: 'bl2qkel9phuwcy25r4ya-mysql.services.clever-cloud.com',
+                user: 'ugsqw3rvnisnorpc',
+                password: 'XM1qp5C4l8poBUmw3bmN',
+                database: 'bl2qkel9phuwcy25r4ya'
             }
         ).promise();
     } else if (AMBIENTE == 'producao') {
@@ -94,7 +94,7 @@ const serial = async (
                 // Este insert irá inserir dados de fk_aquario id=1 (fixo no comando do insert abaixo)
                 // >> você deve ter o aquario de id 1 cadastrado.
                 await poolBancoDados.execute(
-                    'INSERT INTO registro (dataHoraRegistro, temperatura, fkLocal) VALUES (now(), ?, 1)',
+                    'INSERT INTO registro (dataHoraRegistro, temperatura, fkLocal, fkEmpresa) VALUES (now(), ?, 3, 1)',
                     [lm35Temperatura]
                 );
                 console.log("valores inseridos no banco: ", lm35Temperatura)

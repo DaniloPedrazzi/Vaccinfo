@@ -207,13 +207,13 @@ function cadastrar() {
         }).then(function (resposta) {
 
             console.log("resposta: ", resposta);
+            setTimeout(() => {
+                window.location = "login.html";
+            }, "4000")
 
             if (resposta.ok) {
               div_validacao_senha.innerHTML = "Cadastro realizado com sucesso! Redirecionando para tela de Login...";
 
-                setTimeout(() => {
-                    window.location = "login.html";
-                }, "4000")
 
                 finalizarAguardar();
             } else {

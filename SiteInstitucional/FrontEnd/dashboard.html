@@ -54,7 +54,7 @@
             <div class="rightSide">
                 <div class="boxGrafico">
                     <div class="headerGrafico">
-                        <h3>Visão Geral - Diária</h3>
+                        <h3>Visão Geral - Agora</h3>
                     </div>
                     <div class="bodyGraficoDiario">
                         <h3 class="qtdLotesTotal"><span id="qtdTotalLotes"></span> <br> Lotes</h3>
@@ -121,13 +121,13 @@
     }
     function plotarGraficoSemanal(resposta) {
         let labels = [
-            'Domingo',
-            'Segunda',
-            'Terça',
             'Quarta',
             'Quinta',
             'Sexta',
-            'Sábado'
+            'Sábado',
+            'Domingo',
+            'Segunda',
+            'Terça'
         ];
         let dados = {
             labels: labels,
@@ -172,9 +172,9 @@
             }
         }
         for (var j = 0; j < 7; j++) {
-            dados.datasets[0].data[j] = qtdRegistrosCriticos[j];
+            dados.datasets[0].data[j] = qtdRegistrosIdeal[j];
             dados.datasets[1].data[j] = qtdRegistrosAlerta[j];
-            dados.datasets[2].data[j] = qtdRegistrosIdeal[j];
+            dados.datasets[2].data[j] = qtdRegistrosCriticos[j];
         }
 
         const config = {

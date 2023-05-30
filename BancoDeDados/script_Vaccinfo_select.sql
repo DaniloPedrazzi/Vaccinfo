@@ -15,3 +15,16 @@ WHERE
     YEARWEEK(dataHoraRegistro) = YEARWEEK(CURDATE())
     group by fkLocal, dia_semana;
 select fkLocal, DAYNAME(dataHoraRegistro) as 'dia_semana', count(temperatura) as statusCritico from registro where temperatura > 7 OR temperatura < 2 group by fkLocal, DAYNAME(dataHoraRegistro);
+
+-- select visão semanal
+SELECT r.temperatura, r.dataHoraRegistro, DATE_FORMAT(r.dataHoraRegistro, '%Y%m%d') AS dia
+    FROM registro r
+    JOIN (
+      SELECT fkLocal, MAX(dataHoraRegistro) AS maxDataHoraRegistro
+      FROM registro
+      WHERE dataHoraRegistro >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)
+      GROUP BY fkLocal
+    ) subquery
+    ON r.fkLocal = subquery.fkLocal AND r.dataHoraRegistro = subquery.maxDataHoraRegistro
+    WHERE r.dataHoraRegistro >= CURDATE()
+    ORDER BY r.dataHoraRegistro DESC;        

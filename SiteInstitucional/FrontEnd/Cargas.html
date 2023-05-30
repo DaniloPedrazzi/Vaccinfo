@@ -207,7 +207,7 @@
             config
             );
             
-            setTimeout(() => atualizarGrafico(idSensor, dados, myChart), 2000);
+            setTimeout(() => atualizarGrafico(idSensor, dados, myChart), 5000);
         }
         
         // Esta função *atualizarGrafico* atualiza o gráfico que foi renderizado na página,
@@ -244,12 +244,12 @@
                     }
 
                     // Altere aqui o valor em ms se quiser que o gráfico atualize mais rápido ou mais devagar
-                    proximaAtualizacao = setTimeout(() => atualizarGrafico(idSensor, dados, myChart), 2000);
+                    proximaAtualizacao = setTimeout(() => atualizarGrafico(idSensor, dados, myChart), 5000);
                 });
             } else {
                 console.error('Nenhum dado encontrado ou erro na API');
                 // Altere aqui o valor em ms se quiser que o gráfico atualize mais rápido ou mais devagar
-                proximaAtualizacao = setTimeout(() => atualizarGrafico(idSensor, dados, myChart), 2000);
+                proximaAtualizacao = setTimeout(() => atualizarGrafico(idSensor, dados, myChart), 5000);
             }
         })
             .catch(function (error) {
