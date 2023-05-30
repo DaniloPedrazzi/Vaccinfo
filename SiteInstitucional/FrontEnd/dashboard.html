@@ -100,34 +100,41 @@
     contextopieDiaria.canvas.width = 400;
     contextopieDiaria.canvas.height = 200;
 
-    window.onload = obterDadosGraficos();
+    fetch(`/medidas/semanal`, { cache: 'no-store' }).then(function (response) {
+        if (response.ok) {
+            response.json().then(function (resposta) {
+                console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
 
-    function obterDadosGraficos() {
-        fetch(`/medidas/medidas`, { cache: 'no-store' }).then(function (response) {
-            if (response.ok) {
-                response.json().then(function (resposta) {
-                    console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
-                    resposta.reverse();
+                plotarGraficoSemanal(resposta);
+            });
+        } else {
+            console.error('Nenhum dado encontrado ou erro na API');
+        }
+    }).catch(function (error) {
+        console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+    });
 
-                    plotarGraficoSemanal(resposta);
-                    plotarGraficoDiario(resposta);
-                });
-            } else {
-                console.error('Nenhum dado encontrado ou erro na API');
-            }
-        }).catch(function (error) {
-            console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
-        });
-    }
+    fetch(`/medidas/diario`, { cache: 'no-store' }).then(function (response) {
+        if(response.ok){
+            response.json().then(function(resposta){
+                console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+
+                plotarGraficoDiario(resposta);
+            });
+        }
+    }).catch(function (error) {
+        console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+    });
+
     function plotarGraficoSemanal(resposta) {
         let labels = [
+            'Segunda',
+            'Terça',
             'Quarta',
             'Quinta',
             'Sexta',
             'Sábado',
-            'Domingo',
-            'Segunda',
-            'Terça'
+            'Domingo'
         ];
         let dados = {
             labels: labels,
@@ -153,28 +160,34 @@
         var qtdRegistrosIdeal = [0, 0, 0, 0, 0, 0, 0];
         var qtdRegistrosAlerta = [0, 0, 0, 0, 0, 0, 0];
         var qtdRegistrosCriticos = [0, 0, 0, 0, 0, 0, 0];
+        var diasSemana = {
+            'Monday': 0,
+            'Tuesday': 1,
+            'Wednesday': 2,
+            'Thursday': 3,
+            'Friday': 4,
+            'Saturday': 5,
+            'Sunday': 6
+        }
 
         // Inserindo valores no gráfico de acordo com as métricas
-        for (var i = 0; i < resposta.length; i++) {
-            var hoje = Number((new Date().getFullYear()) + ((new Date().getMonth() + 1).toString().padStart(2, '0')) + (new Date().getDate().toString().padStart(2, '0')));
-            var dataRegistro = Number(resposta[i].dia);
+        for (let i = 0; i < resposta.length; i++) {
+            const diaSemana = resposta[i].diaSemana;
+            const mensagem = resposta[i].mensagem;
+            const diaSemanaIndex = diasSemana[diaSemana];
 
-            var registro = resposta[i];
-            var diffDays = hoje - dataRegistro;
-            var index = 6 - diffDays;
-
-            if (registro.temperatura < 2 || registro.temperatura > 8) {
-                qtdRegistrosCriticos[index]++;
-            } else if (registro.temperatura <= 4.4 || registro.temperatura >= 6.6) {
-                qtdRegistrosAlerta[index]++;
-            } else {
-                qtdRegistrosIdeal[index]++;
+            if (mensagem === 'Crítico') {
+                qtdRegistrosCriticos[diaSemanaIndex]++;
+            } else if (mensagem === 'Alerta') {
+                qtdRegistrosAlerta[diaSemanaIndex]++;
+            } else if (mensagem === 'Ideal') {
+                qtdRegistrosIdeal[diaSemanaIndex]++;
             }
         }
-        for (var j = 0; j < 7; j++) {
-            dados.datasets[0].data[j] = qtdRegistrosIdeal[j];
-            dados.datasets[1].data[j] = qtdRegistrosAlerta[j];
-            dados.datasets[2].data[j] = qtdRegistrosCriticos[j];
+        for (let i = 0; i < 7; i++) {
+            dados.datasets[0].data[i] = qtdRegistrosIdeal[i];
+            dados.datasets[1].data[i] = qtdRegistrosAlerta[i];
+            dados.datasets[2].data[i] = qtdRegistrosCriticos[i];
         }
 
         const config = {
@@ -223,18 +236,12 @@
 
         // Inserindo valores no gráfico de acordo com as métricas
         for (var i = 0; i < resposta.length; i++) {
-            var hoje = Number((new Date().getFullYear()) + ((new Date().getMonth() + 1).toString().padStart(2, '0')) + (new Date().getDate().toString().padStart(2, '0')));
-            var dataRegistro = Number(resposta[i].dia);
-
-            var registro = resposta[i];
-            if(dataRegistro == hoje){
-                if (registro.temperatura < 2 || registro.temperatura > 8) {
-                    qtdRegistrosCriticos++;
-                } else if (registro.temperatura <= 4.4 || registro.temperatura >= 6.6) {
-                    qtdRegistrosAlerta++;
-                } else {
-                    qtdRegistrosIdeal++;
-                }
+            if(resposta[i].mensagem === 'Crítico'){
+                qtdRegistrosCriticos++;
+            } else if(resposta[i].mensagem === 'Alerta'){
+                qtdRegistrosAlerta++;
+            } else if(resposta[i].mensagem === 'Ideal'){
+                qtdRegistrosIdeal++;
             }
         }
         dados.datasets[0].data[0] = qtdRegistrosIdeal;

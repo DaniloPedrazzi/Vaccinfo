@@ -7,8 +7,12 @@ router.get("/ultimas/:idSensor", function (req, res) {
     medidaController.buscarUltimasMedidas(req, res);
 });
 
-router.get("/medidas", function (req, res) {
-    medidaController.buscarMedidas(req, res);
+router.get("/semanal", function (req, res) {
+    medidaController.buscarInfoSemanal(req, res);
+});
+
+router.get("/diario", function (req, res) {
+    medidaController.buscarInfoDiario(req, res);
 });
 
 router.get("/listar", function (req, res) {

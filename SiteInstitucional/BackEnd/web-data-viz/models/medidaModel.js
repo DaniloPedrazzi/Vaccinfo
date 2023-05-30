@@ -1,80 +1,76 @@
 var database = require("../database/config");
 
 function buscarUltimasMedidas(idSensor, limite_linhas) {
+    var instrucao = `select 
+    temperatura as temperatura,
+    dataHoraRegistro,
+                DATE_FORMAT(dataHoraRegistro,'%H:%i:%s') as momento_grafico
+                from registro
+                where fkLocal = ${idSensor}
+                order by idRegistro desc limit ${limite_linhas}`;
 
-    instrucaoSql = ''
-
-    if (process.env.AMBIENTE_PROCESSO == "producao") {
-        instrucaoSql = `select top ${limite_linhas}
-        dht11_temperatura as temperatura, 
-        dht11_umidade as umidade,  
-                        momento,
-                        FORMAT(momento, 'HH:mm:ss') as momento_grafico
-                    from medida
-                    where fk_aquario = ${idSensor}
-                    order by id desc`;
-    } else if (process.env.AMBIENTE_PROCESSO == "desenvolvimento") {
-        instrucaoSql = `select 
-        temperatura as temperatura,
-        dataHoraRegistro,
-                        DATE_FORMAT(dataHoraRegistro,'%H:%i:%s') as momento_grafico
-                    from registro
-                    where fkLocal = ${idSensor}
-                    order by idRegistro desc limit ${limite_linhas}`;
-    } else {
-        console.log("\nO AMBIENTE (produção OU desenvolvimento) NÃO FOI DEFINIDO EM app.js\n");
-        return
-    }
-
-    console.log("Executando a instrução SQL: \n" + instrucaoSql);
-    return database.executar(instrucaoSql);
+    console.log("Executando a instrução SQL: \n" + instrucao);
+    return database.executar(instrucao);
 }
 
-function buscarMedidas() {
-    instrucaoSql = `SELECT r.temperatura, r.dataHoraRegistro, DATE_FORMAT(r.dataHoraRegistro, '%Y%m%d') AS dia
-    FROM registro r
-    JOIN (
-      SELECT fkLocal, MAX(dataHoraRegistro) AS maxDataHoraRegistro
-      FROM registro
-      WHERE dataHoraRegistro >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)
-      GROUP BY fkLocal
-    ) subquery
-    ON r.fkLocal = subquery.fkLocal AND r.dataHoraRegistro = subquery.maxDataHoraRegistro
-    WHERE r.dataHoraRegistro >= CURDATE()
-    ORDER BY r.dataHoraRegistro DESC;        
+function buscarInfoSemanal() {
+    var instrucao = `
+    SELECT 
+        ls.idLocal, 
+        DAYNAME(r.dataHoraRegistro) AS diaSemana,
+    CASE
+        WHEN MIN(r.temperatura) < 2 OR MAX(r.temperatura) > 8 THEN 'Crítico'
+        WHEN MAX(r.temperatura) > 4.4 AND MIN(r.temperatura) < 6.6 THEN 'Alerta'
+        ELSE 'Ideal'
+    END AS mensagem
+    FROM
+        registro r
+    JOIN 
+        localSensor ls ON r.fkLocal = ls.idLocal
+    WHERE
+        WEEKDAY(r.dataHoraRegistro) >= 0 AND WEEKDAY(r.dataHoraRegistro) <= 4
+    GROUP BY
+        ls.idLocal,
+        DAYNAME(r.dataHoraRegistro);
     `;
 
-    console.log("Executando a instrução SQL: \n" + instrucaoSql);
-    return database.executar(instrucaoSql);
+    console.log("Executando a instrução SQL: \n" + instrucao);
+    return database.executar(instrucao);
+}
+
+function buscarInfoDiario() {
+    var instrucao = `
+    SELECT
+        ls.idLocal,
+        DAYNAME(r.dataHoraRegistro) AS diaSemana,
+    CASE
+        WHEN MIN(r.temperatura) < 2 OR MAX(r.temperatura) > 8 THEN 'Crítico'
+        WHEN MAX(r.temperatura) > 4.4 AND MIN(r.temperatura) < 6.6 THEN 'Alerta'
+        ELSE 'Ideal'
+    END AS mensagem
+    FROM
+        registro r
+    JOIN localSensor ls ON r.fkLocal = ls.idLocal
+    WHERE
+        DATE(r.dataHoraRegistro) = CURDATE()
+    GROUP BY
+        ls.idLocal, 
+        DAYNAME(r.dataHoraRegistro);
+    `;
+    console.log("Executando a instrução SQL: \n" + instrucao);
+    return database.executar(instrucao);
 }
 
 function buscarMedidasEmTempoReal(idSensor) {
+    var instrucao = `select 
+    temperatura as temperatura,
+                    DATE_FORMAT(dataHoraRegistro,'%H:%i:%s') as momento_grafico, 
+                    fkLocal 
+                    from registro where fkLocal = ${idSensor} 
+                order by idRegistro desc limit 1`;
 
-    instrucaoSql = ''
-
-    if (process.env.AMBIENTE_PROCESSO == "producao") {
-        instrucaoSql = `select top 1
-        dht11_temperatura as temperatura, 
-        dht11_umidade as umidade,  
-                        CONVERT(varchar, momento, 108) as momento_grafico, 
-                        fk_aquario 
-                        from medida where fk_aquario = ${idSensor} 
-                    order by id desc`;
-
-    } else if (process.env.AMBIENTE_PROCESSO == "desenvolvimento") {
-        instrucaoSql = `select 
-        temperatura as temperatura,
-                        DATE_FORMAT(dataHoraRegistro,'%H:%i:%s') as momento_grafico, 
-                        fkLocal 
-                        from registro where fkLocal = ${idSensor} 
-                    order by idRegistro desc limit 1`;
-    } else {
-        console.log("\nO AMBIENTE (produção OU desenvolvimento) NÃO FOI DEFINIDO EM app.js\n");
-        return
-    }
-
-    console.log("Executando a instrução SQL: \n" + instrucaoSql);
-    return database.executar(instrucaoSql);
+    console.log("Executando a instrução SQL: \n" + instrucao);
+    return database.executar(instrucao);
 }
 
 function listar() {
@@ -92,6 +88,7 @@ function listar() {
 module.exports = {
     buscarUltimasMedidas,
     buscarMedidasEmTempoReal,
-    buscarMedidas,
+    buscarInfoSemanal,
+    buscarInfoDiario,
     listar
 }

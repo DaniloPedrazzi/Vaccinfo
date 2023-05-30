@@ -58,8 +58,8 @@
           <p>Formas de contato:</p>
         </div>
         <div class="cards">
-          <div class="card">
-            <div onclick="window.location = ''" class="texto">
+          <div onclick="redirectToSupport()" class="card">
+            <div class="texto">
               <p>Fale conosco</p>
             </div>
           </div>
@@ -87,3 +87,9 @@
     </div>
   </body>
 </html>
+
+<script>
+  function redirectToSupport(){
+    window.location.href = "https://vacc.atlassian.net/servicedesk/customer/portal";
+  }
+</script>

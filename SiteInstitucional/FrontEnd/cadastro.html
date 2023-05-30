@@ -205,20 +205,17 @@ function cadastrar() {
                 senhaAdmServer: senhaVar
             })
         }).then(function (resposta) {
+          console.log("resposta: ", resposta);
 
-            console.log("resposta: ", resposta);
-            setTimeout(() => {
-                window.location = "login.html";
-            }, "4000")
+          
+          div_validacao_senha.innerHTML = "Cadastro realizado com sucesso! Redirecionando para tela de Login...";
+          
+          setTimeout(() => {
+            window.location = "login.html";
+          }, "2000")
 
-            if (resposta.ok) {
-              div_validacao_senha.innerHTML = "Cadastro realizado com sucesso! Redirecionando para tela de Login...";
+          finalizarAguardar();
 
-
-                finalizarAguardar();
-            } else {
-                throw ("Houve um erro ao tentar realizar o cadastro!");
-            }
         }).catch(function (resposta) {
             console.log(`#ERRO: ${resposta}`);
             finalizarAguardar();
