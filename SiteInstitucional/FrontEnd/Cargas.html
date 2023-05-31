@@ -49,9 +49,9 @@
                         <button class="btnTitulo">Filtros</button>
                     </div>
                     <a href="Cargas.html" class="btnTexto">Tudo</a>
-                    <a href="Cargas.html?filtro=critico" class="btnTexto">Crítico</a>
-                    <a href="Cargas.html?filtro=alerta" class="btnTexto">Alerta</a>
-                    <a href="Cargas.html?filtro=ideal" class="btnTexto">Ideal</a>
+                    <a href="Cargas.html?filtro=Crítico" class="btnTexto">Crítico</a>
+                    <a href="Cargas.html?filtro=Alerta" class="btnTexto">Alerta</a>
+                    <a href="Cargas.html?filtro=Ideal" class="btnTexto">Ideal</a>
                 </div>
             </div>
         </div>
@@ -76,32 +76,17 @@
             response.json().then(function (resposta) {
                 console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
                 for (i = 0; i < resposta.length; i++) {
-                    var local = resposta[i].nome;
-                    var idSensor = resposta[i].idLocal;
+                    var local = resposta[i].nomeLocal;
+                    var idLocal = resposta[i].idLocal;
                     var tipoInstalacao = resposta[i].tipoInstalacao;
-                    var temperatura = resposta[i].temperatura;
-                    var dataHoraRegistro = Number(resposta[i].dataHoraRegistro);
+                    var categoria = resposta[i].categoria;
 
-
-                    if(filtro == null){
-                        plotarCargas(idSensor, local, tipoInstalacao);
-                        obterDadosGrafico(idSensor);
-                    }
-                    if(filtro == "critico"){
-                        if(temperatura < 2 || temperatura > 8){
-                            plotarCargas(idSensor, local, tipoInstalacao);
-                            obterDadosGrafico(idSensor);
-                        }
-                    }if(filtro == "alerta"){
-                        if(temperatura <= 4.4 && temperatura > 2 || temperatura >= 6.6 && temperatura < 8){
-                            plotarCargas(idSensor, local, tipoInstalacao);
-                            obterDadosGrafico(idSensor);
-                        }
-                    }if(filtro == "ideal"){
-                        if(temperatura > 4.4 && temperatura < 6.6){
-                            plotarCargas(idSensor, local, tipoInstalacao);
-                            obterDadosGrafico(idSensor);
-                        }
+                    if(filtro == categoria){
+                        plotarCargas(idLocal, local, tipoInstalacao);
+                        obterDadosGrafico(idLocal);
+                    } else if(filtro == null){
+                        plotarCargas(idLocal, local, tipoInstalacao);
+                        obterDadosGrafico(idLocal);
                     }
                 }
             });
@@ -112,37 +97,37 @@
             console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
     });
         
-    function plotarCargas(idSensor, local, tipoInstalacao){
-        if(document.getElementById(`local${idSensor}`) != null){
+    function plotarCargas(idLocal, local, tipoInstalacao){
+        if(document.getElementById(`local${idLocal}`) != null){
             return;
         }
         containerCargas.innerHTML += `
             <div class="carga">
                 <div class="headerCarga">
-                    <h3 id="local${idSensor}" class="numLote">Local: ${local}</h3>
+                    <h3 id="local${idLocal}" class="numLote">Local: ${local}</h3>
                     <div class="backgroundCaminhao">
                         <img src="./img/img-${tipoInstalacao}-icon.png" height="35px" class="caminhaoIcon">
                     </div>
                 </div>
                 <div class="bodyCarga">
-                    <canvas id="canvas${idSensor}"></canvas>
+                    <canvas id="canvas${idLocal}"></canvas>
                 </div>
             </div>
         `
     }
                 
-    function obterDadosGrafico(idSensor) {
+    function obterDadosGrafico(idLocal) {
         if (proximaAtualizacao != undefined) {
             clearTimeout(proximaAtualizacao);
         }
                     
-        fetch(`/medidas/ultimas/${idSensor}`, { cache: 'no-store' }).then(function (response) {
+        fetch(`/medidas/ultimas/${idLocal}`, { cache: 'no-store' }).then(function (response) {
             if (response.ok) {
                 response.json().then(function (resposta) {
                     console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
                     resposta.reverse();
 
-                    plotarGrafico(resposta, idSensor);
+                    plotarGrafico(resposta, idLocal);
                 });
             } else {
                 console.error('Nenhum dado encontrado ou erro na API');
@@ -155,7 +140,7 @@
     // Esta função *plotarGrafico* usa os dados capturados na função anterior para criar o gráfico
     // Configura o gráfico (cores, tipo, etc), materializa-o na página e, 
     // A função *plotarGrafico* também invoca a função *atualizarGrafico*
-    function plotarGrafico(resposta, idSensor) {
+    function plotarGrafico(resposta, idLocal) {
         
         console.log('iniciando plotagem do gráfico...');
         
@@ -199,15 +184,15 @@
             data: dados,
         };
         
-        document.getElementById(`canvas${idSensor}`).width = 1600;
-        document.getElementById(`canvas${idSensor}`).height = 270;
+        document.getElementById(`canvas${idLocal}`).width = 1600;
+        document.getElementById(`canvas${idLocal}`).height = 270;
         // Adicionando gráfico criado em div na tela
         let myChart = new Chart(
-            document.getElementById(`canvas${idSensor}`),
+            document.getElementById(`canvas${idLocal}`),
             config
             );
             
-            setTimeout(() => atualizarGrafico(idSensor, dados, myChart), 5000);
+            setTimeout(() => atualizarGrafico(idLocal, dados, myChart), 5000);
         }
         
         // Esta função *atualizarGrafico* atualiza o gráfico que foi renderizado na página,
@@ -215,8 +200,8 @@
 
     //     Se quiser alterar a busca, ajuste as regras de negócio em src/controllers
     //     Para ajustar o "select", ajuste o comando sql em src/models
-    function atualizarGrafico(idSensor, dados, myChart) {
-        fetch(`/medidas/tempo-real/${idSensor}`, { cache: 'no-store' }).then(function (response) {
+    function atualizarGrafico(idLocal, dados, myChart) {
+        fetch(`/medidas/tempo-real/${idLocal}`, { cache: 'no-store' }).then(function (response) {
             if (response.ok) {
                 response.json().then(function (novoRegistro) {
 
@@ -244,12 +229,12 @@
                     }
 
                     // Altere aqui o valor em ms se quiser que o gráfico atualize mais rápido ou mais devagar
-                    proximaAtualizacao = setTimeout(() => atualizarGrafico(idSensor, dados, myChart), 5000);
+                    proximaAtualizacao = setTimeout(() => atualizarGrafico(idLocal, dados, myChart), 5000);
                 });
             } else {
                 console.error('Nenhum dado encontrado ou erro na API');
                 // Altere aqui o valor em ms se quiser que o gráfico atualize mais rápido ou mais devagar
-                proximaAtualizacao = setTimeout(() => atualizarGrafico(idSensor, dados, myChart), 5000);
+                proximaAtualizacao = setTimeout(() => atualizarGrafico(idLocal, dados, myChart), 5000);
             }
         })
             .catch(function (error) {

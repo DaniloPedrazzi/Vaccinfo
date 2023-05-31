@@ -19,8 +19,8 @@ function buscarInfoSemanal() {
         ls.idLocal, 
         DAYNAME(r.dataHoraRegistro) AS diaSemana,
     CASE
-        WHEN MIN(r.temperatura) < 2 OR MAX(r.temperatura) > 8 THEN 'Crítico'
-        WHEN MAX(r.temperatura) > 4.4 AND MIN(r.temperatura) < 6.6 THEN 'Alerta'
+        WHEN MIN(r.temperatura) <= 2 OR MAX(r.temperatura) >= 8 THEN 'Crítico'
+        WHEN MAX(r.temperatura) <= 4.4 AND MIN(r.temperatura) >= 6.6 THEN 'Alerta'
         ELSE 'Ideal'
     END AS mensagem
     FROM
@@ -44,8 +44,8 @@ function buscarInfoDiario() {
         ls.idLocal,
         DAYNAME(r.dataHoraRegistro) AS diaSemana,
     CASE
-        WHEN MIN(r.temperatura) < 2 OR MAX(r.temperatura) > 8 THEN 'Crítico'
-        WHEN MAX(r.temperatura) > 4.4 AND MIN(r.temperatura) < 6.6 THEN 'Alerta'
+        WHEN MIN(r.temperatura) <= 2 OR MAX(r.temperatura) >= 8 THEN 'Crítico'
+        WHEN MAX(r.temperatura) <= 4.4 AND MIN(r.temperatura) >= 6.6 THEN 'Alerta'
         ELSE 'Ideal'
     END AS mensagem
     FROM
@@ -75,12 +75,34 @@ function buscarMedidasEmTempoReal(idSensor) {
 
 function listar() {
     var instrucao = `
-    select localSensor.idLocal, localSensor.nome, sensor.tipoInstalacao , registro.temperatura, DATE_FORMAT(registro.dataHoraRegistro,'%Y%m%d%H%i%s') as dataHoraRegistro
-        from localSensor
-    join sensor on localSensor.fkSensor = sensor.idSensor
-    join registro on localSensor.idLocal = registro.fkLocal
-    order by localSensor.idLocal limit 1;
-    `
+        SELECT
+            ls.idLocal,
+            ls.nome AS nomeLocal,
+            s.tipoInstalacao,
+        CASE
+            WHEN MIN(r.temperatura) <= 2 OR MAX(r.temperatura) >= 8 THEN 'Crítico'
+            WHEN MAX(r.temperatura) <= 4.4 AND MIN(r.temperatura) >= 6.6 THEN 'Alerta'
+            ELSE 'Ideal'
+        END AS categoria
+        FROM
+        (
+            SELECT
+                r.fkLocal,
+                r.temperatura
+            FROM
+                registro r
+            ORDER BY
+                r.dataHoraRegistro DESC
+            LIMIT
+                7
+        ) AS r
+        JOIN localSensor ls ON r.fkLocal = ls.idLocal
+        JOIN sensor s ON ls.fkSensor = s.idSensor
+        GROUP BY
+            ls.idLocal,
+            ls.nome,
+            s.tipoInstalacao;
+    `;
     return database.executar(instrucao);
 }
 
