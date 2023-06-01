@@ -11,97 +11,217 @@
     <link rel="website icon" type="png" href="img/mini-logo.png">
 </head>
 <body>
-    <div class="header1">
-        <div class="container">
-            <div class="links">
-                <div class="link divisoria">
-                    <a href="login.html">ENTRAR</a>
-                </div>
-                <div class="link">
-                    <a href="cadastro.html">CADASTRAR</a>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="header2">
-        <div class="container">
-            <img src="./img/logo-vaccinfo.png" alt="">
-            <div class="links">
-                <div class="link">
-                    <a href="./index.html">Home</a>
-                </div>
-                <div class="link">
-                    <a href="sobre-nos.html">Sobre</a>
-                </div>
-                <div class="link">
-                    <a href="fale conosco.html">Fale conosco</a>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="menu_flutuante">
-
-    <div class="inputs">
-        Nome: <input type="text" id="inp_rua" class="input"> <span class="btn_fechar">Fechar</span> <br> 
-        Tipo (Geladeira ou Caminhão): <input type="checkbox" placeholder="G"class="input"> <input type="checkbox" placeholder="C"class="input"> <br>
-        Número: <input type="text" id="inp_num_local"class="input"> <br>
-        <button class="botao_local">Registrar Local</button>
-    </div>
-
-        
-    </div>
-    <div class="container_botao">
-        <button class="botao_local">Registrar Local</button>
-    </div>
-    <div class="container_locais">
-        <div class="geladeira">
-            <span class="titulo_local">Geladeira 001</span>
-            <span class="endereco">Rua sei la sei la oq lala, n100 São Paulo SP</span>
-            <div class="box_img">
-                <img src="img/img-geladeira-icon.png">
-            </div>
-         </div>
-        <div class="caminhao">
-            <span class="titulo_local">Caminhão 001</span>
-            <div class="box_img_caminhao">
-                <img src="img/img-caminhao-icon.png">
-            </div>
-        </div>
-        <div class="geladeira">
-            <span class="titulo_local">Geladeira 001</span>
-            <span class="endereco">Rua sei la sei la oq lala, n100 São Paulo SP</span>
-            <div class="box_img">
-                <img src="img/img-geladeira-icon.png">
-            </div>
-         </div>
-        <div class="caminhao">
-            <span class="titulo_local">Caminhão 001</span>
-            <div class="box_img_caminhao">
-                <img src="img/img-caminhao-icon.png">
-            </div>
-        </div>
-        <div class="geladeira">
-            <span class="titulo_local">Geladeira 001</span>
-            <span class="endereco">Rua sei la sei la oq lala, n100 São Paulo SP</span>
-            <div class="box_img">
-                <img src="img/img-geladeira-icon.png">
-            </div>
-         </div>
-        <div class="caminhao">
-            <span class="titulo_local">Caminhão 001</span>
-            <div class="box_img_caminhao">
-                <img src="img/img-caminhao-icon.png">
-            </div>
-        </div>
-    </div>
-    <div class="footer">
-        <div class="footer2">
+    <div class="" id="header_blur">
+        <div class="header1">
             <div class="container">
-                <p>Copyright © 2023 - 2023 Vaccinfo. Todos os direitos reservados. | <a href="">Termos de uso</a> | <a
-                        href="">Política de privacidade</a> | <a href="">Definições de cookies</a> | <a href="">Mapa do
-                        site</a></p>
+                <div class="links">
+                    <div class="link divisoria">
+                        <a href="login.html">ENTRAR</a>
+                    </div>
+                    <div class="link">
+                        <a href="cadastro.html">CADASTRAR</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="header2">
+            <div class="container">
+                <img src="./img/logo-vaccinfo.png" alt="">
+                <div class="links">
+                    <div class="link">
+                        <a href="./index.html">Home</a>
+                    </div>
+                    <div class="link">
+                        <a href="sobre-nos.html">Sobre</a>
+                    </div>
+                    <div class="link">
+                        <a href="fale conosco.html">Fale conosco</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="menu_flutuante invisivel">
+        <div class="inputs">
+            Nome: <input type="text" id="inp_rua" class="input"> <span class="btn_fechar" onclick="fechar_popup()">Fechar</span> <br> 
+            Tipo: <br>
+            Caminhão: <input type="radio" value="Caminhao" name="tipoLote" class="input inputRadio">
+            Geladeira: <input type="radio" value="Geladeira" name="tipoLote" class="input inputRadio"><br>
+            Endereço: <input type="text" id="inp_endereco"class="input"> <br>
+            Número: <input type="text" id="inp_num_local"class="input"> <br>
+            <div id="divResultado"></div>
+            <button onclick="cadastrar()" class="botao_local">Registrar Local</button>
+        </div>
+    </div>
+
+    <div id="efeito_blur">
+        <div class="container_botao">
+            <button class="botao_local" onclick="abrir_fechar_popup()">Registrar Local</button>
+        </div>
+        <div class="container_locais">
+            <div class="geladeira">
+                <span class="titulo_local">Geladeira 001</span>
+                <span class="endereco">Rua sei la sei la oq lala, n100 São Paulo SP</span>
+                <div class="box_img">
+                    <img src="img/img-geladeira-icon.png">
+                </div>
+             </div>
+            <div class="caminhao">
+                <span class="titulo_local">Caminhão 001</span>
+                <div class="box_img_caminhao">
+                    <img src="img/img-caminhao-icon.png">
+                </div>
+            </div>
+            <div class="geladeira">
+                <span class="titulo_local">Geladeira 001</span>
+                <span class="endereco">Rua sei la sei la oq lala, n100 São Paulo SP</span>
+                <div class="box_img">
+                    <img src="img/img-geladeira-icon.png">
+                </div>
+             </div>
+            <div class="caminhao">
+                <span class="titulo_local">Caminhão 001</span>
+                <div class="box_img_caminhao">
+                    <img src="img/img-caminhao-icon.png">
+                </div>
+            </div>
+            <div class="geladeira">
+                <span class="titulo_local">Geladeira 001</span>
+                <span class="endereco">Rua sei la sei la oq lala, n100 São Paulo SP</span>
+                <div class="box_img">
+                    <img src="img/img-geladeira-icon.png">
+                </div>
+             </div>
+            <div class="caminhao">
+                <span class="titulo_local">Caminhão 001</span>
+                <div class="box_img_caminhao">
+                    <img src="img/img-caminhao-icon.png">
+                </div>
+            </div>
+        </div>
+        <div class="footer">
+            <div class="footer2">
+                <div class="container">
+                    <p>Copyright © 2023 - 2023 Vaccinfo. Todos os direitos reservados. | <a href="">Termos de uso</a> | <a
+                            href="">Política de privacidade</a> | <a href="">Definições de cookies</a> | <a href="">Mapa do
+                            site</a></p>
+                </div>
             </div>
         </div>
     </div>
 </body>
 </html>
+
+<script>
+    var fkEndereco;
+    
+    function cadastrar(){
+        var inputsRadio = document.querySelectorAll(".inputRadio");
+        var tipoVar;
+        if(inputsRadio[0].checked){
+            tipoVar = inputsRadio[0].value;
+        }else if(inputsRadio[1].checked){
+            tipoVar = inputsRadio[1].value;
+        }
+        var enderecoVar = inp_endereco.value;
+        var numVar = Number(inp_num_local.value);
+        
+        var nomeVar = inp_rua.value;
+
+        cadastrarEndereço(enderecoVar, numVar);
+    }
+    
+    function cadastrarEndereço(enderecoVar, numVar){
+        fetch("/cargas/cadastrarEndereco", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                enderecoServer: enderecoVar,
+                numeroServer: numVar
+            })
+        }).then(function (resposta) {
+            console.log("resposta: ", resposta);
+            
+            retornarFks(enderecoVar, numVar);
+        }).catch(function (resposta) {
+            console.log(`#ERRO: ${resposta}`);
+        });
+    }
+
+    function retornarFks(enderecoVar, numVar){
+        fetch("/cargas/retornarFks", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                enderecoServer: enderecoVar,
+                numeroServer: numVar
+            })
+        }).then(function (resposta) {
+            console.log("resposta: ", resposta);
+
+            resposta.json().then(json => {
+                console.log(json);
+                console.log(JSON.stringify(json));
+
+                fkEndereco = json[0].idEndereco;
+            });
+            
+            cadastrarFinal(enderecoVar);
+        }).catch(function (resposta) {
+            console.log(`#ERRO: ${resposta}`);
+        });
+    }
+
+    function cadastrarFinal(enderecoVar){
+        fetch("/cargas/cadastrar", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                nomeServer: enderecoVar,
+                fkEnderecoServer: fkEndereco
+            })
+        }).then(function (resposta) {
+            console.log("resposta: ", resposta);
+
+            divResultado.innerHTML = "Cadastro realizado com sucesso!";
+
+            fechar_popup();
+
+        }).catch(function (resposta) {
+            console.log(`#ERRO: ${resposta}`);
+        });
+    }
+</script>
+
+<script>
+    const popUp = document.querySelector(".menu_flutuante")
+
+    var estaAberto = false;
+
+    function abrir_fechar_popup(){
+        if(estaAberto){
+            popUp.classList.add("invisivel");
+            estaAberto = false;
+            efeito_blur.classList.remove("blur");
+            header_blur.classList.remove("blur");
+        } else{
+            popUp.classList.remove("invisivel");
+            estaAberto = true;
+            efeito_blur.classList.add("blur");
+            header_blur.classList.add("blur");
+        }
+    };
+
+    function fechar_popup(){
+        popUp.classList.add("invisivel");
+        estaAberto = false;
+        efeito_blur.classList.remove("blur");
+        header_blur.classList.remove("blur");
+    }
+</script>
