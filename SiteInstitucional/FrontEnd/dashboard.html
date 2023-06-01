@@ -16,11 +16,21 @@
 
     <!-- Funções pra API -->
     <script src="./js/funcoes.js"></script>
-    
+
     <link rel="website icon" type="png" href="img/mini-logo.png">
 </head>
 
-<body onload="validarSessao()">
+<body onload="validarSessao(), atualizacaoPeriodica()">
+    <div class="alertas">
+        <div class="alerta" id="alerta_em_alerta">
+            <img src="./img/imagemAlerta.png" alt="" class="img_sino">
+            <span class="texto_alerta">A GELADEIRA 001 ESTÁ EM ALERTA!!</span>
+        </div>
+        <div class="alerta" id="alerta_critico">
+            <img src="./img/imagemCritico.png" alt="" class="img_sino">
+            <span class="texto_alerta">A GELADEIRA 001 ESTÁ EM ESTADO CRÍTICO!!</span>
+        </div>
+    </div>
     <div class="header2">
         <div class="container">
             <img src="./img/logo-vaccinfo.png" alt="">
@@ -34,7 +44,7 @@
                 <div class="link">
                     <a href="index.html">Sair</a>
                 </div>
-                
+
             </div>
         </div>
     </div>
@@ -115,8 +125,8 @@
     });
 
     fetch(`/medidas/diario`, { cache: 'no-store' }).then(function (response) {
-        if(response.ok){
-            response.json().then(function(resposta){
+        if (response.ok) {
+            response.json().then(function (resposta) {
                 console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
 
                 plotarGraficoDiario(resposta);
@@ -156,7 +166,7 @@
         console.log(resposta)
 
 
-        
+
         var qtdRegistrosIdeal = [0, 0, 0, 0, 0, 0, 0];
         var qtdRegistrosAlerta = [0, 0, 0, 0, 0, 0, 0];
         var qtdRegistrosCriticos = [0, 0, 0, 0, 0, 0, 0];
@@ -209,7 +219,7 @@
             config
         );
     }
-    
+
     function plotarGraficoDiario(resposta) {
         var labels = [
             'Ideal',
@@ -236,11 +246,11 @@
 
         // Inserindo valores no gráfico de acordo com as métricas
         for (var i = 0; i < resposta.length; i++) {
-            if(resposta[i].mensagem === 'Crítico'){
+            if (resposta[i].mensagem === 'Crítico') {
                 qtdRegistrosCriticos++;
-            } else if(resposta[i].mensagem === 'Alerta'){
+            } else if (resposta[i].mensagem === 'Alerta') {
                 qtdRegistrosAlerta++;
-            } else if(resposta[i].mensagem === 'Ideal'){
+            } else if (resposta[i].mensagem === 'Ideal') {
                 qtdRegistrosIdeal++;
             }
         }
@@ -279,4 +289,101 @@
         qtdLotesIdeais.innerHTML = qtdRegistrosIdeal;
         qtdTotalLotes.innerHTML = qtdRegistrosCriticos + qtdRegistrosAlerta + qtdRegistrosIdeal;
     }
+
+    function atualizacaoPeriodica() {
+        obterdados(3);
+
+        // function sendData() {
+		// 	var http = new XMLHttpRequest();
+		// 	http.open('POST', 'http://localhost:3000/api/sendData', false);
+		// 	http.send(null);
+		// }
+
+        // setInterval(() => {
+		// 	sendData();
+		// }, 2000);
+        setTimeout(atualizacaoPeriodica, 5000);
+    }
+
+    // ALERTAS
+    function obterdados(idLocalSensor) {
+        fetch(`/medidas/tempo-real/${idLocalSensor}`)
+            .then(resposta => {
+
+                if (resposta.ok) {
+                    resposta.json().then(resposta => {
+
+                        console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+
+                        var dados = {
+                            temperatura: resposta[0].temperatura,
+                        }
+
+                        alertar(resposta[0].temperatura, idLocalSensor);
+                    });
+                } else {
+
+                    console.error('Nenhum dado encontrado ou erro na API');
+                }
+            })
+            .catch(function (error) {
+                console.error(`Erro na obtenção dos dados do aquario p/ gráfico: ${error.message}`);
+            });
+
+    }
+
+    function alertar(temperatura, idLocalSensor) {
+        
+        var limites = {
+            muito_quente: 8,
+            quente: 6.6,
+            ideal: 5,
+            frio: 4.4,
+            muito_frio: 2
+        };
+
+        // var classe_temperatura = 'cor-alerta';
+
+        if (temperatura >= limites.muito_quente) {
+            alerta_critico.style.display = "flex"
+            console.log("caiu no 1")
+        }
+        else if (temperatura < limites.muito_quente && temperatura >= limites.quente) {
+            alerta_em_alerta.style.display = "flex"
+            console.log("caiu no 2")
+        }
+        else if (temperatura < limites.quente && temperatura > limites.frio) {
+            alerta_em_alerta.style.display = "none" 
+            alerta_critico.style.display = "none"
+            console.log("caiu no 3")
+        }
+        else if (temperatura <= limites.frio && temperatura > limites.muito_frio) {
+            alerta_em_alerta.style.display = "flex"
+            console.log("caiu no 4")
+        }
+        else if (temperatura <= limites.muito_frio) {
+            alerta_critico.style.display = "flex"
+            console.log("caiu no 5")
+        }
+
+        // var card;
+
+        // if (idLocalSensor == 1) {
+        //     temp_aquario_1.innerHTML = temperatura + "°C";
+        //     card = card_1
+        // } else if (idLocalSensor == 2) {
+        //     temp_aquario_2.innerHTML = temperatura + "°C";
+        //     card = card_2
+        // } else if (idLocalSensor == 3) {
+        //     temp_aquario_3.innerHTML = temperatura + "°C";
+        //     card = card_3
+        // } else if (idLocalSensor == 4) {
+        //     temp_aquario_4.innerHTML = temperatura + "°C";
+        //     card = card_4
+        // }
+
+        // // alterando
+        // card.className = classe_temperatura;
+    }
+
 </script>
