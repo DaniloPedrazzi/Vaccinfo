@@ -102,31 +102,36 @@
     contextopieDiaria.canvas.width = 400;
     contextopieDiaria.canvas.height = 200;
 
-    fetch(`/medidas/semanal`, { cache: 'no-store' }).then(function (response) {
-        if (response.ok) {
-            response.json().then(function (resposta) {
-                console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+    function carregarGraficoSemanal() {        
+        fetch(`/medidas/semanal`, { cache: 'no-store' }).then(function (response) {
+            if (response.ok) {
+                response.json().then(function (resposta) {
+                    console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+    
+                    plotarGraficoSemanal(resposta);
+                });
+            } else {
+                console.error('Nenhum dado encontrado ou erro na API');
+            }
+        }).catch(function (error) {
+            console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+        });
+    }
 
-                plotarGraficoSemanal(resposta);
-            });
-        } else {
-            console.error('Nenhum dado encontrado ou erro na API');
-        }
-    }).catch(function (error) {
-        console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
-    });
+    function carregarGraficoDiario() {        
+        fetch(`/medidas/diario`, { cache: 'no-store' }).then(function (response) {
+            if (response.ok) {
+                response.json().then(function (resposta) {
+                    console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+    
+                    plotarGraficoDiario(resposta);
+                });
+            }
+        }).catch(function (error) {
+            console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+        });
+    }
 
-    fetch(`/medidas/diario`, { cache: 'no-store' }).then(function (response) {
-        if (response.ok) {
-            response.json().then(function (resposta) {
-                console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
-
-                plotarGraficoDiario(resposta);
-            });
-        }
-    }).catch(function (error) {
-        console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
-    });
 
     function plotarGraficoSemanal(resposta) {
         let labels = [
@@ -204,6 +209,9 @@
                         stacked: true,
                     }]
                 },
+                animation: {
+                    duration: 0
+                }
             }
         };
         let myChart = new Chart(
@@ -264,6 +272,9 @@
                         top: 10,
                         bottom: 10
                     }
+                },
+                animation: {
+                    duration: 0
                 }
             }
         };
@@ -284,6 +295,8 @@
 
     function atualizacaoPeriodica() {
         obterdados();
+        carregarGraficoDiario();
+        carregarGraficoSemanal();
         setTimeout(atualizacaoPeriodica, 5000);
     }
 
