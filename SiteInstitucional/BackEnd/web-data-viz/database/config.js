@@ -23,6 +23,10 @@ var mySqlConfig = {
     database: "bl2qkel9phuwcy25r4ya",
     user: "ugsqw3rvnisnorpc",
     password: "XM1qp5C4l8poBUmw3bmN",
+    // host: "localhost",
+    // database: "vaccinfo",
+    // user: "server",
+    // password: "12345678",
 };
 
 function executar(instrucao) {

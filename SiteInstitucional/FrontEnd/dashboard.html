@@ -21,15 +21,7 @@
 </head>
 
 <body onload="validarSessao(), atualizacaoPeriodica()">
-    <div class="alertas">
-        <div class="alerta" id="alerta_em_alerta">
-            <img src="./img/imagemAlerta.png" alt="" class="img_sino">
-            <span class="texto_alerta">A GELADEIRA 001 ESTÁ EM ALERTA!!</span>
-        </div>
-        <div class="alerta" id="alerta_critico">
-            <img src="./img/imagemCritico.png" alt="" class="img_sino">
-            <span class="texto_alerta">A GELADEIRA 001 ESTÁ EM ESTADO CRÍTICO!!</span>
-        </div>
+    <div class="alertas" id="div_alertas">
     </div>
     <div class="header2">
         <div class="container">
@@ -291,35 +283,31 @@
     }
 
     function atualizacaoPeriodica() {
-        obterdados(3);
-
-        // function sendData() {
-		// 	var http = new XMLHttpRequest();
-		// 	http.open('POST', 'http://localhost:3000/api/sendData', false);
-		// 	http.send(null);
-		// }
-
-        // setInterval(() => {
-		// 	sendData();
-		// }, 2000);
+        obterdados();
         setTimeout(atualizacaoPeriodica, 5000);
     }
 
     // ALERTAS
-    function obterdados(idLocalSensor) {
-        fetch(`/medidas/tempo-real/${idLocalSensor}`)
+    function obterdados() {
+        fetch(`/medidas/ultimas-locais`)
             .then(resposta => {
 
                 if (resposta.ok) {
                     resposta.json().then(resposta => {
 
+                        console.log("---- ÚLTIMAS MEDIDAS DE TODOS OS LOCAIS ----");
                         console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
 
                         var dados = {
                             temperatura: resposta[0].temperatura,
                         }
 
-                        alertar(resposta[0].temperatura, idLocalSensor);
+                        for (var i = 0; i < resposta.length; i++) {
+
+                            alertar(resposta[i].nome_local, resposta[i].temperatura, resposta[i].fkLocal);
+
+                        }
+
                     });
                 } else {
 
@@ -332,8 +320,8 @@
 
     }
 
-    function alertar(temperatura, idLocalSensor) {
-        
+    function alertar(nomeLocal, temperatura, fkLocal) {
+
         var limites = {
             muito_quente: 8,
             quente: 6.6,
@@ -344,26 +332,65 @@
 
         // var classe_temperatura = 'cor-alerta';
 
+        var card = document.getElementById(`card_local_${fkLocal}`);
+
+        if (card != null) {
+            card.parentNode.removeChild(card);
+        }
+
         if (temperatura >= limites.muito_quente) {
-            alerta_critico.style.display = "flex"
-            console.log("caiu no 1")
+
+            div_alertas.innerHTML += `
+            <div class="alerta" id="card_local_${fkLocal}">
+                <img src="./img/imagemCritico.png" alt="" class="img_sino">
+                <span class="texto_alerta">${nomeLocal} ESTÁ EM ESTADO CRÍTICO!!</span>
+            </div>
+            `;
+            // alerta_critico.style.display = "flex"
+            console.log("caiu no 1 - mto quente")
         }
         else if (temperatura < limites.muito_quente && temperatura >= limites.quente) {
-            alerta_em_alerta.style.display = "flex"
-            console.log("caiu no 2")
+            div_alertas.innerHTML += `
+            <div class="alerta" id="card_local_${fkLocal}">
+                <img src="./img/imagemAlerta.png" alt="" class="img_sino">
+                <span class="texto_alerta">${nomeLocal} ESTÁ EM ALERTA!!</span>
+            </div>
+            `;
+            // alerta_em_alerta.style.display = "flex"
+            console.log("caiu no 2 - quente")
         }
         else if (temperatura < limites.quente && temperatura > limites.frio) {
-            alerta_em_alerta.style.display = "none" 
-            alerta_critico.style.display = "none"
-            console.log("caiu no 3")
+
+            var card = document.getElementById(`card_local_${fkLocal}`);
+
+            if (card != null) {
+                card.parentNode.removeChild(card);
+            }
+
+            // div_alertas.innerHTML = "";
+            // alerta_em_alerta.style.display = "none" 
+            // alerta_critico.style.display = "none"
+            console.log("caiu no 3 - ideal")
         }
         else if (temperatura <= limites.frio && temperatura > limites.muito_frio) {
-            alerta_em_alerta.style.display = "flex"
-            console.log("caiu no 4")
+            div_alertas.innerHTML += `
+            <div class="alerta" id="card_local_${fkLocal}">
+                <img src="./img/imagemAlerta.png" alt="" class="img_sino">
+                <span class="texto_alerta">${nomeLocal} ESTÁ EM ALERTA!!</span>
+            </div>
+            `;
+            // alerta_em_alerta.style.display = "flex"
+            console.log("caiu no 4 - frio")
         }
         else if (temperatura <= limites.muito_frio) {
-            alerta_critico.style.display = "flex"
-            console.log("caiu no 5")
+            div_alertas.innerHTML += `
+            <div class="alerta" id="card_local_${fkLocal}">
+                <img src="./img/imagemCritico.png" alt="" class="img_sino">
+                <span class="texto_alerta">${nomeLocal} ESTÁ EM ESTADO CRÍTICO!!</span>
+            </div>
+            `;
+            // alerta_critico.style.display = "flex"
+            console.log("caiu no 5 - mto frio")
         }
 
         // var card;

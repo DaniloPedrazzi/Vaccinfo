@@ -21,6 +21,21 @@ function buscarUltimasMedidas(req, res) {
     });
 }
 
+function buscarUltimasMedidasLocais(req, res) {
+
+    medidaModel.buscarUltimasMedidasLocais().then(function (resultado) {
+        if (resultado.length > 0) {
+            res.status(200).json(resultado);
+        } else {
+            res.status(204).send("Nenhum resultado encontrado!")
+        }
+    }).catch(function (erro) {
+        console.log(erro);
+        console.log("Houve um erro ao buscar as ultimas medidas.", erro.sqlMessage);
+        res.status(500).json(erro.sqlMessage);
+    });
+}
+
 function buscarInfoSemanal(req, res) {
     medidaModel.buscarInfoSemanal().then(function (resultado) {
         if (resultado.length > 0) {
@@ -85,6 +100,7 @@ function buscarMedidasEmTempoReal(req, res) {
 module.exports = {
     buscarUltimasMedidas,
     buscarMedidasEmTempoReal,
+    buscarUltimasMedidasLocais,
     buscarInfoSemanal,
     buscarInfoDiario,
     listar

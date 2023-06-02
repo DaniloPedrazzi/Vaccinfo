@@ -140,7 +140,7 @@ body{
 .alerta{
     background-color: #D5E4CF;
     width: 20vw;
-    display: none;
+    display: flex;
     flex-direction: row;
     padding: 1%;
     align-items: center;

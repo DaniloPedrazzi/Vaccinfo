@@ -13,6 +13,31 @@ function buscarUltimasMedidas(idSensor, limite_linhas) {
     return database.executar(instrucao);
 }
 
+function buscarUltimasMedidasLocais() {
+    var instrucao = `SELECT 
+    localSensor.nome AS nome_local,
+    temperatura,
+    DATE_FORMAT(dataHoraRegistro, '%H:%i:%s') AS momento_grafico,
+    fkLocal 
+    FROM 
+        registro
+    JOIN 
+        localSensor 
+        ON fkLocal = idLocal
+    WHERE
+        (fkLocal, dataHoraRegistro) IN (
+            SELECT 
+                fkLocal, MAX(dataHoraRegistro)
+            FROM 
+                registro
+            GROUP BY 
+                fkLocal
+        );`;
+
+    console.log("Executando a instrução SQL: \n" + instrucao);
+    return database.executar(instrucao);
+}
+
 function buscarInfoSemanal() {
     var instrucao = `
     SELECT 
@@ -63,10 +88,14 @@ function buscarInfoDiario() {
 
 function buscarMedidasEmTempoReal(idSensor) {
     var instrucao = `select 
+    localSensor.nome as nome_local,
     temperatura as temperatura,
                     DATE_FORMAT(dataHoraRegistro,'%H:%i:%s') as momento_grafico, 
                     fkLocal 
-                    from registro where fkLocal = ${idSensor} 
+                    from registro 
+                    join localSensor 
+                    on fkLocal = idLocal
+                    where fkLocal = ${idSensor} 
                 order by idRegistro desc limit 1`;
 
     console.log("Executando a instrução SQL: \n" + instrucao);
@@ -110,6 +139,7 @@ function listar() {
 module.exports = {
     buscarUltimasMedidas,
     buscarMedidasEmTempoReal,
+    buscarUltimasMedidasLocais,
     buscarInfoSemanal,
     buscarInfoDiario,
     listar

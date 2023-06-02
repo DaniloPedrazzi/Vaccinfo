@@ -7,6 +7,10 @@ router.get("/ultimas/:idSensor", function (req, res) {
     medidaController.buscarUltimasMedidas(req, res);
 });
 
+router.get("/ultimas-locais", function (req, res) {
+    medidaController.buscarUltimasMedidasLocais(req, res);
+});
+
 router.get("/semanal", function (req, res) {
     medidaController.buscarInfoSemanal(req, res);
 });
