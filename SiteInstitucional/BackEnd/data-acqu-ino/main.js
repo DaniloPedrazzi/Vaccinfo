@@ -46,17 +46,22 @@ const serial = async (
     arduino.pipe(new serialport.ReadlineParser({ delimiter: '\r\n' })).on('data', async (data) => {
         console.log(data);
         
-        const lm35Temperatura = parseFloat(data);
-        
-        valoresLm35Temperatura.push(lm35Temperatura);
+        const lm35Temperatura1 = parseFloat(data);
+        const lm35Temperatura2 = lm35Temperatura1 * 1.10;
+        const lm35Temperatura3 = lm35Temperatura1 * 1.25;
+        const lm35Temperatura4 = lm35Temperatura1 * 0.97;
+        const lm35Temperatura5 = lm35Temperatura1 * 0.70;
+
+        valoresLm35Temperatura.push(lm35Temperatura1, lm35Temperatura2, lm35Temperatura3, lm35Temperatura4, lm35Temperatura5);
 
         // *Lu* - usar apenas para quando for inserir
         if (HABILITAR_OPERACAO_INSERIR) {
-            await poolBancoDados.execute(
-                'INSERT INTO registro (dataHoraRegistro, temperatura, fkLocal, fkEmpresa) VALUES (now(), ?, 3, 1)',
-                [lm35Temperatura]
-            );
-            console.log("valores inseridos no banco: ", lm35Temperatura)
+            for (let i = 1; i <= valoresLm35Temperatura.length; i++) {
+                await poolBancoDados.execute(
+                    `INSERT INTO registro (dataHoraRegistro, temperatura, fkLocal, fkEmpresa) VALUES (now(), ${valoresLm35Temperatura[i]}, ${i}, 1)`
+                );
+                console.log("valores inseridos no banco: ", valoresLm35Temperatura[i])
+            }
         }
     });
 
@@ -65,35 +70,11 @@ const serial = async (
     });
 }
 
-const servidor = (
-    valoresLm35Temperatura
-) => {
-    // *Lu* - criando aplicação express (framework js)
-    const app = express();
-    app.use((request, response, next) => {
-        response.header('Access-Control-Allow-Origin', '*');
-        response.header('Access-Control-Allow-Headers', 'Origin, Content-Type, Accept');
-        next();
-    });
-    app.listen(SERVIDOR_PORTA, () => {
-        console.log(`API executada com sucesso na porta ${SERVIDOR_PORTA}`);
-    });
-
-    // *Lu* - rotas
-    app.get('/sensores/lm35/temperatura', (_, response) => {
-        return response.json(valoresLm35Temperatura);
-    });
-    
-}
-
 // *Lu* - funções serial / servidor
 
 (async () => {
     const valoresLm35Temperatura = [];
     await serial(
-        valoresLm35Temperatura
-    );
-    servidor(
         valoresLm35Temperatura
     );
 })();
