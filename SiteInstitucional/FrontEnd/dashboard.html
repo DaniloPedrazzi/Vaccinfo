@@ -34,9 +34,11 @@
                     <a href="fale conosco.html">Fale conosco</a>
                 </div>
                 <div class="link">
+                    <a href="locais.html">Cadastre um Local</a>
+                </div>
+                <div class="link">
                     <a href="index.html">Sair</a>
                 </div>
-
             </div>
         </div>
     </div>
@@ -120,12 +122,13 @@
 
     function carregarGraficoDiario() {        
         fetch(`/medidas/diario`, { cache: 'no-store' }).then(function (response) {
-            if (response.ok) {
+            if (response.ok && response.status != 204) {
                 response.json().then(function (resposta) {
                     console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
-    
                     plotarGraficoDiario(resposta);
                 });
+            }else{
+                document.getElementById('qtdTotalLotes').innerHTML = "0";
             }
         }).catch(function (error) {
             console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
