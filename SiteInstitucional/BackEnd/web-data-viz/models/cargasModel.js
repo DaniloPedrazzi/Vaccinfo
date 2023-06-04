@@ -1,9 +1,22 @@
 var database = require("../database/config")
 
-
-function cadastrar(nome, fkEndereco){
+function listar(){
     var instrucao = `
-        INSERT INTO localSensor (nome, fkEmpresa, fkEndereco, fkSensor) VALUES ('${nome}', 1, ${fkEndereco}, 1);
+        SELECT 
+            ls.nome, 
+            ls.tipoLocal, 
+            end.logradouro, 
+            end.complemento 
+        FROM localSensor AS ls 
+        JOIN endereco AS end 
+            ON fkEndereco = idEndereco;`;
+    console.log("Executando a instrução SQL: \n" + instrucao);
+    return database.executar(instrucao);
+}
+
+function cadastrar(nome, fkEndereco, idSensor, tipoLocal){
+    var instrucao = `
+        INSERT INTO localSensor (nome, fkEmpresa, fkEndereco, fkSensor, tipoLocal) VALUES ('${nome}', 1, ${fkEndereco}, ${idSensor}, '${tipoLocal}');
     `;
     console.log("Executando a instrução SQL: \n" + instrucao);
     return database.executar(instrucao);
@@ -28,6 +41,7 @@ function retornarFks(endereco, numero){
 }
 
 module.exports = {
+    listar,
     cadastrar,
     cadastrarEndereco,
     retornarFks

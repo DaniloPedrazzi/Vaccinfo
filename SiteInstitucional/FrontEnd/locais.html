@@ -10,7 +10,7 @@
     <title>VaccInfo | Locais</title>
     <link rel="website icon" type="png" href="img/mini-logo.png">
 </head>
-<body>
+<body onload="carregarLocais()">
     <div class="" id="header_blur">
         <div class="header1">
             <div class="container">
@@ -43,12 +43,14 @@
     </div>
     <div class="menu_flutuante invisivel">
         <div class="inputs">
-            Nome: <input type="text" id="inp_rua" class="input"> <span class="btn_fechar" onclick="fechar_popup()">Fechar</span> <br> 
+            Nome do Local: <input type="text" id="inp_nome_local" class="input">
+            <span class="btn_fechar" onclick="fechar_popup()">Fechar</span> <br> 
             Tipo: <br>
-            Caminhão: <input type="radio" value="Caminhao" name="tipoLote" class="input inputRadio">
-            Geladeira: <input type="radio" value="Geladeira" name="tipoLote" class="input inputRadio"><br>
+            Caminhão: <input type="radio" value="caminhao" name="tipoLote" class="input inputRadio">
+            Geladeira: <input type="radio" value="geladeira" name="tipoLote" class="input inputRadio"><br>
             Endereço: <input type="text" id="inp_endereco"class="input"> <br>
             Número: <input type="text" id="inp_num_local"class="input"> <br>
+            ID do Sensor: <input type="text" id="inp_id_sensor"class="input"> <br>
             <div id="divResultado"></div>
             <button onclick="cadastrar()" class="botao_local">Registrar Local</button>
         </div>
@@ -58,47 +60,7 @@
         <div class="container_botao">
             <button class="botao_local" onclick="abrir_fechar_popup()">Registrar Local</button>
         </div>
-        <div class="container_locais">
-            <div class="geladeira">
-                <span class="titulo_local">Geladeira 001</span>
-                <span class="endereco">Rua sei la sei la oq lala, n100 São Paulo SP</span>
-                <div class="box_img">
-                    <img src="img/img-geladeira-icon.png">
-                </div>
-             </div>
-            <div class="caminhao">
-                <span class="titulo_local">Caminhão 001</span>
-                <div class="box_img_caminhao">
-                    <img src="img/img-caminhao-icon.png">
-                </div>
-            </div>
-            <div class="geladeira">
-                <span class="titulo_local">Geladeira 001</span>
-                <span class="endereco">Rua sei la sei la oq lala, n100 São Paulo SP</span>
-                <div class="box_img">
-                    <img src="img/img-geladeira-icon.png">
-                </div>
-             </div>
-            <div class="caminhao">
-                <span class="titulo_local">Caminhão 001</span>
-                <div class="box_img_caminhao">
-                    <img src="img/img-caminhao-icon.png">
-                </div>
-            </div>
-            <div class="geladeira">
-                <span class="titulo_local">Geladeira 001</span>
-                <span class="endereco">Rua sei la sei la oq lala, n100 São Paulo SP</span>
-                <div class="box_img">
-                    <img src="img/img-geladeira-icon.png">
-                </div>
-             </div>
-            <div class="caminhao">
-                <span class="titulo_local">Caminhão 001</span>
-                <div class="box_img_caminhao">
-                    <img src="img/img-caminhao-icon.png">
-                </div>
-            </div>
-        </div>
+        <div class="container_locais"></div>
         <div class="footer">
             <div class="footer2">
                 <div class="container">
@@ -113,8 +75,43 @@
 </html>
 
 <script>
-    var fkEndereco;
-    
+    function carregarLocais(){
+        fetch(`/cargas/listar`).then(function (response) {
+            if (response.ok) {
+                response.json().then(function (resposta) {
+                    console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+                    for (let i = 0; i < resposta.length; i++) {
+                        var nome = resposta[i].nome;
+                        var tipoLocal = resposta[i].tipoLocal;
+                        var logradouro = resposta[i].logradouro;
+                        var complemento = resposta[i].complemento;
+                        plotarLocais(nome, tipoLocal, logradouro, complemento);
+                    }
+                });
+            } else {
+                console.error('Nenhum dado encontrado ou erro na API');
+            }
+        }).catch(function (error) {
+                console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+        });
+    }
+
+    function plotarLocais(nome, tipoLocal, logradouro, complemento){
+        if(tipoLocal == "caminhao"){
+            logradouro = "";
+            complemento = "";
+        }
+        document.querySelector(".container_locais").innerHTML += `
+        <div class="local">
+            <span class="titulo_local">${nome}</span>
+            <span class="endereco">${logradouro} ${complemento}</span>
+            <div class="box_img">
+                <img src="img/img-${tipoLocal}-icon.png">
+            </div>
+        </div>
+        `;
+    }
+
     function cadastrar(){
         var inputsRadio = document.querySelectorAll(".inputRadio");
         var tipoVar;
@@ -123,15 +120,17 @@
         }else if(inputsRadio[1].checked){
             tipoVar = inputsRadio[1].value;
         }
+        var nomeVar = inp_nome_local.value;
+
         var enderecoVar = inp_endereco.value;
         var numVar = Number(inp_num_local.value);
         
-        var nomeVar = inp_rua.value;
+        var idSensorVar = Number(inp_id_sensor.value);
 
-        cadastrarEndereço(enderecoVar, numVar);
+        cadastrarEndereço(nomeVar, enderecoVar, numVar, idSensorVar, tipoVar);
     }
     
-    function cadastrarEndereço(enderecoVar, numVar){
+    function cadastrarEndereço(nomeVar, enderecoVar, numVar, idSensorVar, tipoVar){
         fetch("/cargas/cadastrarEndereco", {
             method: "POST",
             headers: {
@@ -144,13 +143,13 @@
         }).then(function (resposta) {
             console.log("resposta: ", resposta);
             
-            retornarFks(enderecoVar, numVar);
+            retornarFks(nomeVar, enderecoVar, numVar, idSensorVar, tipoVar);
         }).catch(function (resposta) {
             console.log(`#ERRO: ${resposta}`);
         });
     }
 
-    function retornarFks(enderecoVar, numVar){
+    function retornarFks(nomeVar, enderecoVar, numVar, idSensorVar, tipoVar) {
         fetch("/cargas/retornarFks", {
             method: "POST",
             headers: {
@@ -163,35 +162,37 @@
         }).then(function (resposta) {
             console.log("resposta: ", resposta);
 
-            resposta.json().then(json => {
+            resposta.json().then(function (json) {
                 console.log(json);
                 console.log(JSON.stringify(json));
 
-                fkEndereco = json[0].idEndereco;
+                var fkEndereco = json[0].idEndereco;
+                cadastrarFinal(nomeVar, idSensorVar, fkEndereco, tipoVar);
             });
-            
-            cadastrarFinal(enderecoVar);
-        }).catch(function (resposta) {
-            console.log(`#ERRO: ${resposta}`);
+
+        }).catch(function (error) {
+            console.log("#ERRO: ", error);
         });
     }
 
-    function cadastrarFinal(enderecoVar){
+    function cadastrarFinal(nomeVar, idSensorVar, fkEndereco, tipoVar){
         fetch("/cargas/cadastrar", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
-                nomeServer: enderecoVar,
-                fkEnderecoServer: fkEndereco
+                nomeServer: nomeVar,
+                fkEnderecoServer: fkEndereco,
+                idSensorServer: idSensorVar,
+                tipoLocalServer: tipoVar
             })
         }).then(function (resposta) {
             console.log("resposta: ", resposta);
 
             divResultado.innerHTML = "Cadastro realizado com sucesso!";
 
-            fechar_popup();
+            // fechar_popup();
 
         }).catch(function (resposta) {
             console.log(`#ERRO: ${resposta}`);

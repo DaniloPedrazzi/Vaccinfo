@@ -3,6 +3,10 @@ var router = express.Router();
 
 var cargasController = require("../controllers/cargasController");
 
+router.get("/listar", function (req, res) {
+    cargasController.listar(req, res);
+});
+
 router.post("/cadastrar", function (req, res) {
     cargasController.cadastrar(req, res);
 });

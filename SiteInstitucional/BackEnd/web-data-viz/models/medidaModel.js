@@ -107,30 +107,29 @@ function listar() {
         SELECT
             ls.idLocal,
             ls.nome AS nomeLocal,
-            s.tipoInstalacao,
+            ls.tipoLocal AS tipoInstalacao,
         CASE
             WHEN MIN(r.temperatura) <= 2 OR MAX(r.temperatura) >= 8 THEN 'Crítico'
             WHEN MAX(r.temperatura) <= 4.4 AND MIN(r.temperatura) >= 6.6 THEN 'Alerta'
             ELSE 'Ideal'
         END AS categoria
         FROM
-        (
-            SELECT
-                r.fkLocal,
-                r.temperatura
-            FROM
-                registro r
-            ORDER BY
-                r.dataHoraRegistro DESC
-            LIMIT
-                7
-        ) AS r
+            (
+                SELECT
+                    r.fkLocal,
+                    r.temperatura
+                FROM
+                    registro r
+                ORDER BY
+                    r.dataHoraRegistro DESC
+                LIMIT
+                    7
+            ) AS r
         JOIN localSensor ls ON r.fkLocal = ls.idLocal
-        JOIN sensor s ON ls.fkSensor = s.idSensor
         GROUP BY
             ls.idLocal,
             ls.nome,
-            s.tipoInstalacao;
+            ls.tipoLocal;
     `;
     return database.executar(instrucao);
 }

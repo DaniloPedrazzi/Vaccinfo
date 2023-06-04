@@ -24,7 +24,7 @@
     flex-direction: column;
     align-items: center;
 }
-.geladeira{
+.local{
     width: 80%;
     height: 10%;
     background-color: #D5E4CF;
@@ -51,25 +51,6 @@
     align-items: center;
     margin-left: 10%;
 }
-.caminhao{
-    width: 80%;
-    height: 10%;
-    background-color: #D5E4CF;
-    margin-bottom: 3%;
-    display: flex;
-    align-items: center;
-    font-weight: 800;
-    color: #025043;
-}
-.box_img_caminhao{
-    width: 8%;
-    height: 100%;
-    background-color: #025043;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-left: 62%;
-}
 .menu_flutuante {
     display: flex;
     flex-direction: colum;
@@ -81,7 +62,7 @@
     transform: translate(-50%, -50%);
     background-color: #D5E4CF;
     width: 70%;
-    height: 50vh;
+    height: 70vh;
     color: #025043;
     border-radius: 10px;
     z-index: 1;
@@ -89,18 +70,24 @@
 }
 .inputs{
    width: 90%;
-   height: 45vh;
+   height: 65vh;
    font-size: 2vmax;
    font-weight: 800;
+   overflow: auto;
 }
 .input{
-    margin-bottom: 5%;
+    margin-bottom: 30px;
 }
 .inputRadio{
     transform: scale(1.5);
 }
-.btn_fechar{
-    margin-left: 55%;
+.btn_fechar {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 20px 30px;
+    font-size: 2vmax;
+    color: #025043;
     cursor: pointer;
 }
 

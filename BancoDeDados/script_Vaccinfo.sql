@@ -40,6 +40,8 @@ CREATE TABLE endereco (
 create table localSensor(
 	idLocal int auto_increment,
 	nome varchar(45),
+	tipolocal VARCHAR(45),
+		constraint chk_instalacao CHECK (tipolocal IN('geladeira','caminhao')),
 	fkEmpresa int,
 		constraint fkLocalEmpresa foreign key (fkEmpresa) references empresa(idEmpresa),
 		constraint pkLocal primary key (idLocal, fkEmpresa),
@@ -52,8 +54,6 @@ create table localSensor(
 CREATE TABLE sensor (
 	idSensor int PRIMARY KEY AUTO_INCREMENT,
    	nomeSensor VARCHAR(45),
-	tipoInstalacao VARCHAR(45),
-		constraint chk_instalacao CHECK (tipoInstalacao IN('geladeira','caminhao')),
 	fkLocalSensor int,
 		constraint fkSensorLocal foreign key (fkLocalSensor) references localSensor(idLocal)
 );

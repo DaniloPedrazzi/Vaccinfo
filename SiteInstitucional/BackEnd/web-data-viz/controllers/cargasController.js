@@ -1,9 +1,29 @@
 var cargasModel = require("../models/cargasModel");
 
+function listar(req, res) {
+    cargasModel.listar()
+        .then(
+            function (resultado) {
+                res.json(resultado);
+            }
+        ).catch(
+            function (erro) {
+                console.log(erro);
+                console.log(
+                    "\nHouve um erro ao realizar a listagem! Erro: ",
+                    erro.sqlMessage
+                );
+                res.status(500).json(erro.sqlMessage);
+            }
+        );
+}
+
 function cadastrar(req, res) {
     // CAMPOS DO CADASTRO
     var nome = req.body.nomeServer;
-    var fkEndereco = req.body.fkEnderecoServer
+    var fkEndereco = req.body.fkEnderecoServer;
+    var idSensor = req.body.idSensorServer;
+    var tipoLocal = req.body.tipoLocalServer;
 
     // VALIDAÇÕES
     if (nome == undefined) {
@@ -11,7 +31,7 @@ function cadastrar(req, res) {
     } else {
         
         // Passe os valores como parâmetro e vá para o arquivo usuarioModel.js
-        cargasModel.cadastrar(nome, fkEndereco)
+        cargasModel.cadastrar(nome, fkEndereco, idSensor, tipoLocal)
                 .then(
                 function (resultado) {
                     res.json(resultado);
@@ -72,6 +92,7 @@ function cadastrarEndereco(req, res){
 }
 
 module.exports = {
+    listar,
     cadastrar,
     cadastrarEndereco,
     retornarFks
