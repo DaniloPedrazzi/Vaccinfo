@@ -66,21 +66,29 @@ function buscarInfoSemanal() {
 function buscarInfoDiario() {
     var instrucao = `
     SELECT
-        ls.idLocal,
-        DAYNAME(r.dataHoraRegistro) AS diaSemana,
+    ls.idLocal,
+    DAYNAME(r.dataHoraRegistro) AS diaSemana,
     CASE
-        WHEN MIN(r.temperatura) <= 2 OR MAX(r.temperatura) >= 8 THEN 'Crítico'
-        WHEN MAX(r.temperatura) <= 4.4 AND MIN(r.temperatura) >= 6.6 THEN 'Alerta'
-        ELSE 'Ideal'
+		WHEN temperatura > 4.4 AND temperatura < 6.6 THEN 'Ideal'
+        WHEN temperatura <= 2 OR temperatura >= 8 THEN 'Crítico'
+        WHEN temperatura <= 4.4 OR temperatura >= 6.6 THEN 'Alerta'
     END AS mensagem
-    FROM
-        registro r
-    JOIN localSensor ls ON r.fkLocal = ls.idLocal
-    WHERE
-        DATE(r.dataHoraRegistro) = CURDATE()
-    GROUP BY
-        ls.idLocal, 
-        DAYNAME(r.dataHoraRegistro);
+FROM
+    localSensor ls
+JOIN
+    registro r ON ls.idLocal = r.fkLocal
+WHERE
+    (ls.idLocal, r.dataHoraRegistro) IN (
+        SELECT
+            fkLocal,
+            MAX(dataHoraRegistro)
+        FROM
+            registro
+        WHERE
+            DATE(dataHoraRegistro) = CURDATE()
+        GROUP BY
+            fkLocal
+    );
     `;
     console.log("Executando a instrução SQL: \n" + instrucao);
     return database.executar(instrucao);
