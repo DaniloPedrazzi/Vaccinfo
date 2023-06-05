@@ -37,6 +37,11 @@ CREATE TABLE endereco (
     estado CHAR(2)
 );
 
+CREATE TABLE sensor (
+	idSensor int PRIMARY KEY AUTO_INCREMENT,
+   	nomeSensor VARCHAR(45)
+);
+
 create table localSensor(
 	idLocal int auto_increment,
 	nome varchar(45),
@@ -49,13 +54,6 @@ create table localSensor(
 		constraint fkLocalEndereco foreign key (fkEndereco) references endereco(idEndereco),
 	fkSensor int,
 		constraint fkSensor foreign key (fkSensor) references sensor(idSensor)
-);
-
-CREATE TABLE sensor (
-	idSensor int PRIMARY KEY AUTO_INCREMENT,
-   	nomeSensor VARCHAR(45),
-	fkLocalSensor int,
-		constraint fkSensorLocal foreign key (fkLocalSensor) references localSensor(idLocal)
 );
 
 CREATE TABLE lote (
@@ -72,7 +70,9 @@ CREATE TABLE registro (
 	dataHoraRegistro DATETIME DEFAULT CURRENT_TIMESTAMP,
 	temperatura FLOAT,
 	fkLocal int,
-		CONSTRAINT registroLocal FOREIGN KEY (fkLocal) REFERENCES LocalSensor(idLocal)
+		CONSTRAINT registroLocal FOREIGN KEY (fkLocal) REFERENCES LocalSensor(idLocal),
+	fkEmpresa int,
+		CONSTRAINT fkEmpresa foreign key (fkEmpresa) references empresa(idEmpresa)
 );
 
 -- Inserir dados de empresas na tabela
@@ -89,16 +89,18 @@ CREATE TABLE registro (
 	INSERT INTO usuario VALUES
 		(null,'Gustavo ribeiro','gustavo.ribeiro@sptech.school','+5511963122168','cpf','53183297809','2005-04-30', '#Vaccinfo', 1, 1),
 		(null,'Vitor Maciel','vitor.mramos@sptech.school','+5511992951528','cpf','53183297809','2000-08-16', '#Vaccinfo', 1, 2);
-    
--- Inserir dados do local aonde o sensor está
-	insert into localSensor values
-		(null,'Geladeira001', 1, 1),
-		(null,'Caminhão001', 2, 2);
 
 -- Inserir o sensor LM35 tanto na geladeira quanto no Caminhão
 	insert into sensor values
-		(null, 'LM35', 'geladeira', 1),
-		(null, 'LM35', 'caminhao', 2);
+		(null, 'LM35'),
+		(null, 'LM35');
+    
+-- Inserir dados do local aonde o sensor está
+	insert into localSensor values
+		(null,'Geladeira001', 'geladeira', 1, 1, 1),
+		(null,'Caminhão001', 'caminhao', 1, null, 2);
+
+select * from registro;
     
 -- Inserir dados sobre um lote
 	insert into lote values
@@ -106,9 +108,9 @@ CREATE TABLE registro (
 		(null, 'VI2', 2, 1);
     
 -- Inserir dados sobre o registro de temperatuda do sensor
-	insert into registro values
-		(null, null, '6', 1),
-		(null, null, '7', 2);
+	insert into registro (temperatura, fkLocal) values
+		(6, 1),
+		(7, 2);
 
 -- Caso hipotético, no qual o lote que estava no caminhão, vá para a geladeira, necessário um update
 	update lote set fkLocal = 1 where idLote = 2;
