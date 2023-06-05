@@ -18,10 +18,10 @@ const serial = async (
     let poolBancoDados = mysql.createPool({
         // altere!
         // CREDENCIAIS DO BANCO LOCAL - MYSQL WORKBENCH
-        host: 'bl2qkel9phuwcy25r4ya-mysql.services.clever-cloud.com',
-        user: 'ugsqw3rvnisnorpc',
-        password: 'XM1qp5C4l8poBUmw3bmN',
-        database: 'bl2qkel9phuwcy25r4ya'
+        host: '10.18.35.201',
+        user: 'server',
+        password: '12345678',
+        database: 'vaccinfo'
     }).promise();
 
     // *Lu* - achar arduíno (porta)
@@ -45,7 +45,7 @@ const serial = async (
     
     arduino.pipe(new serialport.ReadlineParser({ delimiter: '\r\n' })).on('data', async (data) => {
         console.log(data);
-        
+
         const lm35Temperatura1 = parseFloat(data);
         const lm35Temperatura2 = lm35Temperatura1 * 1.10;
         const lm35Temperatura3 = lm35Temperatura1 * 1.25;
@@ -56,11 +56,13 @@ const serial = async (
 
         // *Lu* - usar apenas para quando for inserir
         if (HABILITAR_OPERACAO_INSERIR) {
-            for (let i = 1; i <= valoresLm35Temperatura.length; i++) {
+            var temperaturas = [];
+            temperaturas.push(lm35Temperatura1, lm35Temperatura2, lm35Temperatura3, lm35Temperatura4, lm35Temperatura5) 
+            for (let i = 1; i <= temperaturas.length; i++) {
                 await poolBancoDados.execute(
-                    `INSERT INTO registro (dataHoraRegistro, temperatura, fkLocal, fkEmpresa) VALUES (now(), ${valoresLm35Temperatura[i]}, ${i}, 1)`
+                    `INSERT INTO registro (dataHoraRegistro, temperatura, fkLocal, fkEmpresa) VALUES (now(), ${temperaturas[i - 1]}, ${i}, 1)`
                 );
-                console.log("valores inseridos no banco: ", valoresLm35Temperatura[i])
+                console.log("valores inseridos no banco: ", temperaturas[i - 1]);
             }
         }
     });
