@@ -8,7 +8,7 @@ function listar(){
             end.logradouro, 
             end.complemento 
         FROM localSensor AS ls 
-        JOIN endereco AS end 
+        LEFT JOIN endereco AS end 
             ON fkEndereco = idEndereco;`;
     console.log("Executando a instrução SQL: \n" + instrucao);
     return database.executar(instrucao);

@@ -13,5 +13,5 @@ temperaturaSimulada = (temperaturaReal * 0.584) - 8.845;
 
 Serial.println(temperaturaSimulada);
 
-delay(2000);
+delay(5000);
 }
