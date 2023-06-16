@@ -44,9 +44,9 @@ function buscarInfoSemanal() {
         ls.idLocal, 
         DAYNAME(r.dataHoraRegistro) AS diaSemana,
     CASE
-        WHEN temperatura > 4.4 AND temperatura < 6.6 THEN 'Ideal'
-        WHEN temperatura <= 2 OR temperatura >= 8 THEN 'Crítico'
-        WHEN temperatura <= 4.4 OR temperatura >= 6.6 THEN 'Alerta'
+        WHEN MIN(r.temperatura) <= 2 OR MAX(r.temperatura) >= 8 THEN 'Crítico'
+        WHEN MAX(r.temperatura) <= 4.4 AND MIN(r.temperatura) >= 6.6 THEN 'Alerta'
+        ELSE 'Ideal'
     END AS mensagem
     FROM
         registro r
